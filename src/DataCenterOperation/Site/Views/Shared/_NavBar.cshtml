@@ -1,0 +1,26 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <nav class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">首页</a></li>
+                <li><a>|</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">资产管理</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">巡检数据</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">人员来访</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">备品备件</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right-zero-margin">
+                @await Html.PartialAsync("_LoginPartial")
+            </ul>
+        </div>
+    </nav>
+}
