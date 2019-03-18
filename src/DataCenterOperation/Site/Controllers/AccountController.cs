@@ -1,6 +1,7 @@
 ﻿using DataCenterOperation.Services;
 using DataCenterOperation.Site.Extensions;
 using DataCenterOperation.Site.ViewModels;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -33,7 +34,7 @@ namespace DataCenterOperation.Site.Controllers
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing cookie to ensure a clean login process
-            await HttpContext.Authentication.SignOutAsync(_cookieScheme);
+            await HttpContext.SignOutAsync(_cookieScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
             return View();
@@ -67,9 +68,10 @@ namespace DataCenterOperation.Site.Controllers
                         new Claim("updatedtime", user.UpdatedTime.Value.Ticks.ToString())
                     };
                 var principal = new ClaimsPrincipal(new ClaimsIdentity(userClaims, "AuthenticationTypes.Password"));
-                await HttpContext.Authentication.SignInAsync(_cookieScheme, principal);
+                await HttpContext.SignInAsync(_cookieScheme, principal);
 
-                _logger.LogInformation(1, $"User {user.Username} logged in.");
+                _logger.LogInformation($"User {user.Username} logged in.");
+
                 return RedirectToLocal(returnUrl, isAdmin: user.IsAdmin);
             }
 
@@ -82,8 +84,9 @@ namespace DataCenterOperation.Site.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.Authentication.SignOutAsync(_cookieScheme);
-            _logger.LogInformation(4, $"User {HttpContext.User?.GetUsername()} logged out.");
+            await HttpContext.SignOutAsync(_cookieScheme);
+            _logger.LogInformation($"User {HttpContext.User?.GetUsername()} logged out. Redirecting to HOME...");
+
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
