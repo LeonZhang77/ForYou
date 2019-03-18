@@ -83,7 +83,7 @@ namespace DataCenterOperation.Services
                 return false;
             }
 
-            _logger.LogInformation(2, $"Validating UpdatedTime in principal '{updatedTime}' with UpdatedTime in database '{user.UpdatedTime}' ... ");
+            _logger.LogInformation($"Validating UpdatedTime in principal '{updatedTime}' with UpdatedTime in database '{user.UpdatedTime}' ... ");
 
             if (!user.UpdatedTime.HasValue)
             {

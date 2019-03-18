@@ -1,10 +1,12 @@
 ﻿using DataCenterOperation.Data;
 using DataCenterOperation.Services;
 using DataCenterOperation.Site.Extensions;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,11 +35,14 @@ namespace DataCenterOperation
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging();
+
             // Add framework services.
             services.AddDbContext<DataCenterOperationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddRazorOptions(options =>
                 {
                     options.ViewLocationFormats.Clear();
@@ -46,23 +51,30 @@ namespace DataCenterOperation
                     options.ViewLocationFormats.Add("/Site/Views/{1}/{0}.cshtml");
                 });
 
+            services.AddAuthentication("DataCenterOperation.CookieScheme")
+                .AddCookie("DataCenterOperation.CookieScheme", o =>
+                {
+                    o.LoginPath = new PathString("/Account/Login/");
+                    o.LogoutPath = new PathString("/Account/Logout");
+                    o.AccessDeniedPath = new PathString("/Account/AccessDenied/");
+                    o.Events = new CookieAuthenticationEvents
+                    {
+                        OnValidatePrincipal = ValidatePrincipal
+                    };
+                });
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireClaim("IsAdmin", true.ToString()));
             });
-
-            //services.Configure<SmtpOptions>(Configuration.GetSection("Smtp"));
 
             // Add application services.
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,19 +88,7 @@ namespace DataCenterOperation
 
             app.UseStaticFiles();
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationScheme = "DataCenterOperation.CookieScheme",
-                LoginPath = new PathString("/Account/Login/"),
-                LogoutPath = new PathString("/Account/Logout"),
-                AccessDeniedPath = new PathString("/Account/AccessDenied/"),
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                Events = new CookieAuthenticationEvents
-                {
-                    OnValidatePrincipal = ValidatePrincipal
-                }
-            });
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
@@ -111,7 +111,7 @@ namespace DataCenterOperation
                 !await accountService.ValidatePrincipal(username, updatedTime))
             {
                 context.RejectPrincipal();
-                await context.HttpContext.Authentication.SignOutAsync("DataCenterOperation.CookieScheme");
+                await context.HttpContext.SignOutAsync("DataCenterOperation.CookieScheme");
             }
         }
     }
