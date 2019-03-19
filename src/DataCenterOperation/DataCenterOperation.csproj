@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
     <AssemblyName>DataCenterOperation</AssemblyName>
     <UserSecretsId>bae5408a-5596-4bea-9f90-3dd035268e0e</UserSecretsId>
   </PropertyGroup>
@@ -14,7 +13,6 @@
     <Compile Remove="Site\Controllers\ManageController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
@@ -44,8 +42,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.15" />
-    <PackageReference Include="MySql.Data.EntityFrameworkCore.Design" Version="8.0.15" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>
 
 </Project>
