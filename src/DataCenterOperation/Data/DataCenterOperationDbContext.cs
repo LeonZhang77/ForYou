@@ -12,9 +12,13 @@ namespace DataCenterOperation.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(builder);            
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<VistorRecord> VistorRecords { get; set; }
+
+        public DbSet<VistorEntryRequest> VistorEntryRequests { get; set; }
+        public DbSet<VistorEntourage> VistorEntourages { get; set; }
     }
 }
