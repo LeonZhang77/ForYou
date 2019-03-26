@@ -71,6 +71,18 @@ textarea.brief-description {
     height: 100px;
 }
 
+input.text-date, input.text-time {
+    width: 40%;
+}
+
+input.text-date {
+    float: left;
+}
+
+div.datetime {
+    clear: both;
+}
+
 /*--banner--*/
 .banner {
     height: 128px;
