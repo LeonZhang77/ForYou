@@ -16,5 +16,6 @@ namespace DataCenterOperation.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Failure> Failures { get; set; }
     }
 }
