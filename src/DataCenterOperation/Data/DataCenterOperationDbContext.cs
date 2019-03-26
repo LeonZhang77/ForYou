@@ -16,8 +16,8 @@ namespace DataCenterOperation.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Failure> Failures { get; set; }
         public DbSet<VistorRecord> VistorRecords { get; set; }
-
         public DbSet<VistorEntryRequest> VistorEntryRequests { get; set; }
         public DbSet<VistorEntourage> VistorEntourages { get; set; }
     }
