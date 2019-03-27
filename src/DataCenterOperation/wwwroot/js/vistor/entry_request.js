@@ -101,9 +101,9 @@ function TableToJson(tableid) {
     document.getElementById('hidden_matters').value = resultValue.join(',')
 
      var entourages = TableToJson('entry_request_entourages_Table')
-     alert(entourages)
+     //alert(entourages)
      document.getElementById('hidden_entourages').value = entourages
-     alert(document.getElementById('hidden_entourages').value)
+     //alert(document.getElementById('hidden_entourages').value)
      
     form.submit();
 }

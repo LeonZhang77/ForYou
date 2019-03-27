@@ -19,6 +19,7 @@ namespace DataCenterOperation.Site.ViewModels
         public int NumberOfPeople { get; set; }
 
         [Display(Name = "日期及时间")]
+        [DataType(DataType.Date)]
         public DateTime EntryTime { get; set; }
         
         [Display(Name = "所属单位")]
@@ -44,12 +45,15 @@ namespace DataCenterOperation.Site.ViewModels
         public string Company { get; set; }
 
         [Display(Name = "申请时间")]
+        [DataType(DataType.Date)]
         public DateTime RequestDate { get; set; }
 
         [Display(Name = "进入时间")]
+        [DataType(DataType.Time)]
         public DateTime BeginTime { get; set; }
 
         [Display(Name = "离开时间")]
+        [DataType(DataType.Time)]
         public DateTime EndTime { get; set; }
 
         [Display(Name = "携带物品")]

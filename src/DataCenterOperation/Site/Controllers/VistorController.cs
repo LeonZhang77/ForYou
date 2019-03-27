@@ -17,15 +17,18 @@ namespace DataCenterOperation.Site.Controllers
     {
         private readonly IVistorRecordService _vistorRecordService;
         private readonly IVistorEntryRequestService _vistorEntryRequestService;
+        private readonly IVistorEntourageService _vistorEntourageService;
         private readonly ILogger _logger;        
 
         public VistorController(
             IVistorRecordService vistorRecordService,
             IVistorEntryRequestService vistorEntryRequestService,
+            IVistorEntourageService vistorEntourageService,
             ILoggerFactory loggerFactory)
         {
             _vistorRecordService = vistorRecordService;
             _vistorEntryRequestService = vistorEntryRequestService;
+            _vistorEntourageService = vistorEntourageService;
             _logger = loggerFactory.CreateLogger<HomeController>();
         }        
 
@@ -62,6 +65,14 @@ namespace DataCenterOperation.Site.Controllers
             model.EndTime = entryRequest.EndTime;
             model.Area = entryRequest.Area;
             model.Belongings = entryRequest.Belongings;
+            model.Matter_Short = entryRequest.Matter_Short;
+            model.Matter_Details = entryRequest.Matter_Details;
+            model.Admin_Confirm = entryRequest.Admin_Confirm;
+            model.Manager_Confirm = entryRequest.Manager_Confirm;
+
+            List<VistorEntourage> entourages = await _vistorEntourageService.GetVistorEntourageByRequestGUID(id);
+            model.Entourage = JsonConvert.SerializeObject(entourages);
+
             string result = JsonConvert.SerializeObject(model);
             return (result);
         }
@@ -69,7 +80,11 @@ namespace DataCenterOperation.Site.Controllers
         [HttpGet]
         public IActionResult EntryRequest()
         {
+            var theMoment = DateTime.Now;
             var request = new EntryRequestViewModel();
+            request.RequestDate = theMoment;
+            request.BeginTime = theMoment;
+            request.EndTime = theMoment;
            
             return View(request);
         }
@@ -77,13 +92,17 @@ namespace DataCenterOperation.Site.Controllers
         [HttpPost]
         public IActionResult EntryRequest(EntryRequestViewModel requestModel)
         {
+            string str_requestDate = requestModel.RequestDate.ToString("yyyy-MM-dd");
+            string str_beginTime = requestModel.BeginTime.TimeOfDay.ToString();
+            string str_endTime = requestModel.EndTime.TimeOfDay.ToString();
+
             var request = new VistorEntryRequest
             {
               RequestPeoopleName = requestModel.RequestPeoopleName,
               Company = requestModel.Company,
               RequestDate = requestModel.RequestDate,
-              BeginTime = requestModel.BeginTime,
-              EndTime = requestModel.EndTime,
+              BeginTime = Convert.ToDateTime(str_requestDate + " " + str_beginTime),
+              EndTime = Convert.ToDateTime(str_requestDate + " " + str_endTime),
               Area = requestModel.Area,
               Belongings = requestModel.Belongings,
               Matter_Short = requestModel.Matter_Short,
@@ -99,23 +118,6 @@ namespace DataCenterOperation.Site.Controllers
             _vistorEntryRequestService.AddVistorEntryRequest(request);
            
             return Redirect("./History");
-        }
-
-        [HttpGet]
-        public IActionResult Entry()
-        {
-            var vistor = new EntryViewModel();
-            //vistor.EntryTime = DateTime.Now.ToString("yyyy-MM-dd hh:mm");
-            //vistor.EntryTime.GetDateTimeFormats('t');
-            //vistor.Matter = "";
-            return View(vistor);
-        }
-
-        [HttpPost]
-        public IActionResult Entry(EntryViewModel entry)
-        {
-            var vistor = _vistorRecordService.AddVistorAsync(entry.VistorName, entry.NumberOfPeople, entry.EntryTime, entry.Company, entry.Matter, entry.ContactInfo);
-            return View();
         }
 
         public IActionResult Error()

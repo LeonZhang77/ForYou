@@ -21,29 +21,55 @@ function open_dialog(text_id){
         type: "post",
         dataType:"json",
         success: function (item) {
+            $("#records_table").empty();
+            tr = "<tr><th>申请人</th><th>单位</th><th></th></tr>";
+            $("#records_table").append(tr)
 
           tr = "";
           tr += "<td>" + item.RequestPeoopleName + "</td>";
           tr += "<td>" + item.Company + "</td>";
           $("#records_table").append("<tr>"+tr+"</tr>");
+
           tr = "";
           tr += "<th>申请日期</th>";
           tr += "<th>开始时间</th>";
           tr += "<th>结束时间</th>";
-          $("#records_table").append("<tr>"+tr+"</tr>");
+            $("#records_table").append("<tr>" + tr + "</tr>");
+
           tr = "";
           tr += "<td>" + item.RequestDate + "</td>";
           tr += "<td>" + item.BeginTime + "</td>";
           tr += "<td>" + item.EndTime + "</td>";
-          $("#records_table").append("<tr>"+tr+"</tr>");
+            $("#records_table").append("<tr>" + tr + "</tr>");
+
           tr = "";
           tr += "<th>进入区域</th>";
           tr += "<th>携带事物</th>";
-          $("#records_table").append("<tr>"+tr+"</tr>");
+            $("#records_table").append("<tr>" + tr + "</tr>");
+
           tr = "";
           tr += "<td>" + item.Area + "</td>";
           tr += "<td>" + item.Belongings + "</td>";
-          $("#records_table").append("<tr>"+tr+"</tr>");
+            $("#records_table").append("<tr>" + tr + "</tr>");
+
+            $("#records_table").append("<tr><th>随行人员：</th></tr>")
+            tr = "";
+            tr += "<th>姓名</th>";
+            tr += "<th>证件号</th>";
+            tr += "<th>单位</th>";
+            $("#records_table").append("<tr>" + tr + "</tr>");
+            var entourage_list = jQuery.parseJSON(item.Entourage);
+            for (var i = 0; i < entourage_list.length; i++) {
+                tr = "";
+                tr += "<td>" + entourage_list[i].Name + "</td>";
+                tr += "<td>" + entourage_list[i].Identity + "</td>";
+                tr += "<td>" + entourage_list[i].Company + "</td>";
+                $("#records_table").append("<tr>" + tr + "</tr>");
+            }
+            $("#matter_details").html(item.Matter_Details);
+            $("#admin_confirm").html(item.Admin_Confirm);
+            $("#manager_confirm").html(item.Manager_Confirm);
+
           $( "#dialog" ).dialog( "open" );
         }
     });
