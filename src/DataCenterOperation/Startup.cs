@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -50,7 +49,7 @@ namespace DataCenterOperation
                     options.ViewLocationFormats.Add("/Site/Views/{0}.cshtml");
                     options.ViewLocationFormats.Add("/Site/Views/Shared/{0}.cshtml");
                     options.ViewLocationFormats.Add("/Site/Views/{1}/{0}.cshtml");
-                });               
+                });
 
             services.AddAuthentication("DataCenterOperation.CookieScheme")
                 .AddCookie("DataCenterOperation.CookieScheme", o =>
@@ -72,6 +71,7 @@ namespace DataCenterOperation
             // Add application services.
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IFailureService, FailureService>();
             services.AddTransient<IVistorRecordService, VistorRecordService>();
             services.AddTransient<IVistorEntryRequestService, VistorEntryRequestService>();
             services.AddTransient<IVistorEntourageService, VistorEntourageService>();

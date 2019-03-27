@@ -2,7 +2,7 @@
 
 namespace DataCenterOperation.Data.Entities
 {
-    public class User : AbstractEntity
+    public class User : LoggableEntity
     {
         internal const string Default_Admin_Username = "admin@dco";
         internal const string Default_Admin_Password = Default_Admin_Username;
