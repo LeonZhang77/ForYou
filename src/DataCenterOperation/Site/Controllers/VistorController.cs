@@ -53,7 +53,15 @@ namespace DataCenterOperation.Site.Controllers
             return View(models);
         }
 
-        public async Task<String> Details()
+        public async Task<IActionResult> Add_ContactInfo()
+        {
+            var guid = new Guid(Request.Form["id"]);
+            var contactInfo = Request.Form["contactInfo"];
+            VistorRecord vistorRecord = await _vistorRecordService.UpdateContactInfo(guid, contactInfo);
+            return Redirect("/Vistor/History");
+        }
+
+            public async Task<String> Details()
         {
             var id = new Guid(Request.Form["id"]);
             VistorEntryRequest entryRequest = await _vistorEntryRequestService.GetVistorEntryRequestsById(id);

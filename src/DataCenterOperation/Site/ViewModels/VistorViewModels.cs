@@ -29,6 +29,7 @@ namespace DataCenterOperation.Site.ViewModels
         public string Matter { get; set; }
 
         [Display(Name = "来访人联系电话")]
+        [DataType(DataType.PhoneNumber)]
         public string ContactInfo { get; set; }
 
         public Guid VistorEntryRequestGuid { get; set; }
