@@ -8,11 +8,12 @@
     <AssemblyName>DataCenterOperation</AssemblyName>
     <UserSecretsId>bae5408a-5596-4bea-9f90-3dd035268e0e</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-  </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\upload\1072b9d2-3457-409e-a323-4a01f5f906d9.xls" />
+    <Content Remove="Site\Views\Assert\X86Server_Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Site\Views\Shared\_ValidationScriptsPartial.cshtml">
@@ -21,6 +22,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="wwwroot\upload\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="jQuery" Version="3.3.1" />
@@ -42,8 +44,9 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Newtonsoft.json" Version="12.0.1" />
+    <PackageReference Include="NPOI" Version="2.4.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>
 </Project>

@@ -61,7 +61,7 @@ namespace DataCenterOperation.Site.Controllers
             return Redirect("/Vistor/History");
         }
 
-            public async Task<String> Details()
+        public async Task<String> Details()
         {
             var id = new Guid(Request.Form["id"]);
             VistorEntryRequest entryRequest = await _vistorEntryRequestService.GetVistorEntryRequestsById(id);
