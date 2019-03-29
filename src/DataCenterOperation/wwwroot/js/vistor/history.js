@@ -11,7 +11,52 @@
         duration: 1000
       }
     });
+    $("#dialog_update_contactInfo").dialog({
+        autoOpen: false,
+        width: 900,
+        modal: true,
+        buttons: {
+            "确认": function () {
+                $(this).dialog("close");
+            },
+            "放弃": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
 });
+
+function update_ContactInfo(text_id) {
+    var emelement_id = 'contact_info_' + text_id;
+    var contact_info = document.getElementById(emelement_id).value;
+    //#contact_info_0d783795-2629-46c1-adeb-ba553f6156e5
+    $("#dialog_update_contactInfo").dialog({
+        autoOpen: false,
+        width: 400,
+        modal: true,
+        buttons: {
+            "确认": function () {
+                update_ContactInfo_post(text_id, contact_info);
+                $(this).dialog("close");
+            },
+            "放弃": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#dialog_update_contactInfo").dialog("open");
+}
+
+function update_ContactInfo_post(text_id, contact_info) {
+    $.ajax({
+        type: "POST",
+        url: "/Vistor/Add_ContactInfo",
+        data: {
+            'id': text_id,
+            'contactInfo': contact_info
+        }
+    });
+}
 
 function open_dialog(text_id){
 

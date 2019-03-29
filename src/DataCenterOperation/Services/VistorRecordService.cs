@@ -24,6 +24,20 @@ namespace DataCenterOperation.Services
             return await _db.VistorRecords.ToListAsync();
         }
 
+        public async Task<VistorRecord> GetVistorRecordById(Guid id)
+        {
+            return await _db.VistorRecords.FirstOrDefaultAsync(a => a.Id == id);
+        }
+
+        public async Task<VistorRecord> UpdateContactInfo(Guid id, string contactInfo)
+        {
+            VistorRecord vistorRecord = await _db.VistorRecords.FirstOrDefaultAsync(a => a.Id == id);
+            vistorRecord.ContactInfo = contactInfo;
+            await _db.SaveChangesAsync();
+
+            return vistorRecord;
+        }
+
         public async Task<VistorRecord> AddVistorAsync(VistorEntryRequest request)
         {
             VistorRecord vistor = new VistorRecord
