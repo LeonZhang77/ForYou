@@ -67,6 +67,10 @@ namespace DataCenterOperation.Site.ViewModels
         [Display(Name = "是否提交服务报告")]
         public bool? HasServiceReportSubmitted { get; set; }
 
+        [StringLength(50)]
+        [Display(Name = "故障报告编号")]
+        public string ServiceReportId { get; set; }
+
         [StringLength(1000)]
         [Display(Name = "没有提交报告的原因情况说明")]
         [DataType(DataType.MultilineText)]

@@ -42,6 +42,7 @@ namespace DataCenterOperation.Services
                 HasReportedToSpecifiedPerson = model.HasReportedToSpecifiedPerson,
                 CommentsFromSpecifiedPerson = model.CommentsFromSpecifiedPerson,
                 HasServiceReportSubmitted = model.HasServiceReportSubmitted,
+                ServiceReportId = model.ServiceReportId,
                 WhyNoServiceReportSubmitted = model.WhyNoServiceReportSubmitted,
                 Solution = model.Solution,
                 WhoSolved = model.SolutionEngineer,

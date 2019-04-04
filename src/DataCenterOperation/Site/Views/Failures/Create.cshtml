@@ -76,8 +76,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="HasServiceReportSubmitted" class="control-label"></label>
-                <input asp-for="HasServiceReportSubmitted" class="form-control" />
+                <input checked asp-for="HasServiceReportSubmitted" class="form-control" />
                 <span asp-validation-for="HasServiceReportSubmitted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceReportId" class="control-label"></label>
+                <input asp-for="ServiceReportId" class="form-control" />
+                <span asp-validation-for="ServiceReportId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="WhyNoServiceReportSubmitted" class="control-label"></label>
