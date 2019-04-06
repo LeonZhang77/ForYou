@@ -14,8 +14,8 @@ $(function () {
         }
         });
 
-
-
+    //$("table").tablesort();         
+    $("table").stupidtable();
     $("#dialog_remove").dialog({
         autoOpen: false,
         width: 400,
@@ -96,11 +96,6 @@ function open_upload_dialog() {
     });
     
     $("#dialog").dialog("open");
-}
-
-function redirect(){
-        
-    location.href='/Assert/X86Server_Verify_List';
 }
 
 function X86SServer_Remove(guid_id){

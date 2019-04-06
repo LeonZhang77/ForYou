@@ -4,6 +4,7 @@
 }
 @section Scripts{
     <link href="~/lib/webuploader/webuploader.css" rel="stylesheet" />
+    <link href="~/css/table-gridtable.css" rel="stylesheet" />
     <script src="~/lib/webuploader/webuploader.custom.js"></script>
     <script src="~/js/Assert/x86server_verify_list.js"></script>    
 }
@@ -22,7 +23,7 @@
                 <h2>将增加以下服务器</h2>
                 <button onclick="open_upload_dialog()">上传EXCEL</button>
                 <div style="overflow-x: scroll; overflow-y: auto; width:800px;">
-                    <table class="table">
+                    <table class="table gridtable">
                         <thead>
                             <tr>
                                 <th>
@@ -163,7 +164,7 @@
                 <h2>将修改以下服务器</h2>
                 <button onclick="open_upload_dialog()">上传EXCEL</button>
                 <div style="overflow-x: scroll; overflow-y: auto; width:800px;">
-                    <table class="table">
+                    <table class="table gridtable">
                         <thead>
                             <tr>
                                 <th>
@@ -301,8 +302,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <!-- <button type="submit" class="btn btn-default" onclick='doSubmitForm(this.form)'>确认更改</button> -->
-            <button type="submit" class="btn btn-default">确认更改</button>
+                <button type="submit" class="btn btn-default">确认更改</button>
+            </div>            
         </form>
     </div>

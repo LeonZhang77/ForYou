@@ -4,10 +4,10 @@
 }
 @section Scripts{
     <link href="~/lib/webuploader/webuploader.css" rel="stylesheet" />
-
+    <link href="~/css/table-gridtable.css" rel="stylesheet" />
     <script src="~/lib/webuploader/webuploader.custom.js"></script>
-
-    <script src="~/js/Assert/x86servers.js"></script>    
+    <script src="~/lib/jquery/plugin/stupidtable.js"></script>
+    <script src="~/js/Assert/x86servers.js"></script>       
 }
 @section SectionDialog{
     <div id="dialog" title="上传EXCEL">
@@ -35,74 +35,72 @@
     </div>
     <div class="col-md-9">
         <h2>X86服务器列表</h2>
-        <button onclick="open_upload_dialog()">上传EXCEL</button>
-        @*<button onclick="redirect()">X86Server_Verify_list</button>
-        ="overflow-x: auto; overflow-y: auto; height: 1000px; width:800px;"*@
-        <div style="overflow-x: scroll; overflow-y: auto; height: 1000px; width:800px;">
-            <table class="table table-boarder">
+        <button onclick="open_upload_dialog()">上传EXCEL</button>        
+        <div style="overflow-x:visible; overflow-y: auto; height: 1000px; width:800px;">
+            <table class="gridtable">
                 <thead>
                     <tr>
-                        <th>
+                        <th>操作</th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.FixedAssertNumber)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.Name)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.SerialNumber)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.CPU)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.Memory)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.HD)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.OS)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.EngineNumber)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.RackLocation)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.BeginU)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.EndU)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.VirtualizedResourcePool)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.BusinessSystem)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.IP)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.NetcardNumber)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.HBANumber)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.StorageSize)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.MaintenanceInformation)
                         </th>
-                        <th>
+                        <th  data-sort="string">
                             @Html.DisplayNameFor(model => model.InstallDate)
                         </th>
-                        <th>
+                        <th data-sort="string">
                             @Html.DisplayNameFor(model => model.Band)
-                        </th>
-                        <th>操作</th>
+                        </th>                        
                     </tr>
                 </thead>
                 <tbody>
@@ -110,6 +108,9 @@
                 {
                     <tr>
                         @Html.HiddenFor(modelItem => item.ID)
+                        <td>
+                            <button onclick="X86SServer_Remove('@item.ID')">删除</button>
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.FixedAssertNumber)
                         </td>
@@ -170,11 +171,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Band)
                         </td>
-                        <td>
-                            <button onclick="X86SServer_Remove('@item.ID')">删除</button>
-                        </td>
-                    </tr>
-            }
+                    </tr>            }
                 </tbody>
             </table>
         </div>
