@@ -1,0 +1,180 @@
+﻿@model IEnumerable<DataCenterOperation.Site.ViewModels.AssertX86ServerViewModel>;
+@{
+    ViewData["Title"] = "资产管理";
+}
+@section Scripts{
+    <link href="~/lib/webuploader/webuploader.css" rel="stylesheet" />
+    <link href="~/css/table-gridtable.css" rel="stylesheet" />
+    <script src="~/lib/webuploader/webuploader.custom.js"></script>
+    <script src="~/lib/jquery/plugin/stupidtable.js"></script>
+    <script src="~/js/Assert/x86servers.js"></script>       
+}
+@section SectionDialog{
+    <div id="dialog" title="上传EXCEL">
+        <div id="uploader" class="wu-example">
+            用来存放文件信息
+            <div id="thelist" class="uploader-list"></div>
+            <div class="btns">
+                <div id="picker">选择文件</div>
+                <button id="ctlBtn" class="btn btn-default">开始上传</button>
+            </div>
+        </div>        
+    </div>
+    <div id="dialog_remove" title="确认删除">
+        <div>删除后将不可恢复，确认？</div>
+    </div>
+}
+<div class="row">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="col-md-3">
+        <ul>
+            <li><Label>X86服务器列表</Label></li>
+            <li><a asp-controller="Assert" asp-action="X86Server_Add">增加服务器</a></li>
+            <li><a asp-controller="Assert" asp-action="X86Server_Users">用户管理</a></li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <h2>X86服务器列表</h2>
+        <button onclick="open_upload_dialog()">上传EXCEL</button>        
+        <div style="overflow-x:visible; overflow-y: auto; height: 1000px; width:800px;">
+            <table class="gridtable">
+                <thead>
+                    <tr>
+                        <th>操作</th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.FixedAssertNumber)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.SerialNumber)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.CPU)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.Memory)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.HD)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.OS)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.EngineNumber)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.RackLocation)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.BeginU)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.EndU)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.VirtualizedResourcePool)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.BusinessSystem)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.IP)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.NetcardNumber)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.HBANumber)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.StorageSize)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.MaintenanceInformation)
+                        </th>
+                        <th  data-sort="string">
+                            @Html.DisplayNameFor(model => model.InstallDate)
+                        </th>
+                        <th data-sort="string">
+                            @Html.DisplayNameFor(model => model.Band)
+                        </th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                {
+                    <tr>
+                        @Html.HiddenFor(modelItem => item.ID)
+                        <td>
+                            <button onclick="X86SServer_Remove('@item.ID')">删除</button>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FixedAssertNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SerialNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CPU)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Memory)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HD)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OS)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EngineNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RackLocation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BeginU)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndU)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VirtualizedResourcePool)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BusinessSystem)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IP)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NetcardNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HBANumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StorageSize)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaintenanceInformation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.InstallDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Band)
+                        </td>
+                    </tr>            }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

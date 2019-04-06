@@ -1,0 +1,304 @@
+﻿@model DataCenterOperation.Site.ViewModels.AssertX86ServerVerifyListViewModel;
+@{
+    ViewData["Title"] = "资产管理";
+}
+@section Scripts{
+    <link href="~/lib/webuploader/webuploader.css" rel="stylesheet" />
+    <script src="~/lib/webuploader/webuploader.custom.js"></script>
+    <script src="~/js/Assert/x86server_verify_list.js"></script>    
+}
+
+    <div class="row">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="col-md-3">
+            <ul>
+                <li><a asp-controller="Assert" asp-action="X86Server">X86服务器列表</a></li>
+                <li><a asp-controller="Assert" asp-action="X86Server_Add">增加服务器</a></li>
+                <li><a asp-controller="Assert" asp-action="X86Server_Users">用户管理</a></li>
+            </ul>
+        </div>
+        <form id='entry_request_form' asp-controller="Vistor" asp-action="Request" method="post" class="form-horizontal">
+            <div class="col-md-9">
+                <h2>将增加以下服务器</h2>
+                <button onclick="open_upload_dialog()">上传EXCEL</button>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                固定资产编号
+                            </th>
+                            <th>
+                                服务器名称
+                            </th>
+                            <th>
+                                序列号
+                            </th>
+                            <th>
+                                CPU
+                            </th>
+                            <th>
+                                内存
+                            </th>
+                            <th>
+                                硬盘
+                            </th>
+                            <th>
+                                操作系统
+                            </th>
+                            <th>
+                                机房编号
+                            </th>
+                            <th>
+                                机柜位置
+                            </th>
+                            <th>
+                                起始U位
+                            </th>
+                            <th>
+                                结束U位
+                            </th>
+                            <th>
+                                虚拟资源池
+                            </th>
+                            <th>
+                                业务系统
+                            </th>
+                            <th>
+                                IP地址
+                            </th>
+                            <th>
+                                网卡数量
+                            </th>
+                            <th>
+                                HBA数量
+                            </th>
+                            <th>
+                                存储容量
+                            </th>
+                            <th>
+                                维保信息
+                            </th>
+                            <th>
+                                安装日期
+                            </th>
+                            <th>
+                                品牌机型
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ReadyToAdd)
+                        {
+                        <tr>
+                            @Html.HiddenFor(modelItem => item.ID)
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FixedAssertNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SerialNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CPU)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Memory)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HD)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OS)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EngineNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RackLocation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BeginU)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndU)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VirtualizedResourcePool)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BusinessSystem)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NetcardNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HBANumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StorageSize)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaintenanceInformation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.InstallDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Band)
+                            </td>
+                            <td></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-9">
+                <h2>将修改以下服务器</h2>
+                <button onclick="open_upload_dialog()">上传EXCEL</button>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                固定资产编号
+                            </th>
+                            <th>
+                                服务器名称
+                            </th>
+                            <th>
+                                序列号
+                            </th>
+                            <th>
+                                CPU
+                            </th>
+                            <th>
+                                内存
+                            </th>
+                            <th>
+                                硬盘
+                            </th>
+                            <th>
+                                操作系统
+                            </th>
+                            <th>
+                                机房编号
+                            </th>
+                            <th>
+                                机柜位置
+                            </th>
+                            <th>
+                                起始U位
+                            </th>
+                            <th>
+                                结束U位
+                            </th>
+                            <th>
+                                虚拟资源池
+                            </th>
+                            <th>
+                                业务系统
+                            </th>
+                            <th>
+                                IP地址
+                            </th>
+                            <th>
+                                网卡数量
+                            </th>
+                            <th>
+                                HBA数量
+                            </th>
+                            <th>
+                                存储容量
+                            </th>
+                            <th>
+                                维保信息
+                            </th>
+                            <th>
+                                安装日期
+                            </th>
+                            <th>
+                                品牌机型
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ReadyToModify)
+                        {
+                            @Html.HiddenFor(modelItem => item.ID)
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FixedAssertNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SerialNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CPU)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Memory)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HD)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OS)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EngineNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RackLocation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BeginU)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndU)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.VirtualizedResourcePool)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BusinessSystem)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IP)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NetcardNumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HBANumber)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StorageSize)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MaintenanceInformation)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InstallDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Band)
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <button type="submit" class="btn btn-default" onclick='doSubmitForm(this.form)'>确认更改</button>
+        </form>
+    </div>
