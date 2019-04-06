@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataCenterOperation.Site.ViewModels
@@ -41,6 +43,7 @@ namespace DataCenterOperation.Site.ViewModels
         /// <summary>
         /// Telephone or Email.
         /// </summary>
+        [Required]
         [StringLength(50)]
         [Display(Name = "故障上报的方式")]
         public string WayReportedVia { get; set; }
@@ -48,6 +51,7 @@ namespace DataCenterOperation.Site.ViewModels
         /// <summary>
         /// Company or Engineer.
         /// </summary>
+        [Required]
         [StringLength(50)]
         [Display(Name = "故障上报的对象")]
         public string TargetReportedTo { get; set; }
@@ -57,7 +61,7 @@ namespace DataCenterOperation.Site.ViewModels
         public string TargetEngineerName { get; set; }
 
         [Display(Name = "是否已经上报")]
-        public bool? HasReportedToSpecifiedPerson { get; set; }
+        public bool HasReportedToSpecifiedPerson { get; set; }
 
         [StringLength(1000)]
         [Display(Name = "是否有处理意见或建议")]
@@ -65,7 +69,7 @@ namespace DataCenterOperation.Site.ViewModels
         public string CommentsFromSpecifiedPerson { get; set; }
 
         [Display(Name = "是否提交服务报告")]
-        public bool? HasServiceReportSubmitted { get; set; }
+        public bool HasServiceReportSubmitted { get; set; }
 
         [StringLength(50)]
         [Display(Name = "故障报告编号")]
@@ -103,5 +107,17 @@ namespace DataCenterOperation.Site.ViewModels
         [Display(Name = "领导签名日期")]
         [DataType(DataType.Date)]
         public DateTime? SuperiorSignatureDate { get; set; }
+
+        public List<SelectListItem> ReportWays { get; } = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "电话", Text = "电话" },
+            new SelectListItem { Value = "邮件", Text = "邮件" }
+        };
+
+        public List<SelectListItem> ReportTargets { get; } = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "公司", Text = "公司" },
+            new SelectListItem { Value = "工程师", Text = "工程师" }
+        };
     }
 }

@@ -51,12 +51,16 @@
             </div>
             <div class="form-group">
                 <label asp-for="WayReportedVia" class="control-label"></label>
-                <input asp-for="WayReportedVia" class="form-control" />
+                <select asp-for="WayReportedVia" asp-items="Model.ReportWays">
+                    <option value="">请选择</option>
+                </select>
                 <span asp-validation-for="WayReportedVia" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TargetReportedTo" class="control-label"></label>
-                <input asp-for="TargetReportedTo" class="form-control" />
+                <select asp-for="TargetReportedTo" asp-items="Model.ReportTargets">
+                    <option value="">请选择</option>
+                </select>
                 <span asp-validation-for="TargetReportedTo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -65,18 +69,18 @@
                 <span asp-validation-for="TargetEngineerName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HasReportedToSpecifiedPerson" class="control-label"></label>
+                <label asp-for="HasReportedToSpecifiedPerson" class="control-label"></label>张科
                 <input asp-for="HasReportedToSpecifiedPerson" class="form-control" />
                 <span asp-validation-for="HasReportedToSpecifiedPerson" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CommentsFromSpecifiedPerson" class="control-label"></label>
+                张科<label asp-for="CommentsFromSpecifiedPerson" class="control-label"></label>
                 <textarea asp-for="CommentsFromSpecifiedPerson" class="form-control"></textarea>
                 <span asp-validation-for="CommentsFromSpecifiedPerson" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="HasServiceReportSubmitted" class="control-label"></label>
-                <input checked asp-for="HasServiceReportSubmitted" class="form-control" />
+                <input asp-for="HasServiceReportSubmitted" class="form-control" />
                 <span asp-validation-for="HasServiceReportSubmitted" class="text-danger"></span>
             </div>
             <div class="form-group">
