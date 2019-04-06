@@ -1,4 +1,6 @@
-﻿$(function () {    
+﻿var text_id = "";
+
+$(function () {    
     $("#dialog").dialog({
         autoOpen: false,
         width: 400,
@@ -10,7 +12,32 @@
             effect: "explode",
             duration: 1000
         }
+        });
+
+
+
+    $("#dialog_remove").dialog({
+        autoOpen: false,
+        width: 400,
+        show: {
+            effect: "blind",
+            duration: 1000
+        },
+        hide: {
+            effect: "explode",
+            duration: 1000
+        },
+        buttons: {
+            "确认": function () {
+                X86SServer_Do_Remove(text_id);
+                $(this).dialog("close");
+            },
+            "放弃": function () {
+                $(this).dialog("close");
+            }
+        }
     });
+
 });
 
 function open_upload_dialog() {
@@ -74,4 +101,22 @@ function open_upload_dialog() {
 function redirect(){
         
     location.href='/Assert/X86Server_Verify_List';
+}
+
+function X86SServer_Remove(guid_id){
+    text_id = guid_id;
+    $( "#dialog_remove" ).dialog( "open" );
+}
+
+function X86SServer_Do_Remove(text_id){
+$.ajax({
+        type: "POST",
+        url: "/Assert/X86Server_Remove",
+        data: {
+            'id': text_id,
+        },
+        success: function (item) {
+            location.href=item;
+        }
+    });
 }

@@ -22,14 +22,17 @@ namespace DataCenterOperation.Site.Controllers
     {
         private readonly IAssertX86ServerService _assertX86ServerService;
         private readonly IHostingEnvironment _hostingEnvironment;
-        
+        private ILogger<AssertController> _logger;
+
         public AssertController(
             IAssertX86ServerService assertX86ServerService,
-            IHostingEnvironment hostingEnvironment
+            IHostingEnvironment hostingEnvironment,
+            ILogger<AssertController> logger
             )
         {
             _assertX86ServerService = assertX86ServerService;
             _hostingEnvironment = hostingEnvironment;
+            _logger = logger;
         }
         public IActionResult Overview()
         {
@@ -262,6 +265,27 @@ namespace DataCenterOperation.Site.Controllers
                 }
             }
             return filePath;
+        }
+
+        public async Task<string> X86Server_Remove()
+        {
+            var guid = new Guid(Request.Form["id"]);
+
+            try
+            {
+                _logger.LogInformation($"{User.GetUsername()} is removing a X86 Server...");
+
+                var x86Server = await _assertX86ServerService.RemoveAssertX86ServerByGuid(guid);
+
+                return ("/Assert/X86Server");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "", guid);
+
+                throw ex;
+            }
         }
     }
 }

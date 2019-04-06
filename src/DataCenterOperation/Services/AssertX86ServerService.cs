@@ -87,5 +87,26 @@ namespace DataCenterOperation.Services
             return returnServer;
         }
 
+        public async Task<bool> RemoveAssertX86ServerByGuid(Guid id)
+        { 
+            var x86Server = await _db.Assert_X86Servers.FirstOrDefaultAsync(f => f.Id == id);
+            if (x86Server == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                _db.Assert_X86Servers.Remove(x86Server);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.)
+                return false;
+            }
+        }
+
     }
 }

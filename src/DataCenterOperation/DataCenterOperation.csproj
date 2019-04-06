@@ -14,6 +14,13 @@
   <ItemGroup>
     <Content Remove="wwwroot\upload\1072b9d2-3457-409e-a323-4a01f5f906d9.xls" />
     <Content Remove="Site\Views\Assert\X86Server_Upload.cshtml" />
+    <Content Remove="wwwroot\upload\b57e5f84-e2a9-42d4-8a4d-3a89ba6a78ac.xls" />
+    <Content Remove="wwwroot\upload\bf7330b5-5f7f-4618-986a-db0bb52712c9.xls" />
+    <Content Remove="wwwroot\upload\c9c86782-171f-41de-a30b-0a199885443e.xls" />
+    <Content Remove="wwwroot\upload\d0da7fea-3716-4dcb-8bcb-0712b674526d.xls" />
+    <Content Remove="wwwroot\upload\d6ab8691-b174-47c8-abe2-3444f9f26aab.xls" />
+    <Content Remove="wwwroot\upload\dc15e89e-a79e-4aff-9be7-eb05c9e09a4e.xls" />
+    <Content Remove="wwwroot\upload\0f0914e8-8de8-4d06-ae96-fb016f95b58f.xls" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Site\Views\Shared\_ValidationScriptsPartial.cshtml">

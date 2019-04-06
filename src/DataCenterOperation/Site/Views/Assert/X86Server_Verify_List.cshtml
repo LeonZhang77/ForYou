@@ -89,73 +89,73 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.ReadyToAdd)
-                            <!-- for(var i=0; i < Model.ReadyToAdd.Count; i++) -->
-            {
-                            <tr>
+                            <!-- foreach (var item in Model.ReadyToAdd)  -->
+                            @for (var i = 0; i < Model.ReadyToAdd.Count; i++)
+    {
+                        <tr>
 
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.FixedAssertNumber)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.SerialNumber)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.CPU)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.Memory)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.HD)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.OS)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.EngineNumber)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.RackLocation)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.BeginU)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.EndU)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.VirtualizedResourcePool)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.BusinessSystem)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.IP)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.NetcardNumber)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.HBANumber)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.StorageSize)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.MaintenanceInformation)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.InstallDate)
-                                </td>
-                                <td>
-                                    @Html.TextBoxFor(modelItem => item.Band)
-                                </td>
-                                <td></td>
-                            </tr>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].FixedAssertNumber, new { @readonly = "true" } )
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].Name)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].SerialNumber)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].CPU)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].Memory)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].HD)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].OS)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].EngineNumber)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].RackLocation)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].BeginU)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].EndU)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].VirtualizedResourcePool)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].BusinessSystem)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].IP)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].NetcardNumber)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].HBANumber)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].StorageSize)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].MaintenanceInformation)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].InstallDate)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].Band)
+                            </td>
+                            <td></td>
+                        </tr>
 }
                         </tbody>
                     </table>
@@ -230,71 +230,72 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.ReadyToModify)
+                            
+                            @for (var i = 0; i < Model.ReadyToModify.Count; i++)
             {
-                @Html.HiddenFor(modelItem => item.ID)
+                @Html.HiddenFor(modelItem => Model.ReadyToModify[i].ID)
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FixedAssertNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SerialNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CPU)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Memory)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HD)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OS)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EngineNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RackLocation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BeginU)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndU)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VirtualizedResourcePool)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BusinessSystem)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IP)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NetcardNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HBANumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StorageSize)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MaintenanceInformation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InstallDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Band)
-                    </td>
-                    <td></td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].FixedAssertNumber, new { @readonly = "true" } )
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].Name)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].SerialNumber)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].CPU)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].Memory)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].HD)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].OS)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].EngineNumber)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].RackLocation)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].BeginU)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].EndU)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].VirtualizedResourcePool)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].BusinessSystem)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].IP)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].NetcardNumber)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].HBANumber)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].StorageSize)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].MaintenanceInformation)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].InstallDate)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].Band)
+                            </td>
+                            <td></td>
                 </tr>
 }
                         </tbody>

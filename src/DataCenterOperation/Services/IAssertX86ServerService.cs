@@ -17,5 +17,7 @@ namespace DataCenterOperation.Services
         Task<Assert_X86Server> UpdateAssertX86Server(Assert_X86Server entity);
 
         Task<Assert_X86Server> GetAssertX86ServerByColumn(String value, Util.ENUMS.Type type);
+
+        Task<bool> RemoveAssertX86ServerByGuid(Guid id);
     }
 }
