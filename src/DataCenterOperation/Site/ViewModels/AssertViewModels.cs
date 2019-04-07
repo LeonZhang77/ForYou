@@ -14,9 +14,11 @@ namespace DataCenterOperation.Site.ViewModels
            {
                this.ReadyToAdd = new List<AssertX86ServerViewModel>();
                this.ReadyToModify = new List<AssertX86ServerViewModel>();
+               this.ErrorItems = new List<AssertX86ServerViewModel>();
            }
            public List<AssertX86ServerViewModel> ReadyToAdd { get; set; }
            public List<AssertX86ServerViewModel> ReadyToModify { get; set; }
+           public List<AssertX86ServerViewModel> ErrorItems {get; set; }
     }
 
     public class AssertX86ServerViewModel
