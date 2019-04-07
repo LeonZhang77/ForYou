@@ -21,16 +21,19 @@ namespace DataCenterOperation.Site.Controllers
     public class AssertController : Controller
     {
         private readonly IAssertX86ServerService _assertX86ServerService;
+        private readonly IAssertX86ServerUserInformationService _assertX86ServerUserInformationService;
         private readonly IHostingEnvironment _hostingEnvironment;
         private ILogger<AssertController> _logger;
 
         public AssertController(
             IAssertX86ServerService assertX86ServerService,
+            IAssertX86ServerUserInformationService assertX86ServerUserInformationService,
             IHostingEnvironment hostingEnvironment,
             ILogger<AssertController> logger
             )
         {
             _assertX86ServerService = assertX86ServerService;
+            _assertX86ServerUserInformationService = assertX86ServerUserInformationService;
             _hostingEnvironment = hostingEnvironment;
             _logger = logger;
         }
@@ -364,6 +367,70 @@ namespace DataCenterOperation.Site.Controllers
                     await _assertX86ServerService.UpdateAssertX86Server(entity);
 
             return Redirect("./X86Server");
+        }
+    
+        [HttpGet]
+        public async Task<IActionResult> X86Server_Users(){
+            
+            AssertX86ServerUsersViewModel model = null;
+            if(String.IsNullOrEmpty(Request.QueryString.Value))
+            {
+                model = new AssertX86ServerUsersViewModel();
+            }
+            else
+            {
+                var fixAssertNumber = Request.QueryString.Value.Substring(1);
+                var item = await _assertX86ServerService.GetAssertX86ServerByColumn(fixAssertNumber,ENUMS.Type.FixedAssertNumber);
+                model = new AssertX86ServerUsersViewModel();
+                model.ID = item.Id;
+                model.FixedAssertNumber = item.FixedAssertNumber;
+                model.Name = item.Name;
+                model.SerialNumber = item.SerialNumber;
+                model.HD = item.HD;
+                model.OS = item.OS;
+                model.EngineNumber = item.EngineNumber;
+                model.RackLocation = item.RackLocation;
+                model.BeginU = item.BeginU;
+                model.EndU = item.EndU;
+                model.VirtualizedResourcePool = item.VirtualizedResourcePool;
+                model.BusinessSystem = item.BusinessSystem;
+                model.IP = item.IP;
+                model.NetcardNumber = item.NetcardNumber;
+                model.HBANumber = item.HBANumber;
+                model.StorageSize = item.StorageSize;
+                model.MaintenanceInformation = item.MaintenanceInformation;
+                model.InstallDate = item.InstallDate;
+                model.Band = item.Band;
+                model.CPU = item.CPU;
+                model.Memory = item.Memory;
+                
+                List<Assert_X86ServerUserInformation> users = await _assertX86ServerUserInformationService.GetUsersByServerGuid(item.Id);
+                model.Users = JsonConvert.SerializeObject(users);
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> X86Server_Users(AssertX86ServerUsersViewModel requestModel)
+        {
+            
+            //List<Assert_X86ServerUserInformation> entitis = await _assertX86ServerUserInformationService.GetUsersByServerGuid(requestModel.ID);
+            ICollection<Assert_X86ServerUserInformation> users = AssertX86ServerUsersViewModel.GetUsers(requestModel.Users);
+            Assert_X86ServerUserInformation currentEntity = null;
+            foreach(var item in users)
+            {
+                item.FixedAssertNumber = requestModel.FixedAssertNumber;
+                if ( item.Id == Guid.Empty )
+                {
+                    currentEntity = await _assertX86ServerUserInformationService.AddUserAsync(item);
+                }
+                else
+                {
+                    currentEntity = await _assertX86ServerUserInformationService.UpdateUserAsync(item);
+                }                
+            }
+
+            return Redirect("/Assert/X86Server");
         }
     }
 }

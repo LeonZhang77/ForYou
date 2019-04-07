@@ -111,6 +111,7 @@
                         <td>
                             <button onclick="X86SServer_Remove('@item.ID')">删除</button>
                             <button onclick="X86SServer_Modify('@item.ID')">更改</button>
+                            <button onclick="X86SServer_Users('@item.FixedAssertNumber')">用户信息</button>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.FixedAssertNumber)

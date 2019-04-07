@@ -88,4 +88,34 @@ namespace DataCenterOperation.Site.ViewModels
         [Display(Name = "内存")]
         public string Memory { get; set; }
     }
+
+    public class AssertX86ServerUsersViewModel: AssertX86ServerViewModel
+    {
+        public string Users { get; set; }
+
+        public static ICollection<Assert_X86ServerUserInformation> GetUsers(string jsonString) {
+            List<Assert_X86ServerUserInformation> result = new List<Assert_X86ServerUserInformation>();
+            JsonSerializer serializer = new JsonSerializer();
+            StringReader sr = new StringReader(jsonString);
+            object o = serializer.Deserialize(new JsonTextReader(sr), typeof(List<UsersClass>));
+            List<UsersClass> userClassList = o as List<UsersClass>;
+            foreach (UsersClass item in userClassList)
+            {
+                Assert_X86ServerUserInformation user = new Assert_X86ServerUserInformation
+                {
+                    UserName = item.UserName,
+                    UserDescription = item.UserDescription,
+                    PersonInCharge = item.PersonInCharge,                    
+                };
+                result.Add(user);
+            }
+            return result;
+        }
+
+        private class UsersClass {
+            public string UserName { get; set; }
+            public string UserDescription { get; set; }
+            public string PersonInCharge { get; set; }
+        }
+    }
 }
