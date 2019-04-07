@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DataCenterOperation.Data;
 using DataCenterOperation.Data.Entities;
 using DataCenterOperation.Site.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace DataCenterOperation.Services
@@ -12,7 +13,8 @@ namespace DataCenterOperation.Services
     public interface IFailureService
     {
         Task<Failure> RecordFailureAsync(FailureCreateViewModel model);
-        List<Failure> GetAsync(string keyword, int pageIndex = 1, int pageSize = 20);
+        Task<List<Failure>> GetAsync(string keyword, int pageIndex = 1, int pageSize = 20);
+        Task<int> CountAsync(string keyword);
     }
 
     public class FailureService : IFailureService
@@ -27,20 +29,32 @@ namespace DataCenterOperation.Services
             _logger = logger;
         }
 
-        public List<Failure> GetAsync(string keyword, int pageIndex, int pageSize)
+        public async Task<int> CountAsync(string keyword)
         {
-            var query = string.IsNullOrWhiteSpace(keyword)
+            var query = PrepareQuery(keyword);
+
+            return await query.CountAsync();
+        }
+
+        public async Task<List<Failure>> GetAsync(string keyword, int pageIndex, int pageSize)
+        {
+            var query = PrepareQuery(keyword);
+
+            return await query.OrderByDescending(f => f.WhenRecorded)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        private IQueryable<Failure> PrepareQuery(string keyword)
+        {
+            return string.IsNullOrWhiteSpace(keyword)
                 ? from f in _dbContext.Failures select f
                 : from f in _dbContext.Failures
                   where f.DeviceId.Contains(keyword)
                   || f.DeviceName.Contains(keyword)
                   || f.DeviceLocation.Contains(keyword)
                   select f;
-
-            return query.OrderByDescending(f => f.WhenRecorded)
-                .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
         }
 
         public async Task<Failure> RecordFailureAsync(FailureCreateViewModel model)

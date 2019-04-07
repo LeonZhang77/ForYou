@@ -1,60 +1,46 @@
-﻿@model IEnumerable<DataCenterOperation.Site.ViewModels.FailureListViewModel>
+﻿@model DataCenterOperation.Site.ViewModels.FailureSearchViewModel
 
-<p>
-    <a asp-action="Create">登记新的故障信息</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Index)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeviceName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FailureCause)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateRecorded)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateSolved)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WhoRecorded)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Index)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeviceName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FailureCause)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateRecorded)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateSolved)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WhoRecorded)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@{
+    ViewData["Title"] = "故障信息统计表";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="text-right">
+    <form asp-action="Index" class="form-inline">
+        <div class="form-group">
+            <input asp-for="Keyword" class="form-control" />
+            <button class="btn btn-default">搜索</button>
+        </div>
+    </form>
+
+    <div class="form-group">
+        <span>记录数：@Model.Count，页数：@Model.TotalPages。</span>
+    </div>
+</div>
+
+@await Html.PartialAsync("_Failures", Model.Failures)
+
+@{
+    var prevDisabled = !Model.HasPrevPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+@if (Model.TotalPages > 1)
+{
+    <div>
+        <a asp-action="Index"
+           asp-route-pageIndex="@(Model.PageIndex - 1)"
+           asp-route-pageSize="@(Model.PageSize)"
+           asp-route-keyword="@Model.Keyword"
+           class="btn btn-default @prevDisabled btn">
+            上一页
+        </a>
+        <a asp-action="Index"
+           asp-route-pageIndex="@(Model.PageIndex + 1)"
+           asp-route-pageSize="@(Model.PageSize)"
+           asp-route-keyword="@Model.Keyword"
+           class="btn btn-default @nextDisabled btn">
+            下一页
+        </a>
+    </div>
+}

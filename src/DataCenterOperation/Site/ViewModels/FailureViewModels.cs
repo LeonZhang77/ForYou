@@ -121,7 +121,22 @@ namespace DataCenterOperation.Site.ViewModels
         };
     }
 
-    public class FailureListViewModel
+    public class FailureSearchViewModel
+    {
+        [Display(Prompt = "关键字")]
+        public string Keyword { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+
+        public int Count { get; set; }
+        public IEnumerable<FailureListItem> Failures { get; set; }
+
+        public bool HasPrevPage { get { return PageIndex > 1; } }
+        public bool HasNextPage { get { return PageIndex < TotalPages; } }
+        public int TotalPages { get { return (int)Math.Ceiling(Count / (double)PageSize); } }
+    }
+
+    public class FailureListItem
     {
         [Display(Name = "序号")]
         public int Index { get; set; }

@@ -23,26 +23,38 @@ namespace DataCenterOperation.Site.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(string keyword, int? pi, int? ps)
+        public async Task<IActionResult> Index(string keyword, int? pageIndex, int? pageSize)
         {
-            int pageIndex = pi ?? 1;
+            keyword = keyword ?? string.Empty;
+            pageIndex = pageIndex ?? 1;
             pageIndex = pageIndex < 1 ? 1 : pageIndex;
-            int pageSize = ps ?? 20;
+            pageSize = pageSize ?? 20;
             pageSize = pageSize < 1 ? 20 : pageSize;
 
-            int itemIndexStart = (pageIndex - 1) * pageSize;
-            var failures = _failureService.GetAsync(keyword ?? string.Empty, pageIndex, pageSize)
-                .Select(f => new FailureListViewModel
-                {
-                    Index = ++itemIndexStart,
-                    Id = f.Id,
-                    DeviceName = f.DeviceName,
-                    FailureCause = f.FailureCause,
-                    DateRecorded = f.WhenRecorded,
-                    DateSolved = f.WhenSolved
-                });
+            int itemIndexStart = (pageIndex.Value - 1) * pageSize.Value;
+            var failures = await _failureService.GetAsync(keyword, pageIndex.Value, pageSize.Value);
+            var items = failures.Select(f => new FailureListItem
+            {
+                Index = ++itemIndexStart,
+                Id = f.Id,
+                DeviceName = f.DeviceName,
+                FailureCause = f.FailureCause,
+                DateRecorded = f.WhenRecorded,
+                DateSolved = f.WhenSolved
+            });
 
-            return View(failures);
+            var count = await _failureService.CountAsync(keyword);
+
+            var model = new FailureSearchViewModel
+            {
+                Failures = items,
+                Keyword = keyword,
+                PageIndex = pageIndex.Value,
+                PageSize = pageSize.Value,
+                Count = count
+            };
+
+            return View(model);
         }
 
         public IActionResult Create()
