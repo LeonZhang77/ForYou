@@ -1,15 +1,18 @@
-﻿using DataCenterOperation.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using DataCenterOperation.Data;
 using DataCenterOperation.Data.Entities;
 using DataCenterOperation.Site.ViewModels;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace DataCenterOperation.Services
 {
     public interface IFailureService
     {
         Task<Failure> RecordFailureAsync(FailureCreateViewModel model);
+        List<Failure> GetAsync(string keyword, int pageIndex = 1, int pageSize = 20);
     }
 
     public class FailureService : IFailureService
@@ -22,6 +25,22 @@ namespace DataCenterOperation.Services
         {
             _dbContext = dbContext;
             _logger = logger;
+        }
+
+        public List<Failure> GetAsync(string keyword, int pageIndex, int pageSize)
+        {
+            var query = string.IsNullOrWhiteSpace(keyword)
+                ? from f in _dbContext.Failures select f
+                : from f in _dbContext.Failures
+                  where f.DeviceId.Contains(keyword)
+                  || f.DeviceName.Contains(keyword)
+                  || f.DeviceLocation.Contains(keyword)
+                  select f;
+
+            return query.OrderByDescending(f => f.WhenRecorded)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
 
         public async Task<Failure> RecordFailureAsync(FailureCreateViewModel model)

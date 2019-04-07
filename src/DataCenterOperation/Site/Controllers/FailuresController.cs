@@ -1,11 +1,12 @@
-﻿using DataCenterOperation.Services;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using DataCenterOperation.Services;
 using DataCenterOperation.Site.Extensions;
 using DataCenterOperation.Site.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace DataCenterOperation.Site.Controllers
 {
@@ -22,9 +23,26 @@ namespace DataCenterOperation.Site.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string keyword, int? pi, int? ps)
         {
-            return Content("Index");
+            int pageIndex = pi ?? 1;
+            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            int pageSize = ps ?? 20;
+            pageSize = pageSize < 1 ? 20 : pageSize;
+
+            int itemIndexStart = (pageIndex - 1) * pageSize;
+            var failures = _failureService.GetAsync(keyword ?? string.Empty, pageIndex, pageSize)
+                .Select(f => new FailureListViewModel
+                {
+                    Index = ++itemIndexStart,
+                    Id = f.Id,
+                    DeviceName = f.DeviceName,
+                    FailureCause = f.FailureCause,
+                    DateRecorded = f.WhenRecorded,
+                    DateSolved = f.WhenSolved
+                });
+
+            return View(failures);
         }
 
         public IActionResult Create()

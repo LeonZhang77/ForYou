@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DataCenterOperation.Site.ViewModels
 {
@@ -119,5 +119,22 @@ namespace DataCenterOperation.Site.ViewModels
             new SelectListItem { Value = "公司", Text = "公司" },
             new SelectListItem { Value = "工程师", Text = "工程师" }
         };
+    }
+
+    public class FailureListViewModel
+    {
+        [Display(Name = "序号")]
+        public int Index { get; set; }
+        public Guid Id { get; set; }
+        [Display(Name = "设备名称")]
+        public string DeviceName { get; set; }
+        [Display(Name = "故障原因")]
+        public string FailureCause { get; set; }
+        [Display(Name = "发现日期")]
+        public DateTime? DateRecorded { get; set; }
+        [Display(Name = "解决日期")]
+        public DateTime? DateSolved { get; set; }
+        [Display(Name = "记录人")]
+        public string WhoRecorded { get; set; }
     }
 }
