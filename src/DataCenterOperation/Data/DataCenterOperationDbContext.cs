@@ -21,5 +21,6 @@ namespace DataCenterOperation.Data
         public DbSet<VistorEntryRequest> VistorEntryRequests { get; set; }
         public DbSet<VistorEntourage> VistorEntourages { get; set; }
         public DbSet<Assert_X86Server> Assert_X86Servers { get; set; }
+        public DbSet<Assert_X86ServerUserInformation> Assert_X86ServerUserInformations { get; set; }
     }
 }

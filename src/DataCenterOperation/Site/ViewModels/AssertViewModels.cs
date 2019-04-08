@@ -14,9 +14,11 @@ namespace DataCenterOperation.Site.ViewModels
            {
                this.ReadyToAdd = new List<AssertX86ServerViewModel>();
                this.ReadyToModify = new List<AssertX86ServerViewModel>();
+               this.ErrorItems = new List<AssertX86ServerViewModel>();
            }
            public List<AssertX86ServerViewModel> ReadyToAdd { get; set; }
            public List<AssertX86ServerViewModel> ReadyToModify { get; set; }
+           public List<AssertX86ServerViewModel> ErrorItems {get; set; }
     }
 
     public class AssertX86ServerViewModel
@@ -85,5 +87,44 @@ namespace DataCenterOperation.Site.ViewModels
         //内存
         [Display(Name = "内存")]
         public string Memory { get; set; }
+    }
+
+    public class AssertX86ServerUsersViewModel: AssertX86ServerViewModel
+    {
+        public string Users { get; set; }
+
+        public static ICollection<Assert_X86ServerUserInformation> GetUsers(string jsonString) {
+            List<Assert_X86ServerUserInformation> result = new List<Assert_X86ServerUserInformation>();
+            JsonSerializer serializer = new JsonSerializer();
+            StringReader sr = new StringReader(jsonString);
+            object o = serializer.Deserialize(new JsonTextReader(sr), typeof(List<UsersClass>));
+            List<UsersClass> userClassList = o as List<UsersClass>;
+            foreach (UsersClass item in userClassList)
+            {
+                Assert_X86ServerUserInformation user = new Assert_X86ServerUserInformation
+                {
+                    UserName = item.UserName,
+                    UserDescription = item.UserDescription,
+                    PersonInCharge = item.PersonInCharge,                    
+                };
+                if(String.IsNullOrEmpty(item.Id))
+                {
+                    user.Id = Guid.Empty;
+                }
+                else
+                {
+                    user.Id = new Guid(item.Id);
+                }
+                result.Add(user);
+            }
+            return result;
+        }
+
+        private class UsersClass {
+            public string Id { get; set; }
+            public string UserName { get; set; }
+            public string UserDescription { get; set; }
+            public string PersonInCharge { get; set; }
+        }
     }
 }

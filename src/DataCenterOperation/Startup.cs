@@ -73,9 +73,10 @@ namespace DataCenterOperation
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IVistorRecordService, VistorRecordService>();
-            services.AddTransient<IVistorEntryRequestService, VistorEntryRequestService>();
-            services.AddTransient<IAssertX86ServerService, AssertX86ServerService>();
+            services.AddTransient<IVistorEntryRequestService, VistorEntryRequestService>();            
             services.AddTransient<IVistorEntourageService, VistorEntourageService>();
+            services.AddTransient<IAssertX86ServerService, AssertX86ServerService>();
+            services.AddTransient<IAssertX86ServerUserInformationService, AssertX86ServerUserInformationService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

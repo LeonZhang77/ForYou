@@ -40,26 +40,7 @@ namespace DataCenterOperation.Services
         {
             var currentEntity = _db.Assert_X86Servers.FirstOrDefault(f => f.Id == entity.Id);
             
-            // Id and FixAssertNumber can't be modified.
-            currentEntity.Name = entity.Name;
-            currentEntity.SerialNumber = entity.SerialNumber;
-            currentEntity.HD = entity.HD;
-            currentEntity.OS = entity.OS;
-            currentEntity.EngineNumber = entity.EngineNumber;
-            currentEntity.RackLocation = entity.RackLocation;
-            currentEntity.BeginU = entity.BeginU;
-            currentEntity.EndU = entity.EndU;
-            currentEntity.VirtualizedResourcePool = entity.VirtualizedResourcePool;
-            currentEntity.BusinessSystem = entity.BusinessSystem;
-            currentEntity.IP = entity.IP;
-            currentEntity.NetcardNumber = entity.NetcardNumber;
-            currentEntity.HBANumber = entity.HBANumber;
-            currentEntity.StorageSize = entity.StorageSize;
-            currentEntity.MaintenanceInformation = entity.MaintenanceInformation;
-            currentEntity.InstallDate = entity.InstallDate;
-            currentEntity.Band = entity.Band;
-            currentEntity.CPU = entity.CPU;
-            currentEntity.Memory = entity.Memory;
+            currentEntity = entity;
 
             await _db.SaveChangesAsync();
             return currentEntity;

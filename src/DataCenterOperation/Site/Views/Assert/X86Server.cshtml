@@ -35,7 +35,7 @@
     </div>
     <div class="col-md-9">
         <h2>X86服务器列表</h2>
-        <button onclick="open_upload_dialog()">上传EXCEL</button>        
+        <div style="margin-bottom:10px;"><button class="btn btn-primary" onclick="open_upload_dialog()">上传EXCEL</button></div>     
         <div style="overflow-x:visible; overflow-y: auto; height: 1000px; width:800px;">
             <table class="gridtable">
                 <thead>
@@ -110,6 +110,8 @@
                         @Html.HiddenFor(modelItem => item.ID)
                         <td>
                             <button onclick="X86SServer_Remove('@item.ID')">删除</button>
+                            <button onclick="X86SServer_Modify('@item.ID')">更改</button>
+                            <button onclick="X86SServer_Users('@item.FixedAssertNumber')">用户信息</button>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.FixedAssertNumber)

@@ -14,8 +14,8 @@ $(function () {
         }
         });
 
-    //$("table").tablesort();         
     $("table").stupidtable();
+    
     $("#dialog_remove").dialog({
         autoOpen: false,
         width: 400,
@@ -114,4 +114,12 @@ $.ajax({
             location.href=item;
         }
     });
+}
+
+function X86SServer_Modify(guid_id){    
+    location.href="/Assert/X86Server_Modify?" + guid_id;
+}
+
+function X86SServer_Users(fixedAssertNumber){    
+    location.href="/Assert/X86Server_Users?" + fixedAssertNumber;
 }
