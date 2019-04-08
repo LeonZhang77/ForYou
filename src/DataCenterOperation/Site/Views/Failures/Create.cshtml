@@ -4,7 +4,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="DeviceId" class="control-label"></label>
@@ -128,8 +128,9 @@
                 <span asp-validation-for="SuperiorSignatureDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @Html.HiddenFor(m => m.Id)
                 <input type="submit" value="保存" class="btn btn-default" />
-                <a asp-controller="Failures" asp-action="Index">返回列表</a>
+                <a asp-controller="Failures" asp-action="Index">返回故障信息统计表</a>
             </div>
         </form>
     </div>

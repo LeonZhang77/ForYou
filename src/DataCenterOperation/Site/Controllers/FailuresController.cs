@@ -96,5 +96,63 @@ namespace DataCenterOperation.Site.Controllers
                 throw ex;
             }
         }
+
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null) return BadRequest();
+
+            var failure = await _failureService.GetAsync(id.Value);
+            if (failure == null) return NotFound();
+
+            var model = FailureDetailsViewModel.CreateFromEntity(failure);
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null) return BadRequest();
+
+            var failure = await _failureService.GetAsync(id.Value);
+            if (failure == null) return NotFound();
+
+            var model = FailureEditViewModel.CreateFromEntity(failure);
+
+            return View("Create", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid? id, FailureEditViewModel model)
+        {
+            if (id == null) return BadRequest();
+            if (id.Value != model.Id) return BadRequest();
+
+            var failure = await _failureService.UpdateAsync(model);
+            if (failure == null) return NotFound();
+
+            return RedirectToAction("Details", new { id = failure.Id });
+        }
+
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null) return BadRequest();
+
+            var failure = await _failureService.GetAsync(id.Value);
+            if (failure == null) return NotFound();
+
+            var model = FailureDetailsViewModel.CreateFromEntity(failure);
+
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DoDelete(Guid? id)
+        {
+            if (id == null) return BadRequest();
+
+            await _failureService.DeleteAsync(id.Value);
+
+            return RedirectToAction("Index");
+        }
     }
 }
