@@ -44,7 +44,6 @@ namespace DataCenterOperation.Site.ViewModels
         /// <summary>
         /// Telephone or Email.
         /// </summary>
-        [Required]
         [StringLength(50)]
         [Display(Name = "故障上报的方式")]
         public string WayReportedVia { get; set; }
@@ -52,7 +51,6 @@ namespace DataCenterOperation.Site.ViewModels
         /// <summary>
         /// Company or Engineer.
         /// </summary>
-        [Required]
         [StringLength(50)]
         [Display(Name = "故障上报的对象")]
         public string TargetReportedTo { get; set; }
@@ -279,16 +277,24 @@ namespace DataCenterOperation.Site.ViewModels
     {
         [Display(Name = "序号")]
         public int Index { get; set; }
-        public Guid Id { get; set; }
+
         [Display(Name = "设备名称")]
         public string DeviceName { get; set; }
+
         [Display(Name = "故障原因")]
         public string FailureCause { get; set; }
+
         [Display(Name = "发现日期")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy HH:mm}")]
         public DateTime? DateRecorded { get; set; }
+
         [Display(Name = "解决日期")]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy HH:mm}")]
         public DateTime? DateSolved { get; set; }
+
         [Display(Name = "记录人")]
         public string WhoRecorded { get; set; }
+
+        public Guid Id { get; set; }
     }
 }

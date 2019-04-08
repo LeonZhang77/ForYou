@@ -4,11 +4,11 @@
     ViewData["Title"] = "删除故障信息记录";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Title"]</h3>
+<hr />
 
 <div>
-    <h4>确定要删除此条信息吗？ 删除后将不能恢复。</h4>
-    <hr />
+    <h4>确定要删除下面这条信息吗？ 删除后将不能恢复。</h4>
     @await Html.PartialAsync("_Failure", Model)
 </div>
 
@@ -16,7 +16,7 @@
     <form asp-action="Delete">
         <div class="form-actions no-color">
             <input type="hidden" asp-for="Id" />
-            <button class="btn btn-default" title="确定要删除此条信息吗？ 删除后将不能恢复。">删除</button> |
+            <button class="btn btn-default" title="确定要删除吗？ 删除后将不能恢复。">删除</button> |
             <a asp-action="Index">返回故障信息统计表</a>
         </div>
     </form>
