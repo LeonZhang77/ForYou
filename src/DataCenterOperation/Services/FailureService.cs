@@ -14,6 +14,7 @@ namespace DataCenterOperation.Services
     {
         Task<Failure> RecordFailureAsync(FailureCreateViewModel model);
         Task<Failure> UpdateAsync(FailureEditViewModel model);
+        Task DeleteAsync(Guid id);
         Task<Failure> GetAsync(Guid id);
         Task<List<Failure>> GetAsync(string keyword, int pageIndex = 1, int pageSize = 20);
         Task<int> CountAsync(string keyword);
@@ -62,6 +63,16 @@ namespace DataCenterOperation.Services
         public async Task<Failure> GetAsync(Guid id)
         {
             return await _dbContext.Failures.FirstOrDefaultAsync(f => f.Id == id);
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var failure = await _dbContext.Failures.FirstOrDefaultAsync(f => f.Id == id);
+
+            if (failure == null) return;
+
+            _dbContext.Failures.Remove(failure);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task<Failure> RecordFailureAsync(FailureCreateViewModel model)

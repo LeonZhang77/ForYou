@@ -132,5 +132,27 @@ namespace DataCenterOperation.Site.Controllers
 
             return RedirectToAction("Details", new { id = failure.Id });
         }
+
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null) return BadRequest();
+
+            var failure = await _failureService.GetAsync(id.Value);
+            if (failure == null) return NotFound();
+
+            var model = FailureDetailsViewModel.CreateFromEntity(failure);
+
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DoDelete(Guid? id)
+        {
+            if (id == null) return BadRequest();
+
+            await _failureService.DeleteAsync(id.Value);
+
+            return RedirectToAction("Index");
+        }
     }
 }
