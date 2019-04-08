@@ -4,7 +4,8 @@
     ViewData["Title"] = "故障信息统计表";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Title"]</h3>
+<hr />
 
 <div class="text-right">
     <form asp-action="Index" class="form-inline">
@@ -13,21 +14,17 @@
             <button class="btn btn-default">搜索</button>
         </div>
     </form>
-
-    <div class="form-group">
-        <span>记录数：@Model.Count，页数：@Model.TotalPages。</span>
-    </div>
 </div>
 
 @await Html.PartialAsync("_Failures", Model.Failures)
 
-@{
-    var prevDisabled = !Model.HasPrevPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-@if (Model.TotalPages > 1)
-{
-    <div>
+<div>
+    @{
+        var prevDisabled = !Model.HasPrevPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+    @if (Model.TotalPages > 1)
+    {
         <a asp-action="Index"
            asp-route-pageIndex="@(Model.PageIndex - 1)"
            asp-route-pageSize="@(Model.PageSize)"
@@ -42,5 +39,6 @@
            class="btn btn-default @nextDisabled btn">
             下一页
         </a>
-    </div>
-}
+    }
+    <span>记录数：@Model.Count，页数：@Model.TotalPages。</span>
+</div>

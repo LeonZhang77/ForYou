@@ -4,10 +4,10 @@
     ViewData["Title"] = $"故障信息详情 - {Model.DeviceName}";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h3>@ViewData["Title"]</h3>
+<hr />
 
 <div>
-    <hr />
     @await Html.PartialAsync("_Failure", Model)
 </div>
 <div>
