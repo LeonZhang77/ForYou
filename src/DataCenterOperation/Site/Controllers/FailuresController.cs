@@ -96,5 +96,17 @@ namespace DataCenterOperation.Site.Controllers
                 throw ex;
             }
         }
+
+        public async Task<IActionResult> Details(Guid? id)
+        {
+            if (id == null) return BadRequest();
+
+            var failure = await _failureService.GetAsync(id.Value);
+            if (failure == null) return NotFound();
+
+            var model = FailureDetailsViewModel.CreateFromEntity(failure);
+
+            return View(model);
+        }
     }
 }

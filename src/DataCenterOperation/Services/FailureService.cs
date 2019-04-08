@@ -13,6 +13,7 @@ namespace DataCenterOperation.Services
     public interface IFailureService
     {
         Task<Failure> RecordFailureAsync(FailureCreateViewModel model);
+        Task<Failure> GetAsync(Guid id);
         Task<List<Failure>> GetAsync(string keyword, int pageIndex = 1, int pageSize = 20);
         Task<int> CountAsync(string keyword);
     }
@@ -55,6 +56,11 @@ namespace DataCenterOperation.Services
                   || f.DeviceName.Contains(keyword)
                   || f.DeviceLocation.Contains(keyword)
                   select f;
+        }
+
+        public async Task<Failure> GetAsync(Guid id)
+        {
+            return await _dbContext.Failures.FirstOrDefaultAsync(f => f.Id == id);
         }
 
         public async Task<Failure> RecordFailureAsync(FailureCreateViewModel model)
