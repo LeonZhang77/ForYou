@@ -5,16 +5,17 @@
 }
 
 @section Scripts{
+    <link href="~/css/table-gridtable.css" rel="stylesheet" />
     <script type="text/javascript" src="~/js/vistor/history.js"></script>
 }
 
 @section SectionDialog{
     <div id="dialog" title="进入申请详情">
-        <table id="records_table" style="border:0px solid red;width:850"></table>
+        <table id="records_table" class="gridtable" style="border:0px solid red;width:auto"></table>
     </div>
 
     <div id="dialog_update_contactInfo" title="更新联系人信息">
-        <label id="contactInfo_label" class="control-label">更新联系人信息?</label>        
+        <label id="contactInfo_label" class="control-label">更新联系人信息?</label>
     </div>
 }
 
@@ -31,7 +32,7 @@
     </div>
     <div class="col-md-9">
         <h2>历史纪录</h2>
-        <table class="table table-bordered">
+        <table class="gridtable">
             <thead>
                 <tr>
                     <th>
@@ -75,14 +76,9 @@
                             @Html.DisplayFor(modelItem => item.Matter)
                         </td>
                         <td>
-                            @*@Html.DisplayFor(modelItem => item.ContactInfo)*@
-                            <input id="contact_info_@item.ID" value="@item.ContactInfo"/>
+                            <input id="contact_info_@item.ID" value="@item.ContactInfo" />
                         </td>
                         <td>
-                            @*<a asp-controller="Vistor" asp-action="Details" asp-route-id="@item.VistorEntryRequestGuid">详情</a>
-                                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
                             <button id="update_contactInfo" onclick="update_ContactInfo('@item.ID')">更新联系人电话</button>
                             <button id="details" onclick="open_dialog('@item.VistorEntryRequestGuid')">详情</button>
                         </td>

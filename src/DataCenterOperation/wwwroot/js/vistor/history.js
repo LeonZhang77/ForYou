@@ -1,7 +1,7 @@
 ﻿$(function () {
     $("#dialog").dialog({
       autoOpen: false,
-      width:900,
+      width:500,
       show: {
         effect: "blind",
         duration: 1000
@@ -67,7 +67,7 @@ function open_dialog(text_id){
         dataType:"json",
         success: function (item) {
             $("#records_table").empty();
-            tr = "<tr><th>申请人</th><th>单位</th><th></th></tr>";
+            tr = "<tr><th>申请人</th><th>单位</th></tr>";
             $("#records_table").append(tr)
 
           tr = "";
