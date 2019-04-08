@@ -414,20 +414,18 @@ namespace DataCenterOperation.Site.Controllers
         public async Task<IActionResult> X86Server_Users(AssertX86ServerUsersViewModel requestModel)
         {
             
-            //List<Assert_X86ServerUserInformation> entitis = await _assertX86ServerUserInformationService.GetUsersByServerGuid(requestModel.ID);
             ICollection<Assert_X86ServerUserInformation> users = AssertX86ServerUsersViewModel.GetUsers(requestModel.Users);
             Assert_X86ServerUserInformation currentEntity = null;
+            List<Assert_X86ServerUserInformation> readyToRemove = await _assertX86ServerUserInformationService.GetUsersByServerFixedAssertNumber(requestModel.FixedAssertNumber);
+            foreach(var item in readyToRemove)
+            {
+                var result = await _assertX86ServerUserInformationService.RemoveUserByGuidAsync(item.Id);
+            }
+            //_assertX86ServerUserInformationService.RemoveUsersByServerFixedAssertNumber(requestModel.FixedAssertNumber);
             foreach(var item in users)
             {
                 item.FixedAssertNumber = requestModel.FixedAssertNumber;
-                if ( item.Id == Guid.Empty )
-                {
-                    currentEntity = await _assertX86ServerUserInformationService.AddUserAsync(item);
-                }
-                else
-                {
-                    currentEntity = await _assertX86ServerUserInformationService.UpdateUserAsync(item);
-                }                
+                currentEntity = await _assertX86ServerUserInformationService.AddUserAsync(item);                                
             }
 
             return Redirect("/Assert/X86Server");

@@ -107,12 +107,21 @@ namespace DataCenterOperation.Site.ViewModels
                     UserDescription = item.UserDescription,
                     PersonInCharge = item.PersonInCharge,                    
                 };
+                if(String.IsNullOrEmpty(item.Id))
+                {
+                    user.Id = Guid.Empty;
+                }
+                else
+                {
+                    user.Id = new Guid(item.Id);
+                }
                 result.Add(user);
             }
             return result;
         }
 
         private class UsersClass {
+            public string Id { get; set; }
             public string UserName { get; set; }
             public string UserDescription { get; set; }
             public string PersonInCharge { get; set; }

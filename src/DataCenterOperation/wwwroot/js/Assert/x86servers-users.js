@@ -14,10 +14,13 @@
         td2.innerHTML="<input type='text' value='" + users[i].UserDescription + "'  />";
         var td3=document.createElement("td");
         td3.innerHTML="<input type='text' value='" + users[i].PersonInCharge + "'  />";
+        var td4=document.createElement("td");
+        td4.innerHTML="<input type='text' readonly='true' value='" + users[i].Id + "'  />";
         tr.appendChild(td0);
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
+        tr.appendChild(td4);
         editTable.appendChild(tr);
     }
 });
@@ -71,10 +74,13 @@ function createRow(){
     td2.innerHTML="<input type='text' />";
     var td3=document.createElement("td");
     td3.innerHTML="<input type='text' />";
+    var td4=document.createElement("td");
+    td4.innerHTML="<input type='text' readonly='true' />";
     tr.appendChild(td0);
     tr.appendChild(td1);
     tr.appendChild(td2);
     tr.appendChild(td3);
+    tr.appendChild(td4);
     editTable.appendChild(tr);
 }
 
@@ -89,7 +95,7 @@ function TableToJson(tableid) {
     var txt = "[";
     var table = document.getElementById(tableid);
     var row = table.getElementsByTagName("tr");
-    var col_name = ['', 'UserName', 'UserDescription', 'PersonInCharge'];
+    var col_name = ['', 'UserName', 'UserDescription', 'PersonInCharge', 'Id'];
     for (var j = 1; j < row.length; j++) {
         var r = "{";
         var tds = row[j].getElementsByTagName("input");

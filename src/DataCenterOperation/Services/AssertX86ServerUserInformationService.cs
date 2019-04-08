@@ -30,15 +30,22 @@ namespace DataCenterOperation.Services
             return (returnResult);
         }
 
-        public async Task<Assert_X86ServerUserInformation> AddUserAsync(Assert_X86ServerUserInformation user) 
+        public async Task<List<Assert_X86ServerUserInformation>> GetUsersByServerFixedAssertNumber(string fixedAssertNumber)
         {
 
-            user.Id = Guid.NewGuid();
-            
-            _db.Assert_X86ServerUserInformations.Add(user);
-            _db.SaveChanges();
+            List<Assert_X86ServerUserInformation> returnResult = await _db.Assert_X86ServerUserInformations.Where(f => f.FixedAssertNumber == fixedAssertNumber).ToListAsync();
 
-            return await Task.FromResult(user);
+            return (returnResult);
+        }
+
+        public async Task<Assert_X86ServerUserInformation> AddUserAsync(Assert_X86ServerUserInformation user) 
+        {
+            user.Id = Guid.NewGuid();
+                
+            _db.Assert_X86ServerUserInformations.Add(user);
+            await _db.SaveChangesAsync();
+
+            return user;
         }
 
         public async Task<Assert_X86ServerUserInformation> UpdateUserAsync(Assert_X86ServerUserInformation user) 
@@ -46,12 +53,36 @@ namespace DataCenterOperation.Services
 
             Assert_X86ServerUserInformation item = await _db.Assert_X86ServerUserInformations.FirstOrDefaultAsync( m => m.Id == user.Id );
 
-            item = user;
+            //item = user;
+            item.UserName = user.UserName;
+            item.UserDescription = user.UserDescription;
+            item.PersonInCharge = user.PersonInCharge;
 
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
-            return await Task.FromResult(item);
-        }  
+            return item;
+        }
 
+        public async Task<bool> RemoveUserByGuidAsync(Guid id) 
+        {
+            var item = await _db.Assert_X86ServerUserInformations.FirstOrDefaultAsync( m => m.Id == id );
+                
+            if (item == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                _db.Assert_X86ServerUserInformations.Remove(item);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.)
+                return false;
+            }            
+        }
     }        
 }
