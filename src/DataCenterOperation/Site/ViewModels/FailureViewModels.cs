@@ -109,6 +109,8 @@ namespace DataCenterOperation.Site.ViewModels
         [DataType(DataType.Date)]
         public DateTime? SuperiorSignatureDate { get; set; }
 
+        public Guid Id { get; set; }
+
         public List<SelectListItem> ReportWays { get; } = new List<SelectListItem>
         {
             new SelectListItem { Value = "电话", Text = "电话" },
@@ -120,6 +122,41 @@ namespace DataCenterOperation.Site.ViewModels
             new SelectListItem { Value = "公司", Text = "公司" },
             new SelectListItem { Value = "工程师", Text = "工程师" }
         };
+    }
+
+    public class FailureEditViewModel : FailureCreateViewModel
+    {
+        public static FailureEditViewModel CreateFromEntity(Failure failure)
+        {
+            return new FailureEditViewModel
+            {
+                Id = failure.Id,
+                DeviceId = failure.DeviceId,
+                DeviceName = failure.DeviceName,
+                DeviceLocation = failure.DeviceLocation,
+                WhoRecorded = failure.WhoRecorded,
+                DateRecorded = failure.WhenRecorded,
+                TimeRecorded = failure.WhenRecorded,
+                FailureCause = failure.FailureCause,
+                DateReported = failure.WhenReported,
+                TimeReported = failure.WhenReported,
+                WayReportedVia = failure.WayReportedVia,
+                TargetReportedTo = failure.TargetReportedTo,
+                TargetEngineerName = failure.TargetEngineerName,
+                HasReportedToSpecifiedPerson = failure.HasReportedToSpecifiedPerson ?? false,
+                CommentsFromSpecifiedPerson = failure.CommentsFromSpecifiedPerson,
+                HasServiceReportSubmitted = failure.HasServiceReportSubmitted ?? false,
+                ServiceReportId = failure.ServiceReportId,
+                WhyNoServiceReportSubmitted = failure.WhyNoServiceReportSubmitted,
+                Solution = failure.Solution,
+                SolutionEngineer = failure.WhoSolved,
+                DateSolved = failure.WhenSolved,
+                TimeSolved = failure.WhenSolved,
+                SuperiorComments = failure.SuperiorComments,
+                SuperiorSignature = failure.SuperiorSignature,
+                SuperiorSignatureDate = failure.WhenSigned,
+            };
+        }
     }
 
     public class FailureDetailsViewModel

@@ -108,5 +108,29 @@ namespace DataCenterOperation.Site.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null) return BadRequest();
+
+            var failure = await _failureService.GetAsync(id.Value);
+            if (failure == null) return NotFound();
+
+            var model = FailureEditViewModel.CreateFromEntity(failure);
+
+            return View("Create", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid? id, FailureEditViewModel model)
+        {
+            if (id == null) return BadRequest();
+            if (id.Value != model.Id) return BadRequest();
+
+            var failure = await _failureService.UpdateAsync(model);
+            if (failure == null) return NotFound();
+
+            return RedirectToAction("Details", new { id = failure.Id });
+        }
     }
 }

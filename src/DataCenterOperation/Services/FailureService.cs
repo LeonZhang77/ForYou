@@ -13,6 +13,7 @@ namespace DataCenterOperation.Services
     public interface IFailureService
     {
         Task<Failure> RecordFailureAsync(FailureCreateViewModel model);
+        Task<Failure> UpdateAsync(FailureEditViewModel model);
         Task<Failure> GetAsync(Guid id);
         Task<List<Failure>> GetAsync(string keyword, int pageIndex = 1, int pageSize = 20);
         Task<int> CountAsync(string keyword);
@@ -97,16 +98,51 @@ namespace DataCenterOperation.Services
             return failure;
         }
 
+        public async Task<Failure> UpdateAsync(FailureEditViewModel model)
+        {
+            var failure = await _dbContext.Failures.FirstOrDefaultAsync(f => f.Id == model.Id);
+
+            failure.DeviceId = model.DeviceId;
+            failure.DeviceName = model.DeviceName;
+            failure.DeviceLocation = model.DeviceLocation;
+            failure.WhoRecorded = model.WhoRecorded;
+            failure.WhenRecorded = CombineDateAndTime(model.DateRecorded, model.TimeRecorded);
+            failure.FailureCause = model.FailureCause;
+            failure.WhenReported = CombineDateAndTime(model.DateReported, model.TimeReported);
+            failure.WayReportedVia = model.WayReportedVia;
+            failure.TargetReportedTo = model.TargetReportedTo;
+            failure.TargetEngineerName = model.TargetEngineerName;
+            failure.HasReportedToSpecifiedPerson = model.HasReportedToSpecifiedPerson;
+            failure.CommentsFromSpecifiedPerson = model.CommentsFromSpecifiedPerson;
+            failure.HasServiceReportSubmitted = model.HasServiceReportSubmitted;
+            failure.ServiceReportId = model.ServiceReportId;
+            failure.WhyNoServiceReportSubmitted = model.WhyNoServiceReportSubmitted;
+            failure.Solution = model.Solution;
+            failure.WhoSolved = model.SolutionEngineer;
+            failure.WhenSolved = CombineDateAndTime(model.DateSolved, model.TimeSolved);
+            failure.SuperiorComments = model.SuperiorComments;
+            failure.SuperiorSignature = model.SuperiorSignature;
+            failure.WhenSigned = model.SuperiorSignatureDate;
+
+            await _dbContext.SaveChangesAsync();
+
+            return failure;
+        }
+
         private DateTime? CombineDateAndTime(DateTime? date, DateTime? time)
         {
-            if (!date.HasValue || !time.HasValue) return null;
+            if (!date.HasValue) return null;
 
-            return new DateTime(date.Value.Year,
+            return time.HasValue
+                ? new DateTime(date.Value.Year,
                 date.Value.Month,
                 date.Value.Day,
                 time.Value.Hour,
                 time.Value.Minute,
-                0);
+                0)
+                : new DateTime(date.Value.Year,
+                date.Value.Month,
+                date.Value.Day);
         }
     }
 }
