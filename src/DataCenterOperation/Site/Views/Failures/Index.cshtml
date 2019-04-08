@@ -1,0 +1,46 @@
+﻿@model DataCenterOperation.Site.ViewModels.FailureSearchViewModel
+
+@{
+    ViewData["Title"] = "故障信息统计表";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="text-right">
+    <form asp-action="Index" class="form-inline">
+        <div class="form-group">
+            <input asp-for="Keyword" class="form-control" />
+            <button class="btn btn-default">搜索</button>
+        </div>
+    </form>
+
+    <div class="form-group">
+        <span>记录数：@Model.Count，页数：@Model.TotalPages。</span>
+    </div>
+</div>
+
+@await Html.PartialAsync("_Failures", Model.Failures)
+
+@{
+    var prevDisabled = !Model.HasPrevPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+@if (Model.TotalPages > 1)
+{
+    <div>
+        <a asp-action="Index"
+           asp-route-pageIndex="@(Model.PageIndex - 1)"
+           asp-route-pageSize="@(Model.PageSize)"
+           asp-route-keyword="@Model.Keyword"
+           class="btn btn-default @prevDisabled btn">
+            上一页
+        </a>
+        <a asp-action="Index"
+           asp-route-pageIndex="@(Model.PageIndex + 1)"
+           asp-route-pageSize="@(Model.PageSize)"
+           asp-route-keyword="@Model.Keyword"
+           class="btn btn-default @nextDisabled btn">
+            下一页
+        </a>
+    </div>
+}

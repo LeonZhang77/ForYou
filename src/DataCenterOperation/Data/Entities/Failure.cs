@@ -46,6 +46,9 @@ namespace DataCenterOperation.Data.Entities
 
         public bool? HasServiceReportSubmitted { get; set; }
 
+        [StringLength(50)]
+        public string ServiceReportId { get; set; }
+
         [StringLength(1000)]
         public string WhyNoServiceReportSubmitted { get; set; }
 

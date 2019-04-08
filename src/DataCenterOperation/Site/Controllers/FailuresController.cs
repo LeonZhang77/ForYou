@@ -1,11 +1,12 @@
-﻿using DataCenterOperation.Services;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using DataCenterOperation.Services;
 using DataCenterOperation.Site.Extensions;
 using DataCenterOperation.Site.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace DataCenterOperation.Site.Controllers
 {
@@ -22,9 +23,38 @@ namespace DataCenterOperation.Site.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string keyword, int? pageIndex, int? pageSize)
         {
-            return Content("Index");
+            keyword = keyword ?? string.Empty;
+            pageIndex = pageIndex ?? 1;
+            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            pageSize = pageSize ?? 20;
+            pageSize = pageSize < 1 ? 20 : pageSize;
+
+            int itemIndexStart = (pageIndex.Value - 1) * pageSize.Value;
+            var failures = await _failureService.GetAsync(keyword, pageIndex.Value, pageSize.Value);
+            var items = failures.Select(f => new FailureListItem
+            {
+                Index = ++itemIndexStart,
+                Id = f.Id,
+                DeviceName = f.DeviceName,
+                FailureCause = f.FailureCause,
+                DateRecorded = f.WhenRecorded,
+                DateSolved = f.WhenSolved
+            });
+
+            var count = await _failureService.CountAsync(keyword);
+
+            var model = new FailureSearchViewModel
+            {
+                Failures = items,
+                Keyword = keyword,
+                PageIndex = pageIndex.Value,
+                PageSize = pageSize.Value,
+                Count = count
+            };
+
+            return View(model);
         }
 
         public IActionResult Create()

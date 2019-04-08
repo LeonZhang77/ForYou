@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DataCenterOperation.Site.ViewModels
 {
@@ -41,6 +43,7 @@ namespace DataCenterOperation.Site.ViewModels
         /// <summary>
         /// Telephone or Email.
         /// </summary>
+        [Required]
         [StringLength(50)]
         [Display(Name = "故障上报的方式")]
         public string WayReportedVia { get; set; }
@@ -48,6 +51,7 @@ namespace DataCenterOperation.Site.ViewModels
         /// <summary>
         /// Company or Engineer.
         /// </summary>
+        [Required]
         [StringLength(50)]
         [Display(Name = "故障上报的对象")]
         public string TargetReportedTo { get; set; }
@@ -57,7 +61,7 @@ namespace DataCenterOperation.Site.ViewModels
         public string TargetEngineerName { get; set; }
 
         [Display(Name = "是否已经上报")]
-        public bool? HasReportedToSpecifiedPerson { get; set; }
+        public bool HasReportedToSpecifiedPerson { get; set; }
 
         [StringLength(1000)]
         [Display(Name = "是否有处理意见或建议")]
@@ -65,7 +69,11 @@ namespace DataCenterOperation.Site.ViewModels
         public string CommentsFromSpecifiedPerson { get; set; }
 
         [Display(Name = "是否提交服务报告")]
-        public bool? HasServiceReportSubmitted { get; set; }
+        public bool HasServiceReportSubmitted { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "故障报告编号")]
+        public string ServiceReportId { get; set; }
 
         [StringLength(1000)]
         [Display(Name = "没有提交报告的原因情况说明")]
@@ -99,5 +107,49 @@ namespace DataCenterOperation.Site.ViewModels
         [Display(Name = "领导签名日期")]
         [DataType(DataType.Date)]
         public DateTime? SuperiorSignatureDate { get; set; }
+
+        public List<SelectListItem> ReportWays { get; } = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "电话", Text = "电话" },
+            new SelectListItem { Value = "邮件", Text = "邮件" }
+        };
+
+        public List<SelectListItem> ReportTargets { get; } = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "公司", Text = "公司" },
+            new SelectListItem { Value = "工程师", Text = "工程师" }
+        };
+    }
+
+    public class FailureSearchViewModel
+    {
+        [Display(Prompt = "关键字")]
+        public string Keyword { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+
+        public int Count { get; set; }
+        public IEnumerable<FailureListItem> Failures { get; set; }
+
+        public bool HasPrevPage { get { return PageIndex > 1; } }
+        public bool HasNextPage { get { return PageIndex < TotalPages; } }
+        public int TotalPages { get { return (int)Math.Ceiling(Count / (double)PageSize); } }
+    }
+
+    public class FailureListItem
+    {
+        [Display(Name = "序号")]
+        public int Index { get; set; }
+        public Guid Id { get; set; }
+        [Display(Name = "设备名称")]
+        public string DeviceName { get; set; }
+        [Display(Name = "故障原因")]
+        public string FailureCause { get; set; }
+        [Display(Name = "发现日期")]
+        public DateTime? DateRecorded { get; set; }
+        [Display(Name = "解决日期")]
+        public DateTime? DateSolved { get; set; }
+        [Display(Name = "记录人")]
+        public string WhoRecorded { get; set; }
     }
 }
