@@ -73,6 +73,7 @@ namespace DataCenterOperation
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IFailureService,FailureService>();
+            services.AddTransient<IMysqlDBService, MysqlDBService>();
             services.AddTransient<IVistorRecordService, VistorRecordService>();
             services.AddTransient<IVistorEntryRequestService, VistorEntryRequestService>();            
             services.AddTransient<IVistorEntourageService, VistorEntourageService>();
