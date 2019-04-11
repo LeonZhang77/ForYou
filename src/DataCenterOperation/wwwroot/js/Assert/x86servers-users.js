@@ -41,7 +41,6 @@ function getList(list_name) {
             result.push(area_values[i].value)
         }
     }
-    //alert(result.join(','))    
     return result
 }
 
@@ -108,7 +107,7 @@ function TableToJson(tableid) {
     }
     txt = txt.substring(0, txt.length - 1);
     txt += "]";
-    alert("final" + txt);
+    //alert("final" + txt);
     return txt;
 }
 

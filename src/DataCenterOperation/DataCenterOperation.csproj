@@ -21,6 +21,7 @@
     <Content Remove="wwwroot\upload\d6ab8691-b174-47c8-abe2-3444f9f26aab.xls" />
     <Content Remove="wwwroot\upload\dc15e89e-a79e-4aff-9be7-eb05c9e09a4e.xls" />
     <Content Remove="wwwroot\upload\0f0914e8-8de8-4d06-ae96-fb016f95b58f.xls" />
+    <Content Remove="wwwroot\upload\3106X86服务器基本信息表 .xls" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Site\Views\Shared\_ValidationScriptsPartial.cshtml">
@@ -29,7 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
-    <Folder Include="wwwroot\upload\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="jQuery" Version="3.3.1" />

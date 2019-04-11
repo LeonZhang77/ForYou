@@ -9,8 +9,14 @@ using System.Threading.Tasks;
 
 namespace DataCenterOperation.Services
 {
-    public class VistorEntourageService : IVistorEntourageService
+    public interface IVistorEntourageService
     {
+        Task<List<VistorEntourage>> GetAllVistorEntourage();
+        Task<List<VistorEntourage>> GetVistorEntourageByRequestGUID(Guid guid);
+        Task<VistorEntourage> AddVistorEntourageAsync(VistorEntourage vistorEntourage);
+    }
+    public class VistorEntourageService : IVistorEntourageService
+    {        
         private readonly DataCenterOperationDbContext _db;
         private readonly ILogger _logger;        
 

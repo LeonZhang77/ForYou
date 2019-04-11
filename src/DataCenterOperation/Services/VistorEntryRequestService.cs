@@ -9,6 +9,15 @@ using System.Threading.Tasks;
 
 namespace DataCenterOperation.Services
 {
+    public interface IVistorEntryRequestService
+    {
+        Task<List<VistorEntryRequest>> GetAllVistorEntryRequests();
+
+        Task<VistorEntryRequest> GetVistorEntryRequestsById(Guid id);
+
+        Task<VistorEntryRequest> AddVistorEntryRequest(VistorEntryRequest request);
+    }
+
     public class VistorEntryRequestService : IVistorEntryRequestService
     {
         private readonly DataCenterOperationDbContext _db;

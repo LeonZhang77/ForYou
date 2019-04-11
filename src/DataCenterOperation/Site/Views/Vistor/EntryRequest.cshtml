@@ -4,11 +4,12 @@
     ViewData["Title"] = "来访登记";
 }
 
+<link href="~/css/table-gridtable.css" rel="stylesheet" />
 <script type="text/javascript" src="~/js/vistor/entry_request.js"></script>
 
 <div class="row">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="col-md-3">
+    <div class="col-md-2">
 
         <ul>
             <li><a asp-controller="Vistor" asp-action="History">历史纪录</a></li>
@@ -53,24 +54,24 @@
                     <span asp-validation-for="EndTime" class="text-danger"></span>
                     <input asp-for="EndTime" class="form-control" />                
                 </div>
-            </div>
-            <div class="form-group">                
-                    <div class="col-md-12">
-                        <label asp-for="Area" class="control-label"></label>
-                        <span asp-validation-for="Area" class="text-danger"></span>
-                        <input id='hidden_area' type='hidden' asp-for="Area" class="form-control" />
-                        <div>
-                            <input type="checkbox" name="areas" value="走道区">走道区
-                            <input type="checkbox" name="areas" value="屏蔽机房">屏蔽机房
-                            <input type="checkbox" name="areas" value="网络室">网络室
-                            <input type="checkbox" name="areas" value="配线室">配线室
-                            <input type="checkbox" name="areas" value="配电室">配电室
-                            <div>其他：<input type="text" id="other_area" /></div>
-                        </div>
-                    </div>                
-            </div>
+            </div>            
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label asp-for="Area" class="control-label"></label>
+                    <span asp-validation-for="Area" class="text-danger"></span>
+                    <input id='hidden_area' type='hidden' asp-for="Area" class="form-control" />
+                    <div>
+                        <input type="checkbox" name="areas" value="走道区">走道区
+                        <input type="checkbox" name="areas" value="屏蔽机房">屏蔽机房
+                        <input type="checkbox" name="areas" value="网络室">网络室
+                        <input type="checkbox" name="areas" value="配线室">配线室
+                        <input type="checkbox" name="areas" value="配电室">配电室
+                        <div>其他：<input type="text" id="other_area" /></div>
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-md-12">
                     <label asp-for="Belongings" class="control-label"></label>
@@ -83,7 +84,7 @@
                         <input type="checkbox" name="belongings" value="照相机">照相机
                         <input type="checkbox" name="belongings" value="录音笔">录音笔
                         <div>其他：<input type="text" id="other_belonging" /></div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -97,7 +98,7 @@
                         <input type="checkbox" name="matters" value="设备上下架">设备上下架
                         <input type="checkbox" name="matters" value="系统维护">系统维护
                         <div>其他：<input type="text" id="other_matter" /></div>
-                    </div>                    
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -126,31 +127,32 @@
             </div>
             <div class="form-group">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-default" onclick='doSubmitForm(this.form)'>申请</button>
-                    @*<button type="button" class="btn btn-default" onclick='doSubmitFormTest(this.form)'>申请</button>*@                    
+                    <button type="submit" class="btn btn-default" onclick='doSubmitForm(this.form)'>申请</button>                    
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <h2>随行人员</h2>
             <div>
-                <input type="button" value="新增" onclick="createRow()">
-                <input type="button" value="删除" onclick="delRow()">
-                <div class="form-group">
-                    <input id='hidden_entourages' type='hidden' asp-for="Entourage" class="form-control"/>
-                    <table id="entry_request_entourages_Table">
-                        <tr>
-                            <th>选择</th>
-                            <th>姓名</th>
-                            <th>证件号</th>
-                            <th>单位</th>
-                        </tr>
-                        <tbody id="tbody"></tbody>
-                    </table>
+                <div style="margin-bottom:10px;">
+                    <input type="button" value="新增" onclick="createRow()">
+                    <input type="button" value="删除" onclick="delRow()">
                 </div>
-             </div>
-         </div>
+                <div class="form-group">
+                        <input id='hidden_entourages' type='hidden' asp-for="Entourage" class="form-control" />
+                        <table id="entry_request_entourages_Table" class="gridtable">
+                            <tr>
+                                <th>选择</th>
+                                <th>姓名</th>
+                                <th>证件号</th>
+                                <th>单位</th>
+                            </tr>
+                            <tbody id="tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
     </form>
 </div>
