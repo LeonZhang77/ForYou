@@ -5,440 +5,435 @@
 @section Scripts{
     <link href="~/lib/webuploader/webuploader.css" rel="stylesheet" />
     <link href="~/css/table-gridtable.css" rel="stylesheet" />
-    <script src="~/lib/webuploader/webuploader.custom.js"></script>  
+    <script src="~/lib/webuploader/webuploader.custom.js"></script>
 }
 
-    <div class="row">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="col-md-3">
-            <ul>
-                <li><a asp-controller="Assert" asp-action="X86Server">X86服务器列表</a></li>
-                <li><a asp-controller="Assert" asp-action="X86Server_Add">增加服务器</a></li>
-                <li><a asp-controller="Assert" asp-action="X86Server_Users">用户管理</a></li>
-            </ul>
-        </div>
-        <form id='entry_request_form' asp-controller="Vistor" asp-action="Request" method="post" class="form-horizontal">
-            <div class="col-md-9">
-                <h2>将增加以下服务器</h2>
-                <div style="overflow-x: scroll; overflow-y: auto; width:800px;">
-                    <table class="table gridtable">
-                        <thead>
-                            <tr>
-                                <th>
-                                    固定资产编号
-                                </th>
-                                <th>
-                                    服务器名称
-                                </th>
-                                <th>
-                                    序列号
-                                </th>
-                                <th>
-                                    CPU
-                                </th>
-                                <th>
-                                    内存
-                                </th>
-                                <th>
-                                    硬盘
-                                </th>
-                                <th>
-                                    操作系统
-                                </th>
-                                <th>
-                                    机房编号
-                                </th>
-                                <th>
-                                    机柜位置
-                                </th>
-                                <th>
-                                    起始U位
-                                </th>
-                                <th>
-                                    结束U位
-                                </th>
-                                <th>
-                                    虚拟资源池
-                                </th>
-                                <th>
-                                    业务系统
-                                </th>
-                                <th>
-                                    IP地址
-                                </th>
-                                <th>
-                                    网卡数量
-                                </th>
-                                <th>
-                                    HBA数量
-                                </th>
-                                <th>
-                                    存储容量
-                                </th>
-                                <th>
-                                    维保信息
-                                </th>
-                                <th>
-                                    安装日期
-                                </th>
-                                <th>
-                                    品牌机型
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (var i = 0; i < Model.ReadyToAdd.Count; i++)
-    {
-                        <tr>
+<div>
+    <a class="btn btn-outline-primary btn-sm" asp-controller="Assert" asp-action="X86Server">X86服务器列表</a>
+    <a class="btn btn-outline-primary btn-sm" asp-controller="Assert" asp-action="X86Server_Add">增加服务器</a>
+    <a class="btn btn-outline-primary btn-sm" asp-controller="Assert" asp-action="X86Server_Users">用户管理</a>
+</div>
 
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].FixedAssertNumber, new { @readonly = "true" } )
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].Name)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].SerialNumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].CPU)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].Memory)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].HD)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].OS)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].EngineNumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].RackLocation)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].BeginU)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].EndU)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].VirtualizedResourcePool)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].BusinessSystem)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].IP)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].NetcardNumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].HBANumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].StorageSize)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].MaintenanceInformation)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].InstallDate)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].Band)
-                            </td>
-                            <td></td>
-                        </tr>
-}
-                        </tbody>
-                    </table>
-                </div>            
-                <h2>将修改以下服务器</h2>
-                <div style="overflow-x: scroll; overflow-y: auto; width:800px;">
-                    <table class="table gridtable">
-                        <thead>
-                            <tr>
-                                <th>
-                                    固定资产编号
-                                </th>
-                                <th>
-                                    服务器名称
-                                </th>
-                                <th>
-                                    序列号
-                                </th>
-                                <th>
-                                    CPU
-                                </th>
-                                <th>
-                                    内存
-                                </th>
-                                <th>
-                                    硬盘
-                                </th>
-                                <th>
-                                    操作系统
-                                </th>
-                                <th>
-                                    机房编号
-                                </th>
-                                <th>
-                                    机柜位置
-                                </th>
-                                <th>
-                                    起始U位
-                                </th>
-                                <th>
-                                    结束U位
-                                </th>
-                                <th>
-                                    虚拟资源池
-                                </th>
-                                <th>
-                                    业务系统
-                                </th>
-                                <th>
-                                    IP地址
-                                </th>
-                                <th>
-                                    网卡数量
-                                </th>
-                                <th>
-                                    HBA数量
-                                </th>
-                                <th>
-                                    存储容量
-                                </th>
-                                <th>
-                                    维保信息
-                                </th>
-                                <th>
-                                    安装日期
-                                </th>
-                                <th>
-                                    品牌机型
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                            @for (var i = 0; i < Model.ReadyToModify.Count; i++)
-            {
-                @Html.HiddenFor(modelItem => Model.ReadyToModify[i].ID)
+<form id='entry_request_form' asp-controller="Vistor" asp-action="Request" method="post" class="form-horizontal">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <h4>将增加以下服务器</h4>
+    <div style="overflow-x: scroll; overflow-y: auto; width:800px;">
+        <table class="table gridtable">
+            <thead>
                 <tr>
-                    <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].FixedAssertNumber, new { @readonly = "true" } )
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].Name)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].SerialNumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].CPU)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].Memory)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].HD)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].OS)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].EngineNumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].RackLocation)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].BeginU)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].EndU)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].VirtualizedResourcePool)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].BusinessSystem)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].IP)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].NetcardNumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].HBANumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].StorageSize)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].MaintenanceInformation)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].InstallDate)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].Band)
-                            </td>
-                            <td></td>
+                    <th>
+                        固定资产编号
+                    </th>
+                    <th>
+                        服务器名称
+                    </th>
+                    <th>
+                        序列号
+                    </th>
+                    <th>
+                        CPU
+                    </th>
+                    <th>
+                        内存
+                    </th>
+                    <th>
+                        硬盘
+                    </th>
+                    <th>
+                        操作系统
+                    </th>
+                    <th>
+                        机房编号
+                    </th>
+                    <th>
+                        机柜位置
+                    </th>
+                    <th>
+                        起始U位
+                    </th>
+                    <th>
+                        结束U位
+                    </th>
+                    <th>
+                        虚拟资源池
+                    </th>
+                    <th>
+                        业务系统
+                    </th>
+                    <th>
+                        IP地址
+                    </th>
+                    <th>
+                        网卡数量
+                    </th>
+                    <th>
+                        HBA数量
+                    </th>
+                    <th>
+                        存储容量
+                    </th>
+                    <th>
+                        维保信息
+                    </th>
+                    <th>
+                        安装日期
+                    </th>
+                    <th>
+                        品牌机型
+                    </th>
+                    <th></th>
                 </tr>
-}
-                        </tbody>
-                    </table>
-                </div>
-                <h2>请检查以下记录，本次不会录入数据库，固定资产编号不能为空，也不能重复：</h2>
-                <div style="overflow-x: scroll; overflow-y: auto; width:800px;">
-                    <table class="table gridtable">
-                        <thead>
-                            <tr>
-                                <th>
-                                    固定资产编号
-                                </th>
-                                <th>
-                                    服务器名称
-                                </th>
-                                <th>
-                                    序列号
-                                </th>
-                                <th>
-                                    CPU
-                                </th>
-                                <th>
-                                    内存
-                                </th>
-                                <th>
-                                    硬盘
-                                </th>
-                                <th>
-                                    操作系统
-                                </th>
-                                <th>
-                                    机房编号
-                                </th>
-                                <th>
-                                    机柜位置
-                                </th>
-                                <th>
-                                    起始U位
-                                </th>
-                                <th>
-                                    结束U位
-                                </th>
-                                <th>
-                                    虚拟资源池
-                                </th>
-                                <th>
-                                    业务系统
-                                </th>
-                                <th>
-                                    IP地址
-                                </th>
-                                <th>
-                                    网卡数量
-                                </th>
-                                <th>
-                                    HBA数量
-                                </th>
-                                <th>
-                                    存储容量
-                                </th>
-                                <th>
-                                    维保信息
-                                </th>
-                                <th>
-                                    安装日期
-                                </th>
-                                <th>
-                                    品牌机型
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                            @for (var i = 0; i < Model.ErrorItems.Count; i++)
-            {
-                @Html.HiddenFor(modelItem => Model.ErrorItems[i].ID)
-                <tr>
-                    <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].FixedAssertNumber, new { @readonly = "true" } )
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].Name)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].SerialNumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].CPU)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].Memory)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].HD)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].OS)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].EngineNumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].RackLocation)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].BeginU)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].EndU)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].VirtualizedResourcePool)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].BusinessSystem)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].IP)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].NetcardNumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].HBANumber)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].StorageSize)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].MaintenanceInformation)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].InstallDate)
-                            </td>
-                            <td>
-                                @Html.TextBoxFor(modelItem => Model.ErrorItems[i].Band)
-                            </td>
-                            <td></td>
-                </tr>
-}
-                        </tbody>
-                    </table>
-                </div>
-                <button class="btn btn-primary" type="submit" class="btn btn-default">确认更改数据库</button>
-            </div>            
-        </form>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.ReadyToAdd.Count; i++)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].FixedAssertNumber, new { @readonly = "true" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].Name)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].SerialNumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].CPU)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].Memory)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].HD)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].OS)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].EngineNumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].RackLocation)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].BeginU)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].EndU)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].VirtualizedResourcePool)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].BusinessSystem)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].IP)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].NetcardNumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].HBANumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].StorageSize)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].MaintenanceInformation)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].InstallDate)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToAdd[i].Band)
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
+    <h4>将修改以下服务器</h4>
+    <div style="overflow-x: scroll; overflow-y: auto; width:800px;">
+        <table class="table gridtable">
+            <thead>
+                <tr>
+                    <th>
+                        固定资产编号
+                    </th>
+                    <th>
+                        服务器名称
+                    </th>
+                    <th>
+                        序列号
+                    </th>
+                    <th>
+                        CPU
+                    </th>
+                    <th>
+                        内存
+                    </th>
+                    <th>
+                        硬盘
+                    </th>
+                    <th>
+                        操作系统
+                    </th>
+                    <th>
+                        机房编号
+                    </th>
+                    <th>
+                        机柜位置
+                    </th>
+                    <th>
+                        起始U位
+                    </th>
+                    <th>
+                        结束U位
+                    </th>
+                    <th>
+                        虚拟资源池
+                    </th>
+                    <th>
+                        业务系统
+                    </th>
+                    <th>
+                        IP地址
+                    </th>
+                    <th>
+                        网卡数量
+                    </th>
+                    <th>
+                        HBA数量
+                    </th>
+                    <th>
+                        存储容量
+                    </th>
+                    <th>
+                        维保信息
+                    </th>
+                    <th>
+                        安装日期
+                    </th>
+                    <th>
+                        品牌机型
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for (var i = 0; i < Model.ReadyToModify.Count; i++)
+                {
+                    @Html.HiddenFor(modelItem => Model.ReadyToModify[i].ID)
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].FixedAssertNumber, new { @readonly = "true" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].Name)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].SerialNumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].CPU)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].Memory)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].HD)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].OS)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].EngineNumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].RackLocation)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].BeginU)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].EndU)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].VirtualizedResourcePool)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].BusinessSystem)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].IP)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].NetcardNumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].HBANumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].StorageSize)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].MaintenanceInformation)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].InstallDate)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ReadyToModify[i].Band)
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <h4>请检查以下记录，本次不会录入数据库，固定资产编号不能为空，也不能重复：</h4>
+    <div style="overflow-x: scroll; overflow-y: auto; width:800px;">
+        <table class="table gridtable">
+            <thead>
+                <tr>
+                    <th>
+                        固定资产编号
+                    </th>
+                    <th>
+                        服务器名称
+                    </th>
+                    <th>
+                        序列号
+                    </th>
+                    <th>
+                        CPU
+                    </th>
+                    <th>
+                        内存
+                    </th>
+                    <th>
+                        硬盘
+                    </th>
+                    <th>
+                        操作系统
+                    </th>
+                    <th>
+                        机房编号
+                    </th>
+                    <th>
+                        机柜位置
+                    </th>
+                    <th>
+                        起始U位
+                    </th>
+                    <th>
+                        结束U位
+                    </th>
+                    <th>
+                        虚拟资源池
+                    </th>
+                    <th>
+                        业务系统
+                    </th>
+                    <th>
+                        IP地址
+                    </th>
+                    <th>
+                        网卡数量
+                    </th>
+                    <th>
+                        HBA数量
+                    </th>
+                    <th>
+                        存储容量
+                    </th>
+                    <th>
+                        维保信息
+                    </th>
+                    <th>
+                        安装日期
+                    </th>
+                    <th>
+                        品牌机型
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for (var i = 0; i < Model.ErrorItems.Count; i++)
+                {
+                    @Html.HiddenFor(modelItem => Model.ErrorItems[i].ID)
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].FixedAssertNumber, new { @readonly = "true" })
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].Name)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].SerialNumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].CPU)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].Memory)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].HD)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].OS)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].EngineNumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].RackLocation)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].BeginU)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].EndU)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].VirtualizedResourcePool)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].BusinessSystem)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].IP)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].NetcardNumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].HBANumber)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].StorageSize)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].MaintenanceInformation)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].InstallDate)
+                        </td>
+                        <td>
+                            @Html.TextBoxFor(modelItem => Model.ErrorItems[i].Band)
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <button class="btn btn-primary" type="submit">确认更改数据库</button>
+</form>

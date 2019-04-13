@@ -1,194 +1,138 @@
 ﻿@model DataCenterOperation.Site.ViewModels.AssertX86ServerViewModel
-
 @{
-    ViewData["Title"] = "资产管理";
+    ViewData["Title"] = "更改X86服务器信息";
 }
-
-<div class="row">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="col-md-3">
-
-        <ul>
-            <li><a asp-controller="Assert" asp-action="X86Server">X86服务器列表</a></li>
-            <li><Label>增加服务器</Label></li>            
-            <li><a asp-controller="Assert" asp-action="X86Server_Users">用户管理</a></li>
-        </ul>
-    </div>
-    <div class="col-md-9">
-        <form id='entry_request_form' asp-controller="Vistor" asp-action="Request" method="post" class="form-horizontal">
-            <div class="col-md-4">
-                <div class="form-group">
-                    @Html.HiddenFor(m => m.ID)
-                    <div class="col-md-12">
-                        <label asp-for="FixedAssertNumber" class="control-label"></label>
-                        <span asp-validation-for="FixedAssertNumber" class="text-danger"></span>
-                        <input asp-for="FixedAssertNumber" class="form-control" readonly="true" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="Name" class="control-label"></label>
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                        <input asp-for="Name" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="SerialNumber" class="control-label"></label>
-                        <span asp-validation-for="SerialNumber" class="text-danger"></span>
-                        <input asp-for="SerialNumber" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="CPU" class="control-label"></label>
-                        <span asp-validation-for="CPU" class="text-danger"></span>
-                        <input asp-for="CPU" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="Memory" class="control-label"></label>
-                        <span asp-validation-for="Memory" class="text-danger"></span>
-                        <input asp-for="Memory" class="form-control" list="memoryList"/>
-                        <datalist id="memoryList">
-                            <option value="8G">8G</option>
-                            <option value="16G">16G</option>
-                            <option value="32G">32G</option>
-                            <option value="64G">64G</option>                            
-                        </datalist>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="HD" class="control-label"></label>
-                        <span asp-validation-for="HD" class="text-danger"></span>
-                        <input asp-for="HD" class="form-control" list="hDList" />
-                        <datalist id="hDList">
-                            <option value="300G">300G</option>
-                            <option value="600G">600G</option>
-                            <option value="900G">900G</option>                            
-                        </datalist>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="OS" class="control-label"></label>
-                        <span asp-validation-for="HD" class="text-danger"></span>
-                        <input asp-for="OS" class="form-control" list="oSList"/>
-                        <datalist id="oSList">
-                            <option value="Ubuntu">Ubuntu</option>
-                            <option value="Redhat">Redhat</option>
-                            <option value="Windows Server">Windows Server</option>                            
-                        </datalist>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="EngineNumber" class="control-label"></label>
-                        <span asp-validation-for="EngineNumber" class="text-danger"></span>
-                        <input asp-for="EngineNumber" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="RackLocation" class="control-label"></label>
-                        <span asp-validation-for="RackLocation" class="text-danger"></span>
-                        <input asp-for="RackLocation" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="BeginU" class="control-label"></label>
-                        <span asp-validation-for="BeginU" class="text-danger"></span>
-                        <input asp-for="BeginU" class="form-control" />                                                  
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="EndU" class="control-label"></label>
-                        <span asp-validation-for="EndU" class="text-danger"></span>
-                        <input asp-for="EndU" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="StorageSize" class="control-label"></label>
-                        <span asp-validation-for="StorageSize" class="text-danger"></span>
-                        <input asp-for="StorageSize" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="VirtualizedResourcePool" class="control-label"></label>
-                        <span asp-validation-for="VirtualizedResourcePool" class="text-danger"></span>
-                        <input asp-for="VirtualizedResourcePool" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="BusinessSystem" class="control-label"></label>
-                        <span asp-validation-for="BusinessSystem" class="text-danger"></span>
-                        <input asp-for="BusinessSystem" class="form-control" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="IP" class="control-label"></label>
-                        <span asp-validation-for="IP" class="text-danger"></span>
-                        <input asp-for="IP" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="NetcardNumber" class="control-label"></label>
-                        <span asp-validation-for="NetcardNumber" class="text-danger"></span>
-                        <input asp-for="NetcardNumber" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="HBANumber" class="control-label"></label>
-                        <span asp-validation-for="HBANumber" class="text-danger"></span>
-                        <input asp-for="HBANumber" class="form-control" />
-                    </div>
-                </div>                
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="MaintenanceInformation" class="control-label"></label>
-                        <span asp-validation-for="MaintenanceInformation" class="text-danger"></span>
-                        <input asp-for="MaintenanceInformation" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group datetime">
-                    <div class="col-md-12">
-                        <label asp-for="InstallDate" class="control-label"></label>
-                        <span asp-validation-for="InstallDate" class="text-danger"></span>
-                        <input asp-for="InstallDate" class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <label asp-for="Band" class="control-label"></label>
-                        <span asp-validation-for="Band" class="text-danger"></span>
-                        <input asp-for="Band" class="form-control" list="bandList"/>
-                        <datalist id="bandList">
-                            <option value="联想">联想</option>
-                            <option value="浪潮">浪潮</option>
-                            <option value="华为">华为</option>                            
-                        </datalist>
-                    </div>
-                </div>         
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <button class="btn btn-primary" type="submit" class="btn btn-default">更改</button>                        
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+<h3>@ViewData["Title"]</h3>
+<hr />
+<div>
+    <a class="btn btn-outline-primary btn-sm" asp-controller="Assert" asp-action="X86Server">返回X86服务器列表</a>
+    <a class="btn btn-outline-primary btn-sm" asp-controller="Assert" asp-action="X86Server_Users">用户管理</a>
 </div>
+<form id='entry_request_form' asp-controller="Vistor" asp-action="Request" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        @Html.HiddenFor(m => m.ID)
+        <label asp-for="FixedAssertNumber" class="control-label"></label>
+        <span asp-validation-for="FixedAssertNumber" class="text-danger"></span>
+        <input asp-for="FixedAssertNumber" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SerialNumber" class="control-label"></label>
+        <span asp-validation-for="SerialNumber" class="text-danger"></span>
+        <input asp-for="SerialNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="CPU" class="control-label"></label>
+        <span asp-validation-for="CPU" class="text-danger"></span>
+        <input asp-for="CPU" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Memory" class="control-label"></label>
+        <span asp-validation-for="Memory" class="text-danger"></span>
+        <input asp-for="Memory" class="form-control" list="memoryList" />
+        <datalist id="memoryList">
+            <option value="8G">8G</option>
+            <option value="16G">16G</option>
+            <option value="32G">32G</option>
+            <option value="64G">64G</option>
+        </datalist>
+    </div>
+    <div class="form-group">
+        <label asp-for="HD" class="control-label"></label>
+        <span asp-validation-for="HD" class="text-danger"></span>
+        <input asp-for="HD" class="form-control" list="hDList" />
+        <datalist id="hDList">
+            <option value="300G">300G</option>
+            <option value="600G">600G</option>
+            <option value="900G">900G</option>
+        </datalist>
+    </div>
+    <div class="form-group">
+        <label asp-for="OS" class="control-label"></label>
+        <span asp-validation-for="HD" class="text-danger"></span>
+        <input asp-for="OS" class="form-control" list="oSList" />
+        <datalist id="oSList">
+            <option value="Ubuntu">Ubuntu</option>
+            <option value="Redhat">Redhat</option>
+            <option value="Windows Server">Windows Server</option>
+        </datalist>
+    </div>
+    <div class="form-group">
+        <label asp-for="EngineNumber" class="control-label"></label>
+        <span asp-validation-for="EngineNumber" class="text-danger"></span>
+        <input asp-for="EngineNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="RackLocation" class="control-label"></label>
+        <span asp-validation-for="RackLocation" class="text-danger"></span>
+        <input asp-for="RackLocation" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="BeginU" class="control-label"></label>
+        <span asp-validation-for="BeginU" class="text-danger"></span>
+        <input asp-for="BeginU" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EndU" class="control-label"></label>
+        <span asp-validation-for="EndU" class="text-danger"></span>
+        <input asp-for="EndU" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="StorageSize" class="control-label"></label>
+        <span asp-validation-for="StorageSize" class="text-danger"></span>
+        <input asp-for="StorageSize" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="VirtualizedResourcePool" class="control-label"></label>
+        <span asp-validation-for="VirtualizedResourcePool" class="text-danger"></span>
+        <input asp-for="VirtualizedResourcePool" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="BusinessSystem" class="control-label"></label>
+        <span asp-validation-for="BusinessSystem" class="text-danger"></span>
+        <input asp-for="BusinessSystem" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="IP" class="control-label"></label>
+        <span asp-validation-for="IP" class="text-danger"></span>
+        <input asp-for="IP" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NetcardNumber" class="control-label"></label>
+        <span asp-validation-for="NetcardNumber" class="text-danger"></span>
+        <input asp-for="NetcardNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="HBANumber" class="control-label"></label>
+        <span asp-validation-for="HBANumber" class="text-danger"></span>
+        <input asp-for="HBANumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="MaintenanceInformation" class="control-label"></label>
+        <span asp-validation-for="MaintenanceInformation" class="text-danger"></span>
+        <input asp-for="MaintenanceInformation" class="form-control" />
+    </div>
+    <div class="form-group datetime">
+        <label asp-for="InstallDate" class="control-label"></label>
+        <span asp-validation-for="InstallDate" class="text-danger"></span>
+        <input asp-for="InstallDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Band" class="control-label"></label>
+        <span asp-validation-for="Band" class="text-danger"></span>
+        <input asp-for="Band" class="form-control" list="bandList" />
+        <datalist id="bandList">
+            <option value="联想">联想</option>
+            <option value="浪潮">浪潮</option>
+            <option value="华为">华为</option>
+        </datalist>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success" type="submit">更改</button>
+    </div>
+</form>

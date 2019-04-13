@@ -10,7 +10,14 @@
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">首页</a>
                 </li>
                 <li class="nav-item"><a class="navbar-text">|</a></li>
-                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Assert" asp-action="OverView">资产管理</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAssert" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">资产管理</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownAssert">
+                        <a class="dropdown-item" asp-area="" asp-controller="Assert" asp-action="OverView">资产总况</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" asp-area="" asp-controller="Assert" asp-action="X86Server">X86服务器</a>
+                    </div>
+                </li>
                 <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">巡检数据</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFailures" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">故障信息</a>
