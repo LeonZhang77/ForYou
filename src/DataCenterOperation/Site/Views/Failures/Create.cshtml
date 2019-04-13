@@ -1,139 +1,139 @@
 ﻿@model DataCenterOperation.Site.ViewModels.FailureCreateViewModel
-
+@{
+    ViewData["Title"] = "故障信息登记表";
+}
 <h3>故障信息登记表</h3>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="DeviceId" class="control-label"></label>
-                <input asp-for="DeviceId" class="form-control" />
-                <span asp-validation-for="DeviceId" class="text-danger"></span>
+<div class="col-md-5">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="DeviceId" class="control-label"></label>
+            <input asp-for="DeviceId" class="form-control" />
+            <span asp-validation-for="DeviceId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DeviceName" class="control-label"></label>
+            <input asp-for="DeviceName" class="form-control" />
+            <span asp-validation-for="DeviceName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DeviceLocation" class="control-label"></label>
+            <input asp-for="DeviceLocation" class="form-control" />
+            <span asp-validation-for="DeviceLocation" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="WhoRecorded" class="control-label"></label>
+            <input asp-for="WhoRecorded" class="form-control" />
+            <span asp-validation-for="WhoRecorded" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateRecorded" class="control-label"></label>
+            <div class="datetime">
+                <input asp-for="DateRecorded" class="form-control text-date" />
+                <input asp-for="TimeRecorded" class="form-control text-time" />
+                <span asp-validation-for="DateRecorded" class="text-danger"></span>
+                <span asp-validation-for="TimeRecorded" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DeviceName" class="control-label"></label>
-                <input asp-for="DeviceName" class="form-control" />
-                <span asp-validation-for="DeviceName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="FailureCause" class="control-label"></label>
+            <textarea asp-for="FailureCause" class="form-control"></textarea>
+            <span asp-validation-for="FailureCause" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateReported" class="control-label"></label>
+            <div class="datetime">
+                <input asp-for="DateReported" class="form-control text-date" />
+                <input asp-for="TimeReported" class="form-control text-time" />
+                <span asp-validation-for="DateReported" class="text-danger"></span>
+                <span asp-validation-for="TimeReported" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="DeviceLocation" class="control-label"></label>
-                <input asp-for="DeviceLocation" class="form-control" />
-                <span asp-validation-for="DeviceLocation" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="WayReportedVia" class="control-label"></label>
+            <select asp-for="WayReportedVia" asp-items="Model.ReportWays" class="form-control">
+                <option value="">请选择</option>
+            </select>
+            <span asp-validation-for="WayReportedVia" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TargetReportedTo" class="control-label"></label>
+            <select asp-for="TargetReportedTo" asp-items="Model.ReportTargets" class="form-control">
+                <option value="">请选择</option>
+            </select>
+            <span asp-validation-for="TargetReportedTo" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TargetEngineerName" class="control-label"></label>
+            <input asp-for="TargetEngineerName" class="form-control" />
+            <span asp-validation-for="TargetEngineerName" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check">
+            <input asp-for="HasReportedToSpecifiedPerson" class="form-check-input" />
+            <label asp-for="HasReportedToSpecifiedPerson" class="form-check-label"></label>张科
+            <span asp-validation-for="HasReportedToSpecifiedPerson" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            张科<label asp-for="CommentsFromSpecifiedPerson" class="control-label"></label>
+            <textarea asp-for="CommentsFromSpecifiedPerson" class="form-control"></textarea>
+            <span asp-validation-for="CommentsFromSpecifiedPerson" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check">
+            <input asp-for="HasServiceReportSubmitted" class="form-check-input" />
+            <label asp-for="HasServiceReportSubmitted" class="form-check-label"></label>
+            <span asp-validation-for="HasServiceReportSubmitted" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ServiceReportId" class="control-label"></label>
+            <input asp-for="ServiceReportId" class="form-control" />
+            <span asp-validation-for="ServiceReportId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="WhyNoServiceReportSubmitted" class="control-label"></label>
+            <textarea asp-for="WhyNoServiceReportSubmitted" class="form-control"></textarea>
+            <span asp-validation-for="WhyNoServiceReportSubmitted" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Solution" class="control-label"></label>
+            <textarea asp-for="Solution" class="form-control"></textarea>
+            <span asp-validation-for="Solution" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SolutionEngineer" class="control-label"></label>
+            <input asp-for="SolutionEngineer" class="form-control" />
+            <span asp-validation-for="SolutionEngineer" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateSolved" class="control-label"></label>
+            <div class="datetime">
+                <input asp-for="DateSolved" class="form-control text-date" />
+                <input asp-for="TimeSolved" class="form-control text-time" />
+                <span asp-validation-for="DateSolved" class="text-danger"></span>
+                <span asp-validation-for="TimeSolved" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="WhoRecorded" class="control-label"></label>
-                <input asp-for="WhoRecorded" class="form-control" />
-                <span asp-validation-for="WhoRecorded" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateRecorded" class="control-label"></label>
-                <div class="datetime">
-                    <input asp-for="DateRecorded" class="form-control text-date" />
-                    <input asp-for="TimeRecorded" class="form-control text-time" />
-                    <span asp-validation-for="DateRecorded" class="text-danger"></span>
-                    <span asp-validation-for="TimeRecorded" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="FailureCause" class="control-label"></label>
-                <textarea asp-for="FailureCause" class="form-control"></textarea>
-                <span asp-validation-for="FailureCause" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateReported" class="control-label"></label>
-                <div class="datetime">
-                    <input asp-for="DateReported" class="form-control text-date" />
-                    <input asp-for="TimeReported" class="form-control text-time" />
-                    <span asp-validation-for="DateReported" class="text-danger"></span>
-                    <span asp-validation-for="TimeReported" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="WayReportedVia" class="control-label"></label>
-                <select asp-for="WayReportedVia" asp-items="Model.ReportWays">
-                    <option value="">请选择</option>
-                </select>
-                <span asp-validation-for="WayReportedVia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TargetReportedTo" class="control-label"></label>
-                <select asp-for="TargetReportedTo" asp-items="Model.ReportTargets">
-                    <option value="">请选择</option>
-                </select>
-                <span asp-validation-for="TargetReportedTo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TargetEngineerName" class="control-label"></label>
-                <input asp-for="TargetEngineerName" class="form-control" />
-                <span asp-validation-for="TargetEngineerName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HasReportedToSpecifiedPerson" class="control-label"></label>张科
-                <input asp-for="HasReportedToSpecifiedPerson" class="form-control" />
-                <span asp-validation-for="HasReportedToSpecifiedPerson" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                张科<label asp-for="CommentsFromSpecifiedPerson" class="control-label"></label>
-                <textarea asp-for="CommentsFromSpecifiedPerson" class="form-control"></textarea>
-                <span asp-validation-for="CommentsFromSpecifiedPerson" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HasServiceReportSubmitted" class="control-label"></label>
-                <input asp-for="HasServiceReportSubmitted" class="form-control" />
-                <span asp-validation-for="HasServiceReportSubmitted" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ServiceReportId" class="control-label"></label>
-                <input asp-for="ServiceReportId" class="form-control" />
-                <span asp-validation-for="ServiceReportId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WhyNoServiceReportSubmitted" class="control-label"></label>
-                <textarea asp-for="WhyNoServiceReportSubmitted" class="form-control"></textarea>
-                <span asp-validation-for="WhyNoServiceReportSubmitted" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Solution" class="control-label"></label>
-                <textarea asp-for="Solution" class="form-control"></textarea>
-                <span asp-validation-for="Solution" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SolutionEngineer" class="control-label"></label>
-                <input asp-for="SolutionEngineer" class="form-control" />
-                <span asp-validation-for="SolutionEngineer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DateSolved" class="control-label"></label>
-                <div class="datetime">
-                    <input asp-for="DateSolved" class="form-control text-date" />
-                    <input asp-for="TimeSolved" class="form-control text-time" />
-                    <span asp-validation-for="DateSolved" class="text-danger"></span>
-                    <span asp-validation-for="TimeSolved" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="SuperiorComments" class="control-label"></label>
-                <textarea asp-for="SuperiorComments" class="form-control"></textarea>
-                <span asp-validation-for="SuperiorComments" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SuperiorSignature" class="control-label"></label>
-                <input asp-for="SuperiorSignature" class="form-control" />
-                <span asp-validation-for="SuperiorSignature" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SuperiorSignatureDate" class="control-label"></label>
-                <input asp-for="SuperiorSignatureDate" class="form-control" />
-                <span asp-validation-for="SuperiorSignatureDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.HiddenFor(m => m.Id)
-                <input type="submit" value="保存" class="btn btn-default" />
-                <a asp-controller="Failures" asp-action="Index">返回故障信息统计表</a>
-            </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SuperiorComments" class="control-label"></label>
+            <textarea asp-for="SuperiorComments" class="form-control"></textarea>
+            <span asp-validation-for="SuperiorComments" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SuperiorSignature" class="control-label"></label>
+            <input asp-for="SuperiorSignature" class="form-control" />
+            <span asp-validation-for="SuperiorSignature" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SuperiorSignatureDate" class="control-label"></label>
+            <input asp-for="SuperiorSignatureDate" class="form-control" />
+            <span asp-validation-for="SuperiorSignatureDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            @Html.HiddenFor(m => m.Id)
+            <button type="submit" class="btn btn-success">保存</button> |
+            <a asp-controller="Failures" asp-action="Index">返回故障信息统计表</a>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

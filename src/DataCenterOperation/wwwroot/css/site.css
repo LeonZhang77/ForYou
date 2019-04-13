@@ -18,16 +18,10 @@ body, p, a, input {
     font-family: 'HPSimplified', 'Microsoft YaHei', Arial;
 }
 
-body {
-    padding-top: 180px;
-    padding-bottom: 20px;
-}
-
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-top: 20px;
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
@@ -56,33 +50,6 @@ legend {
     border: 0;
 }
 
-div.section {
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
-textarea.description {
-    width: 400px;
-    height: 200px;
-}
-
-textarea.brief-description {
-    width: 400px;
-    height: 100px;
-}
-
-input.text-date, input.text-time {
-    width: 40%;
-}
-
-input.text-date {
-    float: left;
-}
-
-div.datetime {
-    clear: both;
-}
-
 /*--banner--*/
 .banner {
     height: 128px;
@@ -103,22 +70,6 @@ div.datetime {
         display: inline-block;
         margin-top: 50px;
         vertical-align: top;
-    }
-
-/*--nav--*/
-.navbar-right-zero-margin {
-    float: right;
-}
-
-.btn-logout {
-    padding: 15px;
-    border: 0px;
-    margin: 0px;
-    text-decoration: none;
-}
-
-    .btn-logout:hover {
-        text-decoration: none;
     }
 
 /*--login page--*/

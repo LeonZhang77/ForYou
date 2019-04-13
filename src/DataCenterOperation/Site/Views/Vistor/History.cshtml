@@ -1,91 +1,75 @@
 ﻿@model IEnumerable<DataCenterOperation.Site.ViewModels.EntryViewModel>
-
 @{
-    ViewData["Title"] = "来访登记";
+    ViewData["Title"] = "来访记录";
 }
+
+<h3>@ViewData["Title"]</h3>
+<hr />
 
 @section Scripts{
     <link href="~/css/table-gridtable.css" rel="stylesheet" />
     <script type="text/javascript" src="~/js/vistor/history.js"></script>
 }
-
 @section SectionDialog{
     <div id="dialog" title="进入申请详情">
         <table id="records_table" class="gridtable" style="border:0px solid red;width:auto"></table>
     </div>
-
     <div id="dialog_update_contactInfo" title="更新联系人信息">
         <label id="contactInfo_label" class="control-label">更新联系人信息?</label>
     </div>
 }
 
-<div class="row">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="col-md-3">
-
-        <ul>
-            <li><label>历史纪录</label></li>
-            <li><a asp-controller="Vistor" asp-action="EntryRequest">进入申请</a></li>
-            <li><a asp-controller="Home" asp-action="Error">身份识别</a></li>
-        </ul>
-
-    </div>
-    <div class="col-md-9">
-        <h2>历史纪录</h2>
-        <table class="gridtable">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.VistorName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.NumberOfPeople)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.EntryTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Company)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Matter)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ContactInfo)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.VistorName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.NumberOfPeople)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EntryTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Company)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Matter)
-                        </td>
-                        <td>
-                            <input id="contact_info_@item.ID" value="@item.ContactInfo" />
-                        </td>
-                        <td>
-                            <button id="update_contactInfo" onclick="update_ContactInfo('@item.ID')">更新联系人电话</button>
-                            <button id="details" onclick="open_dialog('@item.VistorEntryRequestGuid')">详情</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
-</div>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VistorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfPeople)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntryTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Matter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactInfo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VistorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfPeople)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EntryTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Matter)
+                </td>
+                <td>
+                    <input class="form-control form-control-sm" type="text" id="contact_info_@item.ID" value="@item.ContactInfo" />
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" id="update_contactInfo" onclick="update_ContactInfo('@item.ID')">更新联系人电话</button>
+                    <button class="btn btn-sm btn-outline-secondary" id="details" onclick="open_dialog('@item.VistorEntryRequestGuid')">详情</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

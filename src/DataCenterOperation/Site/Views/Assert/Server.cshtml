@@ -1,21 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "资产管理";
+    ViewData["Title"] = "服务器总况";
 }
 
-<div class="row">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="col-md-3">
+<h3>@ViewData["Title"]</h3>
+<hr />
 
-        <ul>
-            <li><label>服务器列表</label></li>
-            <li><a asp-controller="Assert" asp-action="X86Server">X86服务器</a></li>
-            <li><a asp-controller="" asp-action="">小型机</a></li>
-        </ul>
-    </div>
-    <div class="col-md-9">
-        <h2>服务器列表</h2>
-        <table class="table">
-            
-        </table>
-    </div>
+<div>
+    <a asp-controller="Assert" asp-action="X86Server">X86服务器</a>
+</div>
+<div>
+    <p>页面正在建设中</p>
 </div>

@@ -1,158 +1,112 @@
 ﻿@model DataCenterOperation.Site.ViewModels.EntryRequestViewModel
-
 @{
     ViewData["Title"] = "来访登记";
 }
+<h3>@ViewData["Title"]</h3>
+<hr />
 
 <link href="~/css/table-gridtable.css" rel="stylesheet" />
 <script type="text/javascript" src="~/js/vistor/entry_request.js"></script>
-
-<div class="row">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="col-md-2">
-
-        <ul>
-            <li><a asp-controller="Vistor" asp-action="History">历史纪录</a></li>
-            <li><label>进入申请</label></li>
-            <li><a asp-controller="Home" asp-action="Error">身份识别</a></li>
-        </ul>
-
-    </div>
+<div class="col-md-5">
     <form id='entry_request_form' asp-controller="Vistor" asp-action="Request" method="post" class="form-horizontal">
-        <div class="col-md-3">
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label asp-for="RequestPeoopleName" class="control-label"></label>
-                    <span asp-validation-for="RequestPeoopleName" class="text-danger"></span>
-                    <input asp-for="RequestPeoopleName" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label asp-for="Company" class="control-label"></label>
-                    <span asp-validation-for="Company" class="text-danger"></span>
-                    <input asp-for="Company" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group datetime">
-                <div class="col-md-12">
-                    <label asp-for="RequestDate" class="control-label"></label>
-                    <span asp-validation-for="RequestDate" class="text-danger"></span>
-                    <input asp-for="RequestDate" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group datetime">                
-                <div class="col-md-12">
-                    <label asp-for="BeginTime" class="control-label"></label>
-                    <span asp-validation-for="BeginTime" class="text-danger"></span>
-                    <input asp-for="BeginTime" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group datetime">
-                <div class="col-md-12">
-                    <label asp-for="EndTime" class="control-label"></label>
-                    <span asp-validation-for="EndTime" class="text-danger"></span>
-                    <input asp-for="EndTime" class="form-control" />                
-                </div>
-            </div>            
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="RequestPeoopleName" class="control-label"></label>
+            <span asp-validation-for="RequestPeoopleName" class="text-danger"></span>
+            <input asp-for="RequestPeoopleName" class="form-control" />
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label asp-for="Area" class="control-label"></label>
-                    <span asp-validation-for="Area" class="text-danger"></span>
-                    <input id='hidden_area' type='hidden' asp-for="Area" class="form-control" />
-                    <div>
-                        <input type="checkbox" name="areas" value="走道区">走道区
-                        <input type="checkbox" name="areas" value="屏蔽机房">屏蔽机房
-                        <input type="checkbox" name="areas" value="网络室">网络室
-                        <input type="checkbox" name="areas" value="配线室">配线室
-                        <input type="checkbox" name="areas" value="配电室">配电室
-                        <div>其他：<input type="text" id="other_area" /></div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label asp-for="Belongings" class="control-label"></label>
-                    <span asp-validation-for="Belongings" class="text-danger"></span>
-                    <input id='hidden_belongings' type='hidden' asp-for="Belongings" class="form-control" />
-                    <div>
-                        <input type="checkbox" name="belongings" value="电脑">电脑
-                        <input type="checkbox" name="belongings" value="移动硬盘">移动硬盘
-                        <input type="checkbox" name="belongings" value="摄像机">摄像机
-                        <input type="checkbox" name="belongings" value="照相机">照相机
-                        <input type="checkbox" name="belongings" value="录音笔">录音笔
-                        <div>其他：<input type="text" id="other_belonging" /></div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label asp-for="Matter_Short" class="control-label"></label>
-                    <span asp-validation-for="Matter_Short" class="text-danger"></span>
-                    <input id='hidden_matters' type='hidden' asp-for="Matter_Short" class="form-control" />
-                    <div>
-                        <input type="checkbox" name="matters" value="参观">参观
-                        <input type="checkbox" name="matters" value="项目实施">项目实施
-                        <input type="checkbox" name="matters" value="设备上下架">设备上下架
-                        <input type="checkbox" name="matters" value="系统维护">系统维护
-                        <div>其他：<input type="text" id="other_matter" /></div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label asp-for="Matter_Details" class="control-label"></label>
-                    <span asp-validation-for="Matter_Details" class="text-danger"></span>
-                    <textarea asp-for="Matter_Details" rows="10" class="form-control"></textarea>
-                </div>
-            </div>
-
+        <div class="form-group">
+            <label asp-for="Company" class="control-label"></label>
+            <span asp-validation-for="Company" class="text-danger"></span>
+            <input asp-for="Company" class="form-control" />
         </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label asp-for="Admin_Confirm" class="control-label"></label>
-                    <span asp-validation-for="Admin_Confirm" class="text-danger"></span>
-                    <textarea asp-for="Admin_Confirm" rows="10" class="form-control"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label asp-for="Manager_Confirm" class="control-label"></label>
-                    <span asp-validation-for="Manager_Confirm" class="text-danger"></span>
-                    <textarea asp-for="Manager_Confirm" rows="10" class="form-control"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-default" onclick='doSubmitForm(this.form)'>申请</button>                    
-                </div>
-            </div>
+        <div class="form-group datetime">
+            <label asp-for="RequestDate" class="control-label"></label>
+            <span asp-validation-for="RequestDate" class="text-danger"></span>
+            <input asp-for="RequestDate" class="form-control" />
         </div>
-        <div class="col-md-2">
+        <div class="form-group datetime">
+            <label asp-for="BeginTime" class="control-label"></label>
+            <span asp-validation-for="BeginTime" class="text-danger"></span>
+            <input asp-for="BeginTime" class="form-control" />
         </div>
-        <div class="col-md-10">
-            <h2>随行人员</h2>
+        <div class="form-group datetime">
+            <label asp-for="EndTime" class="control-label"></label>
+            <span asp-validation-for="EndTime" class="text-danger"></span>
+            <input asp-for="EndTime" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Area" class="control-label"></label>
+            <span asp-validation-for="Area" class="text-danger"></span>
+            <input id='hidden_area' type='hidden' asp-for="Area" class="form-control" />
             <div>
-                <div style="margin-bottom:10px;">
-                    <input type="button" value="新增" onclick="createRow()">
-                    <input type="button" value="删除" onclick="delRow()">
-                </div>
-                <div class="form-group">
-                        <input id='hidden_entourages' type='hidden' asp-for="Entourage" class="form-control" />
-                        <table id="entry_request_entourages_Table" class="gridtable">
-                            <tr>
-                                <th>选择</th>
-                                <th>姓名</th>
-                                <th>证件号</th>
-                                <th>单位</th>
-                            </tr>
-                            <tbody id="tbody"></tbody>
-                        </table>
-                    </div>
-                </div>
+                <input type="checkbox" name="areas" value="走道区">走道区
+                <input type="checkbox" name="areas" value="屏蔽机房">屏蔽机房
+                <input type="checkbox" name="areas" value="网络室">网络室
+                <input type="checkbox" name="areas" value="配线室">配线室
+                <input type="checkbox" name="areas" value="配电室">配电室
+                <div>其他：<input type="text" id="other_area" /></div>
             </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Belongings" class="control-label"></label>
+            <span asp-validation-for="Belongings" class="text-danger"></span>
+            <input id='hidden_belongings' type='hidden' asp-for="Belongings" class="form-control" />
+            <div>
+                <input type="checkbox" name="belongings" value="电脑">电脑
+                <input type="checkbox" name="belongings" value="移动硬盘">移动硬盘
+                <input type="checkbox" name="belongings" value="摄像机">摄像机
+                <input type="checkbox" name="belongings" value="照相机">照相机
+                <input type="checkbox" name="belongings" value="录音笔">录音笔
+                <div>其他：<input type="text" id="other_belonging" /></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Matter_Short" class="control-label"></label>
+            <span asp-validation-for="Matter_Short" class="text-danger"></span>
+            <input id='hidden_matters' type='hidden' asp-for="Matter_Short" class="form-control" />
+            <div>
+                <input type="checkbox" name="matters" value="参观">参观
+                <input type="checkbox" name="matters" value="项目实施">项目实施
+                <input type="checkbox" name="matters" value="设备上下架">设备上下架
+                <input type="checkbox" name="matters" value="系统维护">系统维护
+                <div>其他：<input type="text" id="other_matter" /></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Matter_Details" class="control-label"></label>
+            <span asp-validation-for="Matter_Details" class="text-danger"></span>
+            <textarea asp-for="Matter_Details" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label class="control-label">随行人员</label>
+            <div style="margin-bottom:10px;">
+                <input type="button" value="新增" onclick="createRow()">
+                <input type="button" value="删除" onclick="delRow()">
+            </div>
+            <input id='hidden_entourages' type='hidden' asp-for="Entourage" class="form-control" />
+            <table id="entry_request_entourages_Table" class="gridtable">
+                <tr>
+                    <th>选择</th>
+                    <th>姓名</th>
+                    <th>证件号</th>
+                    <th>单位</th>
+                </tr>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+        <div class="form-group">
+            <label asp-for="Admin_Confirm" class="control-label"></label>
+            <span asp-validation-for="Admin_Confirm" class="text-danger"></span>
+            <textarea asp-for="Admin_Confirm" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label asp-for="Manager_Confirm" class="control-label"></label>
+            <span asp-validation-for="Manager_Confirm" class="text-danger"></span>
+            <textarea asp-for="Manager_Confirm" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success" onclick='doSubmitForm(this.form)'>申请</button>
+        </div>
     </form>
 </div>

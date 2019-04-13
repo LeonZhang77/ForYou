@@ -1,15 +1,7 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
-    <li>
-        <a>@User.GetUsername()</a>
-    </li>
-    <li>
-        <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
-            <button type="submit" class="btn btn-link navbar-btn btn-logout">退出</button>
-        </form>
-    </li>
-}
-else if (!Context.Request.Path.StartsWithSegments("/Account/Login"))
-{
-    <li><a asp-area="" asp-controller="Account" asp-action="Login">登录</a></li>
+    <span class="navbar-text">@User.GetUsername()</span>
+    <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
+        <button type="submit" class="btn btn-link nav-link my-2 my-sm-0">退出</button>
+    </form>
 }
