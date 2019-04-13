@@ -1,7 +1,10 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "数据库管理";
 }
+
+<h3>@ViewData["Title"]</h3>
+<hr />
+
 @section Scripts{
     <link href="~/lib/webuploader/webuploader.css" rel="stylesheet" />
     <script src="~/lib/webuploader/webuploader.custom.js"></script>
@@ -32,33 +35,20 @@
     </div>
 }
 
-
-<div class="row">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="col-md-3">
-
-        <ul>
-            <li><a asp-controller="MysqlDB" asp-action="Index">数据库管理</a></li>
-        </ul>
-
+<div>
+    <div>
+        <button class="btn btn-success" onclick="backup()">备份数据库</button>
+        <button class="btn btn-danger" onclick="remove_all()">清空数据库</button>
+        <button class="btn btn-warning" onclick="open_upload_dialog()">还原数据库</button>
     </div>
-    <div class="col-md-9">
-        <h2>数据库管理</h2>
-        <div class="col-md-3" style="margin-bottom:10px;">
-            <button style="margin-bottom:10px;" class="btn btn-primary" onclick="backup()">备份数据库</button>
-            <div id="div-download" style="margin-bottom:10px; visibility:hidden">
-                <label style="margin-bottom:10px;">以下备份文件已经生成: </label>
-                <input style="margin-bottom:10px;" id="backup-file-name" value="" />
-                <button style="margin-bottom:10px;" onclick="download()">下载备份文件</button>
-                <button style="margin-bottom:10px;" onclick="delete_backup_files()">清除服务器端备份文件</button>
-            </div>
+    <div id="div-download" style="visibility:hidden">
+        <div class="form-group">
+            <strong>备份文件已经生成: </strong>
+            <input class="form-control" id="backup-file-name" value="" />
         </div>
-        <div class="col-md-3">
-            <button onclick="remove_all()">清空数据库</button>
-        </div>
-        <div class="col-md-3">
-            <button onclick="open_upload_dialog()">还原数据库</button>
+        <div class="form-group">
+            <button class="btn btn-outline-success btn-sm" onclick="download()">下载备份文件</button>
+            <button class="btn btn-outline-danger btn-sm" onclick="delete_backup_files()">清除服务器端备份文件</button>
         </div>
     </div>
 </div>
-
