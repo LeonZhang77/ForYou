@@ -2,29 +2,23 @@
 @{
     ViewData["Title"] = "Login - Data Center Operations";
 }
-<div class="row login-panel">
-    <div class="col-md-3">
+<div class="login-panel">
+    <div>
         <h2>请登录</h2>
         <div asp-validation-summary="All" class="text-danger"></div>
-        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label asp-for="Username" class="control-label"></label>
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                    <input asp-for="Username" class="form-control" />
-                </div>
+        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+            <div class="form-group col-md-12">
+                <label asp-for="Username" class="control-label"></label>
+                <span asp-validation-for="Username" class="text-danger"></span>
+                <input asp-for="Username" class="form-control" />
             </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    <label asp-for="Password" class="control-label"></label>
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                    <input asp-for="Password" class="form-control" />
-                </div>
+            <div class="form-group col-md-12">
+                <label asp-for="Password" class="control-label"></label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <input asp-for="Password" class="form-control" />
             </div>
-            <div class="form-group">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-default">登录</button>
-                </div>
+            <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-block btn-success">登录</button>
             </div>
         </form>
     </div>

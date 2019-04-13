@@ -1,27 +1,30 @@
 ﻿@if (User.Identity.IsAuthenticated)
 {
-    <nav class="navbar navbar-inverse">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li><a asp-area="" asp-controller="Home" asp-action="Index">首页</a></li>
-                <li><a>|</a></li>
-                <li><a asp-area="" asp-controller="Assert" asp-action="OverView">资产管理</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="Index">巡检数据</a></li>
-                <li><a asp-area="" asp-controller="Failures" asp-action="Index">故障信息</a></li>
-                <li><a asp-area="" asp-controller="Vistor" asp-action="History">人员来访</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="Index">备品备件</a></li>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">首页 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item"><a class="navbar-text">|</a></li>
+                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Assert" asp-action="OverView">资产管理</a></li>
+                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">巡检数据</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        故障信息
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-area="" asp-controller="Failures" asp-action="Create">故障登记</a>
+                        <a class="dropdown-item" asp-area="" asp-controller="Failures" asp-action="Index">故障统计</a>
+                    </div>
+                </li>
+                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Vistor" asp-action="History">人员来访</a></li>
+                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">备品备件</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right-zero-margin">
-                @await Html.PartialAsync("_LoginPartial")
-            </ul>
+            @await Html.PartialAsync("_LoginPartial")
         </div>
     </nav>
 }

@@ -7,14 +7,15 @@
 <h3>@ViewData["Title"]</h3>
 <hr />
 
-<div class="text-right">
-    <form asp-action="Index" class="form-inline">
-        <div class="form-group">
-            <input asp-for="Keyword" class="form-control" />
-            <button class="btn btn-default">搜索</button>
-        </div>
-    </form>
-</div>
+<form asp-action="Index" class="form-inline mb-2">
+    <div class="form-group mr-sm-2">
+        <input asp-for="Keyword" class="form-control form-control-sm" />
+    </div>
+    <div class="form-group mr-sm-2">
+        <button type="submit" class="btn btn-outline-primary btn-sm">搜索</button>
+    </div>
+    <small class="form-text">记录数：@Model.Count，页数：@Model.TotalPages。</small>
+</form>
 
 @await Html.PartialAsync("_Failures", Model.Failures)
 
@@ -25,20 +26,27 @@
     }
     @if (Model.TotalPages > 1)
     {
-        <a asp-action="Index"
-           asp-route-pageIndex="@(Model.PageIndex - 1)"
-           asp-route-pageSize="@(Model.PageSize)"
-           asp-route-keyword="@Model.Keyword"
-           class="btn btn-default @prevDisabled btn">
-            上一页
-        </a>
-        <a asp-action="Index"
-           asp-route-pageIndex="@(Model.PageIndex + 1)"
-           asp-route-pageSize="@(Model.PageSize)"
-           asp-route-keyword="@Model.Keyword"
-           class="btn btn-default @nextDisabled btn">
-            下一页
-        </a>
+        <nav aria-label="Search results pages">
+            <ul class="pagination pagination-sm">
+                <li class="page-item @prevDisabled">
+                    <a asp-action="Index"
+                       asp-route-pageIndex="@(Model.PageIndex - 1)"
+                       asp-route-pageSize="@(Model.PageSize)"
+                       asp-route-keyword="@Model.Keyword"
+                       class="page-link">
+                        上一页
+                    </a>
+                </li>
+                <li class="page-item @nextDisabled">
+                    <a asp-action="Index"
+                       asp-route-pageIndex="@(Model.PageIndex + 1)"
+                       asp-route-pageSize="@(Model.PageSize)"
+                       asp-route-keyword="@Model.Keyword"
+                       class="page-link">
+                        下一页
+                    </a>
+                </li>
+            </ul>
+        </nav>
     }
-    <span>记录数：@Model.Count，页数：@Model.TotalPages。</span>
 </div>

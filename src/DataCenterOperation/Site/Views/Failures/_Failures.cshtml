@@ -6,34 +6,34 @@
     </caption>
     <thead>
         <tr>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Index)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.DeviceName)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.FailureCause)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.DateRecorded)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.DateSolved)
             </th>
-            <th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.WhoRecorded)
             </th>
-            <th></th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <th scope="col">
                     @Html.DisplayFor(modelItem => item.Index)
-                </td>
+                </th>
                 <td>
                     @Html.DisplayFor(modelItem => item.DeviceName)
                 </td>
