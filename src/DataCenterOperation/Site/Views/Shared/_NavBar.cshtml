@@ -13,15 +13,23 @@
                 <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Assert" asp-action="OverView">资产管理</a></li>
                 <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">巡检数据</a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFailures" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         故障信息
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFailures">
                         <a class="dropdown-item" asp-area="" asp-controller="Failures" asp-action="Create">故障登记</a>
                         <a class="dropdown-item" asp-area="" asp-controller="Failures" asp-action="Index">故障统计</a>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Vistor" asp-action="History">人员来访</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownVistors" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        人员来访
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownVistors">
+                        <a class="dropdown-item" asp-area="" asp-controller="Vistor" asp-action="History">来访记录</a>
+                        <a class="dropdown-item" asp-area="" asp-controller="Vistor" asp-action="EntryRequest">来访登记</a>
+                    </div>
+                </li>
                 <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">备品备件</a></li>
             </ul>
             @await Html.PartialAsync("_LoginPartial")
