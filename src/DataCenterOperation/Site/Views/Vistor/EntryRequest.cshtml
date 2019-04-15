@@ -1,6 +1,7 @@
 ﻿@model DataCenterOperation.Site.ViewModels.EntryRequestViewModel
 @{
     ViewData["Title"] = "来访登记";
+    var readOnly = Context.User.IsAdmin() ? string.Empty : "readonly";
 }
 <h3>@ViewData["Title"]</h3>
 <hr />
@@ -103,7 +104,7 @@
         <div class="form-group">
             <label asp-for="Manager_Confirm" class="control-label"></label>
             <span asp-validation-for="Manager_Confirm" class="text-danger"></span>
-            <textarea asp-for="Manager_Confirm" class="form-control"></textarea>
+            <textarea @readOnly asp-for="Manager_Confirm" class="form-control"></textarea>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-success" onclick='doSubmitForm(this.form)'>申请</button>
