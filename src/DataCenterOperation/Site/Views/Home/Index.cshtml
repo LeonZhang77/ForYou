@@ -1,17 +1,21 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@{UserPermission userPermission = (UserPermission)ViewBag.AccessPremission; }
 
 <div class="row">
     <div class="col-md-3">
         <h2>资产</h2>
         <ul>
-            <li><a asp-controller="Assert" asp-action="Server">服务器</a></li>
-            <li><a asp-controller="" asp-action="">网络设备</a></li>
-            <li><a asp-controller="" asp-action="">存储设备</a></li>
-            <li><a asp-controller="" asp-action="">精密设备</a></li>
-            <li><a asp-controller="" asp-action="">不间断电源</a></li>
-            <li><a asp-controller="" asp-action="">其他设备</a></li>
+            @if (userPermission == UserPermission.Admin)
+            {
+                <li><a asp-controller="Assert" asp-action="Server">服务器</a></li>
+                <li><a asp-controller="" asp-action="">网络设备</a></li>
+                <li><a asp-controller="" asp-action="">存储设备</a></li>
+                <li><a asp-controller="" asp-action="">精密设备</a></li>
+                <li><a asp-controller="" asp-action="">不间断电源</a></li>
+                <li><a asp-controller="" asp-action="">其他设备</a></li>
+            }
         </ul>
     </div>
     <div class="col-md-3">
