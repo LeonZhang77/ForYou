@@ -1,9 +1,11 @@
-﻿using DataCenterOperation.Services;
+﻿using DataCenterOperation.Data.Entities;
+using DataCenterOperation.Services;
 using DataCenterOperation.Site.Extensions;
 using DataCenterOperation.Site.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -107,6 +109,72 @@ namespace DataCenterOperation.Site.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Management()
+        {
+            // Clear the existing cookie to ensure a clean login process
+
+            List<UserAccessViewModel> models = new List<UserAccessViewModel>(); 
+            List<User> entities = await _userService.GetAllUsers();
+            foreach (User item in entities)
+            {
+                var model = UserAccessViewModel.GetUserAcessInfo(item);             
+                
+                models.Add(model);
+            }
+
+            return View(models);
+        }
+
+        public async Task<string> User_Add()
+        {
+            var returnValue = "/account/management";
+
+            var username = Request.Form["username"];
+            var password = Request.Form["password"];
+            var role = Request.Form["role"];
+
+            var entity = new User
+            {
+                Username = username,
+                Password = password
+            };
+            entity.IsAdmin = role.Equals("Admin") ?  true : false;
+        
+            await _userService.AddOrUpdateUser(entity);
+
+            return returnValue;
+        }
+
+        public async Task<string> User_Remove()
+        {
+            var returnValue = "/account/management";
+                        
+            var guid = new Guid(Request.Form["id"]);      
+            
+            await _userService.RemoveUser(guid);
+
+            return returnValue;
+        }
+
+        public async Task<string> User_Modify()
+        {
+            var returnValue = "/account/management";
+
+            var guid = new Guid(Request.Form["id"]);
+            var password = Request.Form["password"];
+            var role = Request.Form["role"];
+
+            var entity = await _userService.GetUserAsync(guid);
+            entity.IsAdmin = role.Equals("Admin") ? true : false;
+            entity.Password = password;
+
+            await _userService.AddOrUpdateUser(entity);
+
+            return returnValue;
         }
 
         #region helper methods
