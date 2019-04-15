@@ -1,7 +1,7 @@
 ﻿@model DataCenterOperation.Site.ViewModels.EntryRequestViewModel
 @{
     ViewData["Title"] = "来访登记";
-    var readOnly = Context.User.IsAdmin() ? string.Empty : "readonly";
+    var readOnly = User.IsAdmin() ? string.Empty : "readonly";
 }
 <h3>@ViewData["Title"]</h3>
 <hr />
