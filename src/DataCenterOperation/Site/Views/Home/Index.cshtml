@@ -7,15 +7,13 @@
     <div class="col-md-3">
         <h2>资产</h2>
         <ul>
-            @if (userPermission == UserPermission.Admin)
-            {
                 <li><a asp-controller="Assert" asp-action="Server">服务器</a></li>
                 <li><a asp-controller="" asp-action="">网络设备</a></li>
                 <li><a asp-controller="" asp-action="">存储设备</a></li>
                 <li><a asp-controller="" asp-action="">精密设备</a></li>
                 <li><a asp-controller="" asp-action="">不间断电源</a></li>
                 <li><a asp-controller="" asp-action="">其他设备</a></li>
-            }
+            
         </ul>
     </div>
     <div class="col-md-3">
@@ -35,19 +33,26 @@
         </ul>
     </div>
     <div class="col-md-3">
-        <h2>备件</h2>
-        <ul>
-            <li><a asp-controller="" asp-action="">网络设备</a></li>
-            <li><a asp-controller="" asp-action="">存储设备</a></li>
-            <li><a asp-controller="" asp-action="">其他设备</a></li>
-        </ul>
+        @if (userPermission == UserPermission.Admin)
+        {
+            <h2>备件</h2>
+            <ul>
+                <li><a asp-controller="" asp-action="">网络设备</a></li>
+                <li><a asp-controller="" asp-action="">存储设备</a></li>
+                <li><a asp-controller="" asp-action="">其他设备</a></li>
+            </ul>
+        }
     </div>
 </div>
 <div class="row">
     <div class="col-md-3">
-        <h2>系统</h2>
-        <ul>
-            <li><a asp-controller="MysqlDB" asp-action="Index">数据库</a></li>
-        </ul>
-    </div>
+        @if (userPermission == UserPermission.Admin)
+        {
+            <h2>系统</h2>
+            <ul>
+                <li><a asp-controller="MysqlDB" asp-action="Index">数据库</a></li>
+                <li><a asp-controller="Account" asp-action="Management">系统用户</a></li>
+            </ul>
+        }
+     </div>
 </div>
