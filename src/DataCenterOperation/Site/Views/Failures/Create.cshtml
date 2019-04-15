@@ -1,7 +1,7 @@
 ﻿@model DataCenterOperation.Site.ViewModels.FailureCreateViewModel
 @{
     ViewData["Title"] = "故障信息登记表";
-    var readOnly = Context.User.IsAdmin() ? string.Empty : "readonly";
+    var readOnly = User.IsAdmin() ? string.Empty : "readonly";
 }
 <h3>故障信息登记表</h3>
 <hr />
