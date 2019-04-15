@@ -1,6 +1,7 @@
 ﻿@model DataCenterOperation.Site.ViewModels.FailureCreateViewModel
 @{
     ViewData["Title"] = "故障信息登记表";
+    var readOnly = Context.User.IsAdmin() ? string.Empty : "readonly";
 }
 <h3>故障信息登记表</h3>
 <hr />
@@ -115,17 +116,17 @@
         </div>
         <div class="form-group">
             <label asp-for="SuperiorComments" class="control-label"></label>
-            <textarea asp-for="SuperiorComments" class="form-control"></textarea>
+            <textarea @readOnly asp-for="SuperiorComments" class="form-control"></textarea>
             <span asp-validation-for="SuperiorComments" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="SuperiorSignature" class="control-label"></label>
-            <input asp-for="SuperiorSignature" class="form-control" />
+            <input @readOnly asp-for="SuperiorSignature" class="form-control" />
             <span asp-validation-for="SuperiorSignature" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="SuperiorSignatureDate" class="control-label"></label>
-            <input asp-for="SuperiorSignatureDate" class="form-control" />
+            <input @readOnly asp-for="SuperiorSignatureDate" class="form-control" />
             <span asp-validation-for="SuperiorSignatureDate" class="text-danger"></span>
         </div>
         <div class="form-group">
