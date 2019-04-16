@@ -12,10 +12,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace DataCenterOperation.Site.Controllers
 {
+    [Authorize(Policy = "AdminOnly")]
     public class MysqlDBController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
