@@ -8,7 +8,7 @@
     <a class="btn btn-outline-primary btn-sm" asp-controller="Assert" asp-action="X86Server">X86服务器列表</a>
     <a class="btn btn-outline-primary btn-sm" asp-controller="Assert" asp-action="X86Server_Users">用户管理</a>
 </div>
-<form id='entry_request_form' asp-controller="Vistor" asp-action="Request" method="post">
+<form id='entry_request_form' asp-controller="Assert" asp-action="X86Server_Add" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="FixedAssertNumber" class="control-label"></label>
