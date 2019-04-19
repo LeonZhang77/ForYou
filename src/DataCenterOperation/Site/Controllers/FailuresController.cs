@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using DataCenterOperation.Services;
@@ -6,7 +7,10 @@ using DataCenterOperation.Site.Extensions;
 using DataCenterOperation.Site.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Runtime.InteropServices;
 
 namespace DataCenterOperation.Site.Controllers
 {
@@ -15,11 +19,14 @@ namespace DataCenterOperation.Site.Controllers
     {
         private IFailureService _failureService;
         private ILogger<FailuresController> _logger;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
         public FailuresController(IFailureService failureService,
+            IHostingEnvironment hostingEnvironment,
             ILogger<FailuresController> logger)
         {
             _failureService = failureService;
+            _hostingEnvironment = hostingEnvironment;
             _logger = logger;
         }
 
@@ -153,6 +160,85 @@ namespace DataCenterOperation.Site.Controllers
             await _failureService.DeleteAsync(id.Value);
 
             return RedirectToAction("Index");
+        }
+
+        public async Task<string> Report_Upload(IFormCollection upload_files)
+        {
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var filePath = "";
+            foreach (var item in upload_files.Files)
+            {
+                var filename = Guid.NewGuid();
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                { filePath = webRootPath + "\\upload\\FailersReport\\" + filename.ToString() + ".jpg"; }
+                else
+                { filePath = webRootPath + "/upload/FailersReport/" + filename.ToString() + ".jpg"; }
+
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await item.CopyToAsync(stream);
+                }
+            }
+            return filePath;
+        }
+
+        public string Report_Rename()
+        {
+            var new_file_name = Request.Form["id"];
+            var old_file_Path = Request.Form["filePath"];
+            var new_file_path = "";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                new_file_path = Path.GetDirectoryName(old_file_Path) + "\\" + new_file_name + Path.GetExtension(old_file_Path);
+            }
+            else
+            {
+                new_file_path = Path.GetDirectoryName(old_file_Path) + "/" + new_file_name + Path.GetExtension(old_file_Path);
+            }
+
+            System.IO.File.Move(old_file_Path, new_file_path);
+            
+            return new_file_path;
+        }
+
+        public int Report_Remove()
+        {
+            var returndata = 0;
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var file_name = Request.Form["id"];
+            var file_path = "";
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            { file_path = webRootPath + "\\upload\\FailersReport\\" + file_name + ".jpg"; }
+            else
+            { file_path = webRootPath + "/upload/FailersReport/" + file_name + ".jpg"; }
+
+            if (System.IO.File.Exists(file_path)) 
+            {
+                System.IO.File.Delete(file_path);
+                returndata = 1; 
+            }
+
+            return returndata;
+        }
+
+        public int Report_Show()
+        {
+            var returndata = 0;
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var file_name = Request.Form["id"];
+            var file_path = "";
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            { file_path = webRootPath + "\\upload\\FailersReport\\" + file_name + ".jpg"; }
+            else
+            { file_path = webRootPath + "/upload/FailersReport/" + file_name + ".jpg"; }
+
+            if (System.IO.File.Exists(file_path)) { returndata = 1; }
+
+            return returndata;
         }
     }
 }
