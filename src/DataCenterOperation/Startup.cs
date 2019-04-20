@@ -43,7 +43,7 @@ namespace DataCenterOperation
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddRazorOptions(options =>
                 {
                     options.ViewLocationFormats.Clear();
