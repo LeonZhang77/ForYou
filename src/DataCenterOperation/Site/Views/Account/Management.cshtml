@@ -1,24 +1,19 @@
-﻿@model IEnumerable<DataCenterOperation.Site.ViewModels.UserAccessViewModel>;
+﻿@model IEnumerable<DataCenterOperation.Data.Entities.User>;
 @{
     ViewData["Title"] = "系统用户";
 }
-
 <h3>@ViewData["Title"]</h3>
 <hr />
-
 @section Scripts{
     <script src="~/js/Account/management.js"></script>
 }
 @section SectionDialog{
-
     <div id="dialog_remove" title="确认删除">
         <div>删除后将不可恢复，确认？</div>
     </div>
-
     <div id="dialog_after_modify" title="更新成功">
         <div>更新已成功！</div>
     </div>
-
     <div id="dialog_add_user" title="增加用户">
         <div><label>用户名:</label><input id="add_user_name" /></div>
         <div>
@@ -34,7 +29,6 @@
 <div style="margin-bottom:10px;">
     <button class="btn btn-outline-primary btn-sm" onclick="User_Add()">增加用户</button>
 </div>
-
 <div style="overflow-x:visible; overflow-y: auto; height: 1000px; width: 100%">
     <table class="table table-bordered table-striped table-hover">
         <thead>
@@ -49,34 +43,32 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    @Html.HiddenFor(modelItem => item.User.Id)
+                    @Html.HiddenFor(modelItem => item.Id)
                     <td>
-                        <button onclick="User_Remove('@item.User.Id')">删除</button>
-                        <button onclick="User_Modify('@item.User.Id')">更新用户信息</button>
+                        <button onclick="User_Remove('@item.Id')">删除</button>
+                        <button onclick="User_Modify('@item.Id')">更新用户信息</button>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.User.Username)
+                        @Html.DisplayFor(modelItem => item.Username)
                     </td>
                     <td>
-                        @*@Html.DisplayFor(modelItem => item.UserPermission)*@
-                        @if (item.UserPermission == UserPermission.Admin)
+                        @if (item.IsAdmin)
                         {
-                            <select id="role_@item.User.Id">
-                                <option value="Admin" selected="selected" >管理员</option>
+                            <select id="role_@item.Id">
+                                <option value="Admin" selected="selected">管理员</option>
                                 <option value="Normal">普通用户</option>
                             </select>
                         }
                         else
                         {
-                            <select id="role_@item.User.Id">
+                            <select id="role_@item.Id">
                                 <option value="Admin">管理员</option>
                                 <option value="Normal" selected="selected">普通用户</option>
                             </select>
-                        }                        
+                        }
                     </td>
                     <td>
-                        @*@Html.text(modelItem => item.User.Password)*@
-                        <input type="text" value="@item.User.Password" id="password_@item.User.Id" />
+                        <input type="text" value="@item.Password" id="password_@item.Id" />
                     </td>
                 </tr>}
         </tbody>

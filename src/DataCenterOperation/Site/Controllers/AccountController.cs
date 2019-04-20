@@ -1,16 +1,16 @@
-﻿using DataCenterOperation.Data.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using DataCenterOperation.Data.Entities;
 using DataCenterOperation.Services;
 using DataCenterOperation.Site.Extensions;
 using DataCenterOperation.Site.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace DataCenterOperation.Site.Controllers
 {
@@ -115,18 +115,9 @@ namespace DataCenterOperation.Site.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Management()
         {
-            // Clear the existing cookie to ensure a clean login process
+            var users = await _userService.GetAllUsers();
 
-            List<UserAccessViewModel> models = new List<UserAccessViewModel>(); 
-            List<User> entities = await _userService.GetAllUsers();
-            foreach (User item in entities)
-            {
-                var model = UserAccessViewModel.GetUserAcessInfo(item);             
-                
-                models.Add(model);
-            }
-
-            return View(models);
+            return View(users);
         }
 
         public async Task<string> User_Add()
@@ -142,8 +133,8 @@ namespace DataCenterOperation.Site.Controllers
                 Username = username,
                 Password = password
             };
-            entity.IsAdmin = role.Equals("Admin") ?  true : false;
-        
+            entity.IsAdmin = role.Equals("Admin") ? true : false;
+
             await _userService.AddOrUpdateUser(entity);
 
             return returnValue;
@@ -152,9 +143,9 @@ namespace DataCenterOperation.Site.Controllers
         public async Task<string> User_Remove()
         {
             var returnValue = "/account/management";
-                        
-            var guid = new Guid(Request.Form["id"]);      
-            
+
+            var guid = new Guid(Request.Form["id"]);
+
             await _userService.RemoveUser(guid);
 
             return returnValue;
