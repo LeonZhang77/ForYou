@@ -46,6 +46,7 @@ namespace DataCenterOperation.Site.Controllers
                 Id = f.Id,
                 DeviceName = f.DeviceName,
                 FailureCause = f.FailureCause,
+                WhoRecorded = f.WhoRecorded,
                 DateRecorded = f.WhenRecorded,
                 DateSolved = f.WhenSolved
             });
