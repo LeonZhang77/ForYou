@@ -21,6 +21,21 @@ namespace DataCenterOperation.Site.ViewModels
            public List<AssertX86ServerViewModel> ErrorItems {get; set; }
     }
 
+    public class X86ServerSearchViewModel
+    {
+        [Display(Prompt = "关键字")]
+        public string Keyword { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+
+        public int Count { get; set; }
+        public IEnumerable<AssertX86ServerViewModel> Servers { get; set; }
+
+        public bool HasPrevPage { get { return PageIndex > 1; } }
+        public bool HasNextPage { get { return PageIndex < TotalPages; } }
+        public int TotalPages { get { return (int)Math.Ceiling(Count / (double)PageSize); } }
+    }
+
     public class AssertX86ServerViewModel
     {
         public Guid ID { get; set; }

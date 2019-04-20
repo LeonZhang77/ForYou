@@ -1,20 +1,19 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using DataCenterOperation.Data.Entities;
 using DataCenterOperation.Services;
 using DataCenterOperation.Site.Extensions;
 using DataCenterOperation.Site.ViewModels;
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using DataCenterOperation.Data;
-using DataCenterOperation.Data.Entities;
 using DataCenterOperation.Util;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System.Runtime.InteropServices;
 
 namespace DataCenterOperation.Site.Controllers
 {
@@ -47,44 +46,57 @@ namespace DataCenterOperation.Site.Controllers
             return View();
         }
 
-        [HttpGet]
-        public async Task<IActionResult> X86Server()
+        public async Task<IActionResult> X86Server(string keyword, int? pageIndex, int? pageSize)
         {
-            List<Assert_X86Server> servers = (await _assertX86ServerService.GetAllAssertX86Server());
-            List<AssertX86ServerViewModel> models = new List<AssertX86ServerViewModel>();
+            keyword = keyword ?? string.Empty;
+            pageIndex = pageIndex ?? 1;
+            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            pageSize = pageSize ?? 20;
+            pageSize = pageSize < 1 ? 20 : pageSize;
 
-            foreach (Assert_X86Server item in servers)
+            var servers = await _assertX86ServerService.GetX86ServersAsync(keyword, pageIndex.Value, pageSize.Value);
+            var items = servers.Select(server => new AssertX86ServerViewModel
             {
-                AssertX86ServerViewModel model = new AssertX86ServerViewModel();
-                model.ID = item.Id;
-                model.FixedAssertNumber = item.FixedAssertNumber;
-                model.Name = item.Name;
-                model.SerialNumber = item.SerialNumber;
-                model.HD = item.HD;
-                model.OS = item.OS;
-                model.EngineNumber = item.EngineNumber;
-                model.RackLocation = item.RackLocation;
-                model.BeginU = item.BeginU;
-                model.EndU = item.EndU;
-                model.VirtualizedResourcePool = item.VirtualizedResourcePool;
-                model.BusinessSystem = item.BusinessSystem;
-                model.IP = item.IP;
-                model.NetcardNumber = item.NetcardNumber;
-                model.HBANumber = item.HBANumber;
-                model.StorageSize = item.StorageSize;
-                model.MaintenanceInformation = item.MaintenanceInformation;
-                model.InstallDate = item.InstallDate;
-                model.Band = item.Band;
-                model.CPU = item.CPU;
-                model.Memory = item.Memory;
-                models.Add(model);
-            }            
-            return View(models);
+                ID = server.Id,
+                FixedAssertNumber = server.FixedAssertNumber,
+                Name = server.Name,
+                SerialNumber = server.SerialNumber,
+                HD = server.HD,
+                OS = server.OS,
+                EngineNumber = server.EngineNumber,
+                RackLocation = server.RackLocation,
+                BeginU = server.BeginU,
+                EndU = server.EndU,
+                VirtualizedResourcePool = server.VirtualizedResourcePool,
+                BusinessSystem = server.BusinessSystem,
+                IP = server.IP,
+                NetcardNumber = server.NetcardNumber,
+                HBANumber = server.HBANumber,
+                StorageSize = server.StorageSize,
+                MaintenanceInformation = server.MaintenanceInformation,
+                InstallDate = server.InstallDate,
+                Band = server.Band,
+                CPU = server.CPU,
+                Memory = server.Memory
+            });
+
+            var count = await _assertX86ServerService.CountAsync(keyword);
+
+            var model = new X86ServerSearchViewModel
+            {
+                Servers = items,
+                Keyword = keyword,
+                PageIndex = pageIndex.Value,
+                PageSize = pageSize.Value,
+                Count = count
+            };
+
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult X86Server_Add()
-        {            
+        {
             var request = new AssertX86ServerViewModel();
             request.InstallDate = DateTime.Now;
 
@@ -122,9 +134,10 @@ namespace DataCenterOperation.Site.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> X86Server_Verify_List() {
+        public async Task<IActionResult> X86Server_Verify_List()
+        {
             string filePath = Request.QueryString.Value.Substring(1);
-                
+
             List<string[]> str_values_List = Util.Excel_Utils.GetSheetValuesFromExcel(filePath);
             List<AssertX86ServerViewModel> tempList = new List<AssertX86ServerViewModel>();
             AssertX86ServerVerifyListViewModel returnModel = new AssertX86ServerVerifyListViewModel();
@@ -170,14 +183,14 @@ namespace DataCenterOperation.Site.Controllers
             }
             foreach (var item in tempList)
             {
-                if ( tempList.FindAll(m => m.FixedAssertNumber == item.FixedAssertNumber).Count >= 2)
+                if (tempList.FindAll(m => m.FixedAssertNumber == item.FixedAssertNumber).Count >= 2)
                 {
                     returnModel.ErrorItems.Add(item);
                 }
                 else
                 {
                     Assert_X86Server server = await _assertX86ServerService.GetAssertX86ServerByColumn(item.FixedAssertNumber, ENUMS.Type.FixedAssertNumber);
-                    
+
                     if (server != null)
                     {
                         returnModel.ReadyToModify.Add(item);
@@ -187,17 +200,17 @@ namespace DataCenterOperation.Site.Controllers
                         returnModel.ReadyToAdd.Add(item);
                     }
                 }
-                
+
             }
 
             if (System.IO.File.Exists(filePath))
             {
                 //删除临时文件
-                System.IO.File.Delete(filePath); 
-            }            
+                System.IO.File.Delete(filePath);
+            }
             return View(returnModel);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> X86Server_Verify_List(AssertX86ServerVerifyListViewModel verifyListModel)
         {
@@ -233,26 +246,26 @@ namespace DataCenterOperation.Site.Controllers
             {
                 var entity = await _assertX86ServerService.GetAssertX86ServerByColumn(model.FixedAssertNumber, ENUMS.Type.FixedAssertNumber);
                 entity.FixedAssertNumber = model.FixedAssertNumber;
-                    entity.Name = model.Name;
-                    entity.SerialNumber = model.SerialNumber;
-                    entity.HD = model.HD;
-                    entity.OS = model.OS;
-                    entity.EngineNumber = model.EngineNumber;
-                    entity.RackLocation = model.RackLocation;
-                    entity.BeginU = model.BeginU;
-                    entity.EndU = model.EndU;
-                    entity.VirtualizedResourcePool = model.VirtualizedResourcePool;
-                    entity.BusinessSystem = model.BusinessSystem;
-                    entity.IP = model.IP;
-                    entity.NetcardNumber = model.NetcardNumber;
-                    entity.HBANumber = model.HBANumber;
-                    entity.StorageSize = model.StorageSize;
-                    entity.MaintenanceInformation = model.MaintenanceInformation;
-                    entity.InstallDate = model.InstallDate;
-                    entity.Band = model.Band;
-                    entity.CPU = model.CPU;
-                    entity.Memory= model.Memory;
-                
+                entity.Name = model.Name;
+                entity.SerialNumber = model.SerialNumber;
+                entity.HD = model.HD;
+                entity.OS = model.OS;
+                entity.EngineNumber = model.EngineNumber;
+                entity.RackLocation = model.RackLocation;
+                entity.BeginU = model.BeginU;
+                entity.EndU = model.EndU;
+                entity.VirtualizedResourcePool = model.VirtualizedResourcePool;
+                entity.BusinessSystem = model.BusinessSystem;
+                entity.IP = model.IP;
+                entity.NetcardNumber = model.NetcardNumber;
+                entity.HBANumber = model.HBANumber;
+                entity.StorageSize = model.StorageSize;
+                entity.MaintenanceInformation = model.MaintenanceInformation;
+                entity.InstallDate = model.InstallDate;
+                entity.Band = model.Band;
+                entity.CPU = model.CPU;
+                entity.Memory = model.Memory;
+
                 await _assertX86ServerService.UpdateAssertX86Server(entity);
             }
 
@@ -270,8 +283,8 @@ namespace DataCenterOperation.Site.Controllers
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 { filePath = webRootPath + "\\upload\\" + filename.ToString() + ".xls"; }
-                else 
-                { filePath = webRootPath + "/upload/" + filename.ToString() + ".xls";  }
+                else
+                { filePath = webRootPath + "/upload/" + filename.ToString() + ".xls"; }
 
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
@@ -304,39 +317,40 @@ namespace DataCenterOperation.Site.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> X86Server_Modify(){
+        public async Task<IActionResult> X86Server_Modify()
+        {
             //var guid = new Guid(Request.Form["id"]);
             var guid = new Guid(Request.QueryString.Value.Substring(1));
             Assert_X86Server x86Server = await _assertX86ServerService.GetAssertX86ServerById(guid);
             AssertX86ServerViewModel model = new AssertX86ServerViewModel();
-                model.ID = x86Server.Id;
-                model.FixedAssertNumber = x86Server.FixedAssertNumber;
-                model.Name = x86Server.Name;
-                model.SerialNumber = x86Server.SerialNumber;
-                model.Band = x86Server.Band;
-                model.CPU = x86Server.CPU;
-                model.Memory = x86Server.Memory;
-                model.HD = x86Server.HD;
-                model.OS = x86Server.OS;
-                model.EngineNumber = x86Server.EngineNumber;
-                model.RackLocation = x86Server.RackLocation;
-                model.BeginU = x86Server.BeginU;
-                model.EndU = x86Server.EndU;
-                model.VirtualizedResourcePool = x86Server.VirtualizedResourcePool;
-                model.BusinessSystem = x86Server.BusinessSystem;
-                model.IP = x86Server.IP;
-                model.NetcardNumber = x86Server.NetcardNumber;
-                model.HBANumber = x86Server.HBANumber;
-                model.StorageSize = x86Server.StorageSize;
-                model.MaintenanceInformation = x86Server.MaintenanceInformation;
-                if (String.IsNullOrEmpty(x86Server.InstallDate.ToString()))
-                {
-                    model.InstallDate = null;
-                }
-                else
-                {
-                    model.InstallDate = x86Server.InstallDate;
-                }
+            model.ID = x86Server.Id;
+            model.FixedAssertNumber = x86Server.FixedAssertNumber;
+            model.Name = x86Server.Name;
+            model.SerialNumber = x86Server.SerialNumber;
+            model.Band = x86Server.Band;
+            model.CPU = x86Server.CPU;
+            model.Memory = x86Server.Memory;
+            model.HD = x86Server.HD;
+            model.OS = x86Server.OS;
+            model.EngineNumber = x86Server.EngineNumber;
+            model.RackLocation = x86Server.RackLocation;
+            model.BeginU = x86Server.BeginU;
+            model.EndU = x86Server.EndU;
+            model.VirtualizedResourcePool = x86Server.VirtualizedResourcePool;
+            model.BusinessSystem = x86Server.BusinessSystem;
+            model.IP = x86Server.IP;
+            model.NetcardNumber = x86Server.NetcardNumber;
+            model.HBANumber = x86Server.HBANumber;
+            model.StorageSize = x86Server.StorageSize;
+            model.MaintenanceInformation = x86Server.MaintenanceInformation;
+            if (String.IsNullOrEmpty(x86Server.InstallDate.ToString()))
+            {
+                model.InstallDate = null;
+            }
+            else
+            {
+                model.InstallDate = x86Server.InstallDate;
+            }
             return View(model);
         }
 
@@ -344,43 +358,44 @@ namespace DataCenterOperation.Site.Controllers
         public async Task<IActionResult> X86Server_Modify(AssertX86ServerViewModel model)
         {
             Assert_X86Server entity = await _assertX86ServerService.GetAssertX86ServerById(model.ID);
-            
-                    entity.Name = model.Name;
-                    entity.SerialNumber = model.SerialNumber;
-                    entity.HD = model.HD;
-                    entity.OS = model.OS;
-                    entity.EngineNumber = model.EngineNumber;
-                    entity.RackLocation = model.RackLocation;
-                    entity.BeginU = model.BeginU;
-                    entity.EndU = model.EndU;
-                    entity.VirtualizedResourcePool = model.VirtualizedResourcePool;
-                    entity.BusinessSystem = model.BusinessSystem;
-                    entity.IP = model.IP;
-                    entity.NetcardNumber = model.NetcardNumber;
-                    entity.HBANumber = model.HBANumber;
-                    entity.StorageSize = model.StorageSize;
-                    entity.MaintenanceInformation = model.MaintenanceInformation;
-                    entity.InstallDate = model.InstallDate;
-                    entity.Band = model.Band;
-                    entity.CPU = model.CPU;
-                    entity.Memory = model.Memory;
-                    await _assertX86ServerService.UpdateAssertX86Server(entity);
+
+            entity.Name = model.Name;
+            entity.SerialNumber = model.SerialNumber;
+            entity.HD = model.HD;
+            entity.OS = model.OS;
+            entity.EngineNumber = model.EngineNumber;
+            entity.RackLocation = model.RackLocation;
+            entity.BeginU = model.BeginU;
+            entity.EndU = model.EndU;
+            entity.VirtualizedResourcePool = model.VirtualizedResourcePool;
+            entity.BusinessSystem = model.BusinessSystem;
+            entity.IP = model.IP;
+            entity.NetcardNumber = model.NetcardNumber;
+            entity.HBANumber = model.HBANumber;
+            entity.StorageSize = model.StorageSize;
+            entity.MaintenanceInformation = model.MaintenanceInformation;
+            entity.InstallDate = model.InstallDate;
+            entity.Band = model.Band;
+            entity.CPU = model.CPU;
+            entity.Memory = model.Memory;
+            await _assertX86ServerService.UpdateAssertX86Server(entity);
 
             return Redirect("./X86Server");
         }
-    
+
         [HttpGet]
-        public async Task<IActionResult> X86Server_Users(){
-            
+        public async Task<IActionResult> X86Server_Users()
+        {
+
             AssertX86ServerUsersViewModel model = null;
-            if(String.IsNullOrEmpty(Request.QueryString.Value))
+            if (String.IsNullOrEmpty(Request.QueryString.Value))
             {
                 model = new AssertX86ServerUsersViewModel();
             }
             else
             {
                 var fixAssertNumber = Request.QueryString.Value.Substring(1);
-                var item = await _assertX86ServerService.GetAssertX86ServerByColumn(fixAssertNumber,ENUMS.Type.FixedAssertNumber);
+                var item = await _assertX86ServerService.GetAssertX86ServerByColumn(fixAssertNumber, ENUMS.Type.FixedAssertNumber);
                 model = new AssertX86ServerUsersViewModel();
                 model.ID = item.Id;
                 model.FixedAssertNumber = item.FixedAssertNumber;
@@ -403,7 +418,7 @@ namespace DataCenterOperation.Site.Controllers
                 model.Band = item.Band;
                 model.CPU = item.CPU;
                 model.Memory = item.Memory;
-                
+
                 List<Assert_X86ServerUserInformation> users = await _assertX86ServerUserInformationService.GetUsersByServerGuid(item.Id);
                 model.Users = JsonConvert.SerializeObject(users);
             }
@@ -413,19 +428,19 @@ namespace DataCenterOperation.Site.Controllers
         [HttpPost]
         public async Task<IActionResult> X86Server_Users(AssertX86ServerUsersViewModel requestModel)
         {
-            
+
             ICollection<Assert_X86ServerUserInformation> users = AssertX86ServerUsersViewModel.GetUsers(requestModel.Users);
             Assert_X86ServerUserInformation currentEntity = null;
             List<Assert_X86ServerUserInformation> readyToRemove = await _assertX86ServerUserInformationService.GetUsersByServerFixedAssertNumber(requestModel.FixedAssertNumber);
-            foreach(var item in readyToRemove)
+            foreach (var item in readyToRemove)
             {
                 var result = await _assertX86ServerUserInformationService.RemoveUserByGuidAsync(item.Id);
             }
             //_assertX86ServerUserInformationService.RemoveUsersByServerFixedAssertNumber(requestModel.FixedAssertNumber);
-            foreach(var item in users)
+            foreach (var item in users)
             {
                 item.FixedAssertNumber = requestModel.FixedAssertNumber;
-                currentEntity = await _assertX86ServerUserInformationService.AddUserAsync(item);                                
+                currentEntity = await _assertX86ServerUserInformationService.AddUserAsync(item);
             }
 
             return Redirect("/Assert/X86Server");
