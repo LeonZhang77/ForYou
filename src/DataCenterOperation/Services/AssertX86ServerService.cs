@@ -65,6 +65,8 @@ namespace DataCenterOperation.Services
                   || s.RackLocation.Contains(keyword)
                   || s.SerialNumber.Contains(keyword)
                   || s.ContractNumber.Contains(keyword)
+                  || s.FixedAssertNumber.Contains(keyword)
+                  || s.EngineNumber.Contains(keyword)
                   select s;
         }
 
