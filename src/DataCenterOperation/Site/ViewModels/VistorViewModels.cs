@@ -1,12 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
 using DataCenterOperation.Data.Entities;
 using Newtonsoft.Json;
-using System.IO;
 
 namespace DataCenterOperation.Site.ViewModels
 {
+    public class HistorySearchViewModel
+    {
+        [Display(Prompt = "关键字")]
+        public string Keyword { get; set; }
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+
+        public int Count { get; set; }
+        public IEnumerable<EntryViewModel> Items { get; set; }
+
+        public bool HasPrevPage { get { return PageIndex > 1; } }
+        public bool HasNextPage { get { return PageIndex < TotalPages; } }
+        public int TotalPages { get { return (int)Math.Ceiling(Count / (double)PageSize); } }
+    }
+
     public class EntryViewModel
     {
 
@@ -21,7 +36,7 @@ namespace DataCenterOperation.Site.ViewModels
         [Display(Name = "日期及时间")]
         [DataType(DataType.Date)]
         public DateTime EntryTime { get; set; }
-        
+
         [Display(Name = "所属单位")]
         public string Company { get; set; }
 
@@ -76,7 +91,8 @@ namespace DataCenterOperation.Site.ViewModels
 
         public string Entourage { get; set; }
 
-        public static ICollection<VistorEntourage> GetEntourage(string jsonString) {
+        public static ICollection<VistorEntourage> GetEntourage(string jsonString)
+        {
             List<VistorEntourage> result = new List<VistorEntourage>();
             JsonSerializer serializer = new JsonSerializer();
             StringReader sr = new StringReader(jsonString);
@@ -88,14 +104,15 @@ namespace DataCenterOperation.Site.ViewModels
                 {
                     Name = item.Name,
                     Identity = item.Identity,
-                    Company = item.Company,                    
+                    Company = item.Company,
                 };
                 result.Add(vistorEntourage);
             }
             return result;
         }
 
-        private class VistorEntourageClass {
+        private class VistorEntourageClass
+        {
             public string Name { get; set; }
             public string Identity { get; set; }
             public string Company { get; set; }

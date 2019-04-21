@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DataCenterOperation.Site.ViewModels.EntryViewModel>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VistorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfPeople)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EntryTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Matter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactInfo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VistorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfPeople)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EntryTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Matter)
+                </td>
+                <td>
+                    <input class="form-control form-control-sm" type="text" id="contact_info_@item.ID" value="@item.ContactInfo" />
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" id="update_contactInfo" onclick="update_ContactInfo('@item.ID')">更新联系人电话</button>
+                    <button class="btn btn-sm btn-outline-secondary" id="details" onclick="open_dialog('@item.VistorEntryRequestGuid')">详情</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
