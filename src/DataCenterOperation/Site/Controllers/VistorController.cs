@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using DataCenterOperation.Data.Entities;
+using DataCenterOperation.Services;
+using DataCenterOperation.Site.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using DataCenterOperation.Services;
-using DataCenterOperation.Site.Extensions;
-using DataCenterOperation.Site.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using DataCenterOperation.Data;
-using DataCenterOperation.Data.Entities;
 using Newtonsoft.Json;
 
 namespace DataCenterOperation.Site.Controllers
@@ -18,7 +16,7 @@ namespace DataCenterOperation.Site.Controllers
         private readonly IVistorRecordService _vistorRecordService;
         private readonly IVistorEntryRequestService _vistorEntryRequestService;
         private readonly IVistorEntourageService _vistorEntourageService;
-        private readonly ILogger _logger;        
+        private readonly ILogger _logger;
 
         public VistorController(
             IVistorRecordService vistorRecordService,
@@ -30,27 +28,41 @@ namespace DataCenterOperation.Site.Controllers
             _vistorEntryRequestService = vistorEntryRequestService;
             _vistorEntourageService = vistorEntourageService;
             _logger = loggerFactory.CreateLogger<HomeController>();
-        }        
+        }
 
-        public async Task<IActionResult> History()
+        public async Task<IActionResult> History(string keyword, int? pageIndex, int? pageSize)
         {
-            List<VistorRecord> records = (await _vistorRecordService.GetAllVistorRecords());
-            List<EntryViewModel> models = new List<EntryViewModel>();
-            foreach (VistorRecord item in records)
-            {
-                EntryViewModel model = new EntryViewModel();
-                model.ID = item.Id;
-                model.VistorName = item.VistorName;
-                model.NumberOfPeople = item.NumberOfPeople;
-                model.EntryTime = item.EntryTime;
-                model.Company = item.Company;
-                model.Matter = item.Matter;
-                model.ContactInfo = item.ContactInfo;
-                model.VistorEntryRequestGuid = item.VistorEntryRequestGuid;
-                models.Add(model);
-            }
+            keyword = keyword ?? string.Empty;
+            pageIndex = pageIndex ?? 1;
+            pageIndex = pageIndex < 1 ? 1 : pageIndex;
+            pageSize = pageSize ?? 20;
+            pageSize = pageSize < 1 ? 20 : pageSize;
 
-            return View(models);
+            var records = await _vistorRecordService.GetVistorRecordsAsync(keyword, pageIndex.Value, pageSize.Value);
+            var items = records.Select(r => new EntryViewModel
+            {
+                ID = r.Id,
+                VistorName = r.VistorName,
+                NumberOfPeople = r.NumberOfPeople,
+                EntryTime = r.EntryTime,
+                Company = r.Company,
+                Matter = r.Matter,
+                ContactInfo = r.ContactInfo,
+                VistorEntryRequestGuid = r.VistorEntryRequestGuid,
+            });
+
+            var count = await _vistorRecordService.CountAsync(keyword);
+
+            var model = new HistorySearchViewModel
+            {
+                Items = items,
+                Keyword = keyword,
+                PageIndex = pageIndex.Value,
+                PageSize = pageSize.Value,
+                Count = count
+            };
+
+            return View(model);
         }
 
         public async Task<IActionResult> Add_ContactInfo()
@@ -93,7 +105,7 @@ namespace DataCenterOperation.Site.Controllers
             request.RequestDate = theMoment;
             request.BeginTime = theMoment;
             request.EndTime = theMoment;
-           
+
             return View(request);
         }
 
@@ -106,17 +118,17 @@ namespace DataCenterOperation.Site.Controllers
 
             var request = new VistorEntryRequest
             {
-              RequestPeoopleName = requestModel.RequestPeoopleName,
-              Company = requestModel.Company,
-              RequestDate = requestModel.RequestDate,
-              BeginTime = Convert.ToDateTime(str_requestDate + " " + str_beginTime),
-              EndTime = Convert.ToDateTime(str_requestDate + " " + str_endTime),
-              Area = requestModel.Area,
-              Belongings = requestModel.Belongings,
-              Matter_Short = requestModel.Matter_Short,
-              Matter_Details = requestModel.Matter_Details,
-              Admin_Confirm = requestModel.Admin_Confirm,
-              Manager_Confirm = requestModel.Manager_Confirm,
+                RequestPeoopleName = requestModel.RequestPeoopleName,
+                Company = requestModel.Company,
+                RequestDate = requestModel.RequestDate,
+                BeginTime = Convert.ToDateTime(str_requestDate + " " + str_beginTime),
+                EndTime = Convert.ToDateTime(str_requestDate + " " + str_endTime),
+                Area = requestModel.Area,
+                Belongings = requestModel.Belongings,
+                Matter_Short = requestModel.Matter_Short,
+                Matter_Details = requestModel.Matter_Details,
+                Admin_Confirm = requestModel.Admin_Confirm,
+                Manager_Confirm = requestModel.Manager_Confirm,
             };
 
 
@@ -124,7 +136,7 @@ namespace DataCenterOperation.Site.Controllers
             request.Entourage = vistorEntourages;
 
             _vistorEntryRequestService.AddVistorEntryRequest(request);
-           
+
             return Redirect("./History");
         }
 

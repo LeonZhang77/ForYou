@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataCenterOperation.Site.ViewModels.EntryViewModel>
+﻿@model DataCenterOperation.Site.ViewModels.HistorySearchViewModel
 @{
     ViewData["Title"] = "来访记录";
 }
@@ -19,57 +19,14 @@
     </div>
 }
 
-<table class="table table-bordered table-striped table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.VistorName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumberOfPeople)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EntryTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Company)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Matter)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContactInfo)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VistorName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfPeople)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EntryTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Company)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Matter)
-                </td>
-                <td>
-                    <input class="form-control form-control-sm" type="text" id="contact_info_@item.ID" value="@item.ContactInfo" />
-                </td>
-                <td>
-                    <button class="btn btn-sm btn-outline-primary" id="update_contactInfo" onclick="update_ContactInfo('@item.ID')">更新联系人电话</button>
-                    <button class="btn btn-sm btn-outline-secondary" id="details" onclick="open_dialog('@item.VistorEntryRequestGuid')">详情</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<form asp-action="History" class="form-inline mb-2">
+    <div class="form-group mr-sm-2">
+        <input asp-for="Keyword" class="form-control form-control-sm" />
+    </div>
+    <div class="form-group mr-sm-2">
+        <button type="submit" class="btn btn-outline-primary btn-sm">搜索</button>
+    </div>
+    <small class="form-text">记录数：@Model.Count，页数：@Model.TotalPages。</small>
+</form>
+
+@await Html.PartialAsync("_VisitingRecords", Model.Items)

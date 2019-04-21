@@ -1,17 +1,18 @@
-﻿using DataCenterOperation.Data;
-using DataCenterOperation.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataCenterOperation.Data;
+using DataCenterOperation.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace DataCenterOperation.Services
 {
     public interface IVistorRecordService
     {
-        Task<List<VistorRecord>> GetAllVistorRecords();
+        Task<List<VistorRecord>> GetVistorRecordsAsync(string keyword, int pageIndex, int pageSize);
+        Task<int> CountAsync(string keyword);
         Task<VistorRecord> AddVistorAsync(VistorEntryRequest request);
         Task<VistorRecord> GetVistorRecordById(Guid id);
         Task<VistorRecord> UpdateContactInfo(Guid id, string contactInfo);
@@ -20,16 +21,39 @@ namespace DataCenterOperation.Services
     public class VistorRecordService : IVistorRecordService
     {
         private readonly DataCenterOperationDbContext _db;
-        private readonly ILogger _logger;        
+        private readonly ILogger _logger;
 
-        public VistorRecordService(DataCenterOperationDbContext dbContext,ILoggerFactory loggerFactory)
+        public VistorRecordService(DataCenterOperationDbContext dbContext, ILoggerFactory loggerFactory)
         {
             _db = dbContext;
             _logger = loggerFactory.CreateLogger<VistorRecordService>();
         }
 
-        public async Task<List<VistorRecord>> GetAllVistorRecords() {
-            return await _db.VistorRecords.ToListAsync();
+        public async Task<List<VistorRecord>> GetVistorRecordsAsync(string keyword, int pageIndex, int pageSize)
+        {
+            var query = PrepareQuery(keyword);
+
+            return await query.OrderByDescending(f => f.EntryTime)
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+        }
+
+        public async Task<int> CountAsync(string keyword)
+        {
+            return await PrepareQuery(keyword).CountAsync();
+        }
+
+        private IQueryable<VistorRecord> PrepareQuery(string keyword)
+        {
+            return string.IsNullOrWhiteSpace(keyword)
+                ? from f in _db.VistorRecords select f
+                : from f in _db.VistorRecords
+                  where f.Company.Contains(keyword)
+                  || f.ContactInfo.Contains(keyword)
+                  || f.VistorName.Contains(keyword)
+                  || f.Matter.Contains(keyword)
+                  select f;
         }
 
         public async Task<VistorRecord> GetVistorRecordById(Guid id)
@@ -59,7 +83,7 @@ namespace DataCenterOperation.Services
                 VistorEntryRequestGuid = request.Id,
             };
 
-            if ( request.Entourage != null && request.Entourage.Count() > 0)
+            if (request.Entourage != null && request.Entourage.Count() > 0)
             {
                 vistor.NumberOfPeople = request.Entourage.Count();
             }
@@ -75,7 +99,7 @@ namespace DataCenterOperation.Services
             return await Task.FromResult(vistor);
         }
 
-        public async Task<VistorRecord> AddVistorAsync(string vistorName, int numberOfPeople, DateTime entryTime, string company, string matter, string contactInfo )
+        public async Task<VistorRecord> AddVistorAsync(string vistorName, int numberOfPeople, DateTime entryTime, string company, string matter, string contactInfo)
         {
             var vistor = new VistorRecord
             {
@@ -86,14 +110,14 @@ namespace DataCenterOperation.Services
                 Company = company,
                 Matter = matter,
                 ContactInfo = contactInfo
-            };                    
+            };
 
             _db.VistorRecords.Add(vistor);
 
             _db.SaveChanges();
-            
+
             return await Task.FromResult(vistor);
         }
 
-    }        
+    }
 }
