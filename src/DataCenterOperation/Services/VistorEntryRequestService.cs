@@ -16,6 +16,8 @@ namespace DataCenterOperation.Services
         Task<VistorEntryRequest> GetVistorEntryRequestsById(Guid id);
 
         Task<VistorEntryRequest> AddVistorEntryRequest(VistorEntryRequest request);
+
+        Task<VistorEntryRequest> UpdateManageConfirm(Guid id, string manageConfirm);
     }
 
     public class VistorEntryRequestService : IVistorEntryRequestService
@@ -67,6 +69,15 @@ namespace DataCenterOperation.Services
             _db.SaveChanges();
 
             return request;
+        }
+
+        public async Task<VistorEntryRequest> UpdateManageConfirm(Guid id, string manageConfirm)
+        {
+            VistorEntryRequest item = await _db.VistorEntryRequests.FirstOrDefaultAsync(a => a.Id == id);
+            item.Manager_Confirm = manageConfirm;
+            await _db.SaveChangesAsync();
+
+            return item;
         }
 
     }        

@@ -47,6 +47,9 @@ namespace DataCenterOperation.Site.ViewModels
         [DataType(DataType.PhoneNumber)]
         public string ContactInfo { get; set; }
 
+        [Display(Name = "数据中心分管领导审批")]
+        public string Manager_Confirm { get; set; }
+
         public Guid VistorEntryRequestGuid { get; set; }
 
     }

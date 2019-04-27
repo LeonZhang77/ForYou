@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<DataCenterOperation.Site.ViewModels.EntryViewModel>
+@{
+    var readOnly = User.IsAdmin() ? string.Empty : "readonly";
+}
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -20,6 +23,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ContactInfo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Manager_Confirm)
             </th>
             <th></th>
         </tr>
@@ -47,8 +53,16 @@
                     <input class="form-control form-control-sm" type="text" id="contact_info_@item.ID" value="@item.ContactInfo" />
                 </td>
                 <td>
-                    <button class="btn btn-sm btn-outline-primary" id="update_contactInfo" onclick="update_ContactInfo('@item.ID')">更新联系人电话</button>
+                    <input @readOnly class="form-control form-control-sm" type="text" id="manage_confirm_@item.VistorEntryRequestGuid" value="@item.Manager_Confirm" />
+
+                </td>
+                <td>
                     <button class="btn btn-sm btn-outline-secondary" id="details" onclick="open_dialog('@item.VistorEntryRequestGuid')">详情</button>
+                    <button class="btn btn-sm btn-outline-primary" id="update_contactInfo" onclick="update_ContactInfo('@item.ID')">更新联系人电话</button>
+                    @if (User.IsAdmin())
+                    {
+                        <button class="btn btn-sm btn-outline-secondary" onclick="open_manage_dialog('@item.VistorEntryRequestGuid')">领导审批</button>
+                    }
                 </td>
             </tr>
         }

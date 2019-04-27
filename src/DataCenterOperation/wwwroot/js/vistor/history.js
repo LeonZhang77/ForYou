@@ -10,6 +10,18 @@
         effect: "explode",
         duration: 1000
       }
+      });
+    $("#success_dialog").dialog({
+      autoOpen: false,
+      width:500,
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      }
     });
     $("#dialog_update_contactInfo").dialog({
         autoOpen: false,
@@ -23,8 +35,55 @@
                 $(this).dialog("close");
             }
         }
+        });
+    $("#manage_dialog").dialog({
+        autoOpen: false,
+        width: 900,
+        modal: true,
+        buttons: {
+            "确认": function () {
+                $(this).dialog("close");
+            },
+            "放弃": function () {
+                $(this).dialog("close");
+            }
+        }
     });
 });
+
+function open_manage_dialog(text_id){
+    var emelement_id = 'manage_confirm_' + text_id;
+    var manage_confirm = document.getElementById(emelement_id).value;
+    $("#manage_dialog").dialog({
+        autoOpen: false,
+        width: 400,
+        modal: true,
+        buttons: {
+            "确认": function () {
+                update_manage_confirm(text_id, manage_confirm);
+                $(this).dialog("close");
+            },
+            "放弃": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#manage_dialog").dialog("open");
+}
+
+function update_manage_confirm(text_id, manage_confirm) {
+    $.ajax({
+        type: "POST",
+        url: "/Vistor/Add_Manage_Confirm",
+        data: {
+            'id': text_id,
+            'manageConfirm': manage_confirm
+            },
+        success: function (item) {
+            $("#success_dialog").dialog("open");
+        }
+    });
+}
 
 function update_ContactInfo(text_id) {
     var emelement_id = 'contact_info_' + text_id;
@@ -54,6 +113,9 @@ function update_ContactInfo_post(text_id, contact_info) {
         data: {
             'id': text_id,
             'contactInfo': contact_info
+        },
+        success: function (item) {
+            $("#success_dialog").dialog("open");
         }
     });
 }
