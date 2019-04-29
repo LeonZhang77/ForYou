@@ -129,6 +129,8 @@ function show_report(guid_id) {
             if (responsedata=='1')
             {
                 $("#img_failure_report").attr('src',"/upload/FailersReport/"+guid_id+".jpg");
+                $("#a_fail_report").attr('href',"/upload/FailersReport/"+guid_id+".jpg");
+                $("#a_fail_report").attr('download', guid_id+".jpg");
                 $("#dialog_show_report").dialog("open");
             }
             else

@@ -30,34 +30,39 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <th scope="col">
-                    @Html.DisplayFor(modelItem => item.Index)
-                </th>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeviceName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FailureCause)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateRecorded)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateSolved)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.WhoRecorded)
-                </td>
-                <td>
-                    @Html.ActionLink("详情", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("编辑", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("删除", "Delete", new { id = item.Id }) |
-                    <button class="btn btn-primary btn-sm" onclick="open_upload_dialog('@item.Id')">上传故障报告</button>
-                    <button class="btn btn-primary btn-sm" onclick="remove_report('@item.Id')">删除故障报告</button>
-                    <button class="btn btn-primary btn-sm" onclick="show_report('@item.Id')">查看故障报告</button>
-                </td>
-            </tr>
+        <tr>
+            <th scope="col">
+                @Html.DisplayFor(modelItem => item.Index)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeviceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FailureCause)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateRecorded)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateSolved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WhoRecorded)
+            </td>
+            <td>
+                @Html.ActionLink("详情", "Details", new { id = item.Id }) |
+                @Html.ActionLink("编辑", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("删除", "Delete", new { id = item.Id }) |
+                <a href="#" class"="dropdown">
+                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">故障报告</a>
+                    <ul id="contextMenu" class="dropdown-menu" role="menu">
+                        <li><a class="dropdown-item" href="#" onclick="open_upload_dialog('@item.Id')">上传故障报告</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="remove_report('@item.Id')">删除故障报告</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="show_report('@item.Id')">查看故障报告</a></li>
+                    </ul>
+                </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

@@ -48,8 +48,13 @@ namespace DataCenterOperation.Site.Controllers
                 Company = r.Company,
                 Matter = r.Matter,
                 ContactInfo = r.ContactInfo,
-                VistorEntryRequestGuid = r.VistorEntryRequestGuid,
-            });
+                VistorEntryRequestGuid = r.VistorEntryRequestGuid
+            }).ToList();
+            foreach(EntryViewModel item in items)
+            {
+                var entryRequest = await _vistorEntryRequestService.GetVistorEntryRequestsById(item.VistorEntryRequestGuid);
+                item.Manager_Confirm = entryRequest.Manager_Confirm;
+            }
 
             var count = await _vistorRecordService.CountAsync(keyword);
 
@@ -70,6 +75,14 @@ namespace DataCenterOperation.Site.Controllers
             var guid = new Guid(Request.Form["id"]);
             var contactInfo = Request.Form["contactInfo"];
             VistorRecord vistorRecord = await _vistorRecordService.UpdateContactInfo(guid, contactInfo);
+            return Redirect("/Vistor/History");
+        }
+
+        public async Task<IActionResult> Add_Manage_Confirm()
+        {
+            var guid = new Guid(Request.Form["id"]);
+            var manageConfirm = Request.Form["manageConfirm"];
+            VistorEntryRequest item = await _vistorEntryRequestService.UpdateManageConfirm(guid, manageConfirm);
             return Redirect("/Vistor/History");
         }
 
