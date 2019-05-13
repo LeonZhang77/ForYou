@@ -50,6 +50,16 @@
             <ul>
                 <li><a asp-controller="MysqlDB" asp-action="Index">数据库</a></li>
                 <li><a asp-controller="Account" asp-action="Management">系统用户</a></li>
+                <li><a asp-controller="Home" asp-action="CopyRight">版权信息</a></li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="col">
+            <h2>系统</h2>
+            <ul>
+                <li><a asp-controller="Home" asp-action="CopyRight">版权信息</a></li>                
             </ul>
         </div>
     }

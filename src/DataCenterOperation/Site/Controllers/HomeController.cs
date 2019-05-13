@@ -19,6 +19,11 @@ namespace DataCenterOperation.Site.Controllers
             return View();
         }
 
+        public IActionResult CopyRight()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View();

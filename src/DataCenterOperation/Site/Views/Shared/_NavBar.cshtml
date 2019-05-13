@@ -43,6 +43,16 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownSystem">
                             <a class="dropdown-item" asp-area="" asp-controller="MysqlDB" asp-action="Index">数据库</a>
                             <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Management">系统用户</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CopyRight">版权信息</a>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSystem" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">系统</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownSystem">                            
+                            <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CopyRight">版权信息</a>
                         </div>
                     </li>
                 }
