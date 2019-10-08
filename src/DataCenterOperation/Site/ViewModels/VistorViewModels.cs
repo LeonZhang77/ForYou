@@ -97,6 +97,7 @@ namespace DataCenterOperation.Site.ViewModels
         public static ICollection<VistorEntourage> GetEntourage(string jsonString)
         {
             List<VistorEntourage> result = new List<VistorEntourage>();
+            if (jsonString.Equals("]")) { return result; }
             JsonSerializer serializer = new JsonSerializer();
             StringReader sr = new StringReader(jsonString);
             object o = serializer.Deserialize(new JsonTextReader(sr), typeof(List<VistorEntourageClass>));
